@@ -19,9 +19,10 @@ namespace TSP
 		AdjacencyMatrix();
 		AdjacencyMatrix(uint vertices_num);
 		AdjacencyMatrix(std::string filename);
+		AdjacencyMatrix(std::vector<Vertex> &coordinates);
 		virtual ~AdjacencyMatrix();
 
-		// Inherited via GraphRepresentation
+		
 		virtual void AddEdge(uint source, uint destination, uint weight) override;
 
 
@@ -35,8 +36,7 @@ namespace TSP
 
 	private:
 		weight **adjacency_matrix_;
-		uint vertices_num_;
-		uint edges_num_;
+	
 
 		
 

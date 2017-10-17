@@ -3,20 +3,30 @@
 
 using namespace TSP;
 
-AdjacencyMatrix::AdjacencyMatrix()
-	: vertices_num_(5)
-	, edges_num_(0)
-	, adjacency_matrix_(AllocateSquareMatrix(5))
-{}
+AdjacencyMatrix::AdjacencyMatrix()	
+	: adjacency_matrix_(AllocateSquareMatrix(5))
+{
+	vertices_num_ = 5;
+	edges_num_ = 0;
+}
 
-TSP::AdjacencyMatrix::AdjacencyMatrix(uint vertices)
-	: vertices_num_(vertices)
-	, edges_num_(0)
-	, adjacency_matrix_(AllocateSquareMatrix(vertices))
-{}
+TSP::AdjacencyMatrix::AdjacencyMatrix(uint vertices)	
+	: adjacency_matrix_(AllocateSquareMatrix(vertices))
+{
+	vertices_num_ = vertices;
+	edges_num_ = 0;
+}
 
 TSP::AdjacencyMatrix::AdjacencyMatrix(std::string filename)
 {
+}
+
+TSP::AdjacencyMatrix::AdjacencyMatrix(std::vector<Vertex> &coordinates)
+{
+	coordinates_ = coordinates;
+	vertices_num_ = coordinates_.size();
+	adjacency_matrix_ = AllocateSquareMatrix(coordinates.size());
+	ConvertCoordinatesToWeights();
 }
 
 
