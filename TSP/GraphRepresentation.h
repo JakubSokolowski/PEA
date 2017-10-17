@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 #ifdef TSP_EXPORTS
 #define TSP_API __declspec(dllexport)
@@ -14,12 +15,21 @@ namespace TSP
 	using weight = double;
 	using density = double;
 
+	struct TSP_API Vertex
+	{
+		uint x_;
+		uint y_;
+		uint id_;
+	};
+
 	class TSP_API GraphRepresentation
 	{
 	public:
 
 		GraphRepresentation() {};
 		GraphRepresentation(std::string filename) {};
+		GraphRepresentation(std::vector<Vertex> &coordinates) {};
+		
 		virtual ~GraphRepresentation() {};
 
 	    virtual void AddEdge(uint source, uint destination, uint weight) = 0;
@@ -32,8 +42,12 @@ namespace TSP
 		virtual std::string GetGraphInfo() = 0;
 
 	protected:
-
-		weight** AllocateSquareMatrix(uint matrix_size);		
+		std::vector<Vertex> coordinates_;
+		uint vertices_num_ = 0;
+		uint edges_num_ = 0;
+		weight** AllocateSquareMatrix(uint matrix_size);
+		void ConvertCoordinatesToWeights();
+		weight GetEuclideanDistance(Vertex source, Vertex destination);
 	};
 }
 
