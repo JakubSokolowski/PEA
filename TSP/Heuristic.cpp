@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Solver.h"
+#include "Heuristic.h"
 
 
 TSP::Heuristic::Heuristic()
