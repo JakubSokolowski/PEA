@@ -10,17 +10,13 @@ namespace TSP
 	template<typename R>
 	R ParseGraphFile(std::string filepath);	
 
-	std::vector<Vertex> ReadCoordinates(std::fstream & stream)
+	inline std::vector<Vertex> ReadCoordinates(std::fstream & stream)
 	{
 		uint id, x, y;
 		auto coordinates = std::vector<Vertex>();
 		while (stream >> id >> x >> y)
 			coordinates.push_back(Vertex{ id, x, y });
 		return coordinates;
-	}
-	void ReadWeights(std::fstream & stream, GraphRepresentation& representation)
-	{		
-	
 	}
 
 	template<typename R>
@@ -44,8 +40,8 @@ namespace TSP
 			rep = R(coordinates);
 		}
 
-		else if (file_type == "EDGE_WEIGHT")
-			ReadWeights(file, rep);
+		/*else if (file_type == "EDGE_WEIGHT")	
+			int y = 7'*/
 		else
 			throw std::runtime_error("Invlid file type identifier");
 
