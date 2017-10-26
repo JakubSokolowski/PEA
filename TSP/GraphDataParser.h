@@ -8,7 +8,7 @@
 namespace TSP
 {
 	template<typename R>
-	R * ParseGraphFile(std::string filepath);	
+	R ParseGraphFile(std::string filepath);	
 
 	std::vector<Vertex> ReadCoordinates(std::fstream & stream)
 	{
@@ -18,13 +18,13 @@ namespace TSP
 			coordinates.push_back(Vertex{ id, x, y });
 		return coordinates;
 	}
-	void ReadWeights(std::fstream & stream, GraphRepresentation* representation)
+	void ReadWeights(std::fstream & stream, GraphRepresentation& representation)
 	{		
 	
 	}
 
 	template<typename R>
-	inline R * ParseGraphFile(std::string filepath)
+	inline R  ParseGraphFile(std::string filepath)
 	{
 
 		std::fstream file;
@@ -35,13 +35,13 @@ namespace TSP
 
 		std::string file_type;
 		std::getline(file, file_type);
-		R* rep;
+		R rep;
 
 
 		if (file_type == "NODE_COORD")
 		{
 			std::vector<Vertex> coordinates = ReadCoordinates(file);
-			rep = new R(coordinates);
+			rep = R(coordinates);
 		}
 
 		else if (file_type == "EDGE_WEIGHT")
