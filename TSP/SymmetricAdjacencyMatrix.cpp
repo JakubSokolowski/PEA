@@ -45,6 +45,7 @@ void TSP::SymmetricAdjacencyMatrix::AddEdge(uint source, uint destination, uint 
 	{
 		adjacency_matrix_[source][destination] = weight;
 		adjacency_matrix_[destination][source] = weight;
+		edges_num_ += 1;
 	}		
 }
 

@@ -22,4 +22,5 @@ void TSP::AsymmetricAdjacencyMatrix::AddEdge(int source, uint destination, uint 
 {
 	if(!IsConnected(source,destination))
 		adjacency_matrix_[source][destination] = weight;
+	edges_num_++;
 }
