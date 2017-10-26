@@ -139,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AsymmetricAdjacencyMatrix.cpp" />
+    <ClCompile Include="GraphDataParser.cpp" />
     <ClCompile Include="SymmetricAdjacencyMatrix.cpp" />
     <ClCompile Include="BranchAndBound.cpp" />
     <ClCompile Include="dllmain.cpp">

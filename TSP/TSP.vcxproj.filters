@@ -68,6 +68,9 @@
     <ClCompile Include="BranchAndBound.cpp">
       <Filter>Source Files\Heuristics\BranchAndBound</Filter>
     </ClCompile>
+    <ClCompile Include="GraphDataParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Problem.h">
