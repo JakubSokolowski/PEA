@@ -12,7 +12,7 @@
 namespace TSP
 {
 	using uint = unsigned int;
-	using weight = double;
+	using weight = int;
 	using density = double;
 
 	struct TSP_API Vertex
@@ -28,25 +28,24 @@ namespace TSP
 
 		GraphRepresentation() {};
 		GraphRepresentation(std::string filename) {};
-		GraphRepresentation(std::vector<Vertex> &coordinates) {};
-		
+		GraphRepresentation(std::vector<Vertex> &coordinates) {};		
 		virtual ~GraphRepresentation() {};
 
 	    virtual void AddEdge(uint source, uint destination, uint weight) = 0;
 
-
-		virtual bool IsConnected(uint source, uint destination) = 0;
-		virtual weight GetWeight(uint source, uint destination) = 0;
-		virtual uint GetNumOfEdges() = 0;
-		virtual uint GetNumOfVertices() = 0;		
-		virtual std::string GetGraphInfo() = 0;
+		virtual const bool IsConnected(uint source, uint destination) = 0;
+		virtual const weight GetWeight(uint source, uint destination) = 0;
+		virtual const uint GetNumOfEdges() = 0;
+		virtual const uint GetNumOfVertices() = 0;		
+		virtual const std::string GetGraphInfo() = 0;
+		virtual const void Print() = 0;
 
 	protected:
-		std::vector<Vertex> coordinates_;
-		uint vertices_num_ = 0;
+
+		std::vector<Vertex> coordinates_;		
 		uint edges_num_ = 0;
-		weight** AllocateSquareMatrix(uint matrix_size);
-		void ConvertCoordinatesToWeights();
+		std::vector<std::vector<weight>> AllocateSquareMatrix(uint matrix_size);
+		void ConvertCoordinatesToWeights(std::vector<Vertex> &coordinates);
 		weight GetEuclideanDistance(Vertex source, Vertex destination);
 	};
 }
