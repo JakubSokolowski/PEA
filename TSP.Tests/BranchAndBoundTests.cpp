@@ -41,14 +41,14 @@ namespace TSPTests
 				{ 7,   6,   9,   6,  INF }
 			};
 
-			BranchAndBound solver = BranchAndBound();
-			auto Graph = SymmetricAdjacencyMatrix(matrix);
+			BranchAndBound<int> solver = BranchAndBound<int>();
+			auto Graph = SymmetricAdjacencyMatrix<int>(matrix);
 			auto result = solver.Solve(Graph);
 			Assert::AreEqual(34, result.distance_);
 
 			// 2nd instance
 
-			auto Graph2 = SymmetricAdjacencyMatrix(4);
+			auto Graph2 = SymmetricAdjacencyMatrix<int>(4);
 			Graph2.AddEdge(0, 1, 20);
 			Graph2.AddEdge(0, 2, 42);
 			Graph2.AddEdge(0, 3, 35);
@@ -56,7 +56,7 @@ namespace TSPTests
 			Graph2.AddEdge(1, 3, 34);
 			Graph2.AddEdge(1, 2, 30);
 			
-			BranchAndBound solver2 = BranchAndBound();
+			auto solver2 = BranchAndBound<int>();
 			auto result2 = solver2.Solve(Graph2);
 			Assert::AreEqual(97, result2.distance_);
 		}
