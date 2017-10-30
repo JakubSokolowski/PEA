@@ -3,34 +3,37 @@
 
 using namespace TSP;
 
-HeldKarp::HeldKarp()
+template <typename Cost>
+HeldKarp<Cost>::HeldKarp()
 {
 }
 
-
-HeldKarp::~HeldKarp()
+template <typename Cost>
+HeldKarp<Cost>::~HeldKarp()
 {
 }
 
-Solution TSP::HeldKarp::Solve(GraphRepresentation& representation)
+template <typename Cost>
+Solution<Cost> HeldKarp<Cost>::Solve(GraphRepresentation<Cost>& representation)
 {
 	auto states = PrepareStateMatrix(representation.GetNumOfVertices());
-	int minimum = SolveSubset(representation, 0, 1, states);
-	return Solution(minimum);
+	Cost minimum = SolveSubset(representation, 0, 1, states);
+	return Solution<Cost>(minimum);
 }
-
-std::vector<std::vector<TSP::weight>> TSP::HeldKarp::PrepareStateMatrix(int matrix_size)
+template <typename Cost>
+std::vector<std::vector<Cost>> HeldKarp<Cost>::PrepareStateMatrix(int matrix_size)
 {
 	//std::vector<std::vector<TSP::weight>> state_matrix(matrix_size, std::vector<TSP::weight>((1 << matrix_size) - 1, INT_MAX));
 
-	std::vector<std::vector<TSP::weight>> state_matrix(matrix_size);
+	std::vector<std::vector<Cost>> state_matrix(matrix_size);
 	for (auto& neighbors : state_matrix)
-		neighbors = std::vector<TSP::weight>((1 << matrix_size) - 1, INT_MAX);
+		neighbors = std::vector<TSP::Cost>((1 << matrix_size) - 1, INT_MAX);
 
 	return state_matrix;
 }
 
-int TSP::HeldKarp::SolveSubset(GraphRepresentation& cities, int position, int visited, std::vector<std::vector<TSP::weight>>& state)
+template <typename Cost>
+Cost HeldKarp<Cost>::SolveSubset(GraphRepresentation<Cost>& cities, int position, int visited, std::vector<std::vector<Cost>>& state)
 {
 	if (visited == ((1 << cities.GetNumOfVertices()) - 1))
 		return cities.GetWeight(position, 0);
@@ -49,5 +52,10 @@ int TSP::HeldKarp::SolveSubset(GraphRepresentation& cities, int position, int vi
 
 	return state[position][visited];
 }
+
+template HeldKarp<int>;
+template HeldKarp<unsigned int>;
+template HeldKarp<double>;
+
 
 

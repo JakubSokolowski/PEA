@@ -1,25 +1,49 @@
 #pragma once
 
-#include <vector>
+#ifndef TSP_SOLUTION
+#define TSP_SOLUTION
 
-#ifdef TSP_EXPORTS
-#define TSP_API __declspec(dllexport)
-#else
-#define TSP_API __declspec(dllimport)
-#endif
+#include <string>
+#include <vector>
+#include <limits>
 
 namespace TSP
 {
-	class TSP_API Solution
+	template<typename Cost>
+	class Solution
 	{
 	public:
 		Solution();
-		Solution(int distance);
-		Solution(int distance, std::vector<int> path);
+		Solution(Cost distance);
+		Solution(Cost distance, std::vector<int> path);
 		~Solution();
 
-		int distance_;
+		Cost distance_ = std::numeric_limits<Cost>::max();
 		std::vector<int> path_;
-
 	};
+
+	template<typename Cost>
+	TSP::Solution<Cost>::Solution()
+	{
+	}
+
+	template<typename Cost>
+	TSP::Solution<Cost>::Solution(Cost distance)
+	{
+		distance_ = distance;
+	}
+
+	template<typename Cost>
+	TSP::Solution<Cost>::Solution(Cost distance, std::vector<int> path)
+	{
+		distance_ = distance;
+		path_ = path;
+	}
+
+
+	template<typename Cost>
+	TSP::Solution<Cost>::~Solution()
+	{
+	}
 }
+#endif

@@ -1,7 +1,4 @@
 #include "stdafx.h"
-#include "GraphDataParser.h"
+#include "BB.h"
 
 using namespace TSP;
-
-
-

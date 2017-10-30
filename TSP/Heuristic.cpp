@@ -1,11 +1,10 @@
 #include "stdafx.h"
 #include "Heuristic.h"
 
+using namespace TSP;
 
-TSP::Heuristic::Heuristic()
-{
-}
 
-TSP::Heuristic::~Heuristic()
-{
-}
+
+template Heuristic<int>;
+template Heuristic<unsigned int>;
+template Heuristic<double>;

@@ -5,106 +5,89 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{0e803a9e-d071-48a6-85ef-09fdde313103}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\GraphRepresentations">
-      <UniqueIdentifier>{db953ed1-e7db-4b25-9512-c9eaa98ca46d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Heuristics">
-      <UniqueIdentifier>{76eba0b3-d1cf-422e-b2fe-ac2dd276c85c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Heuristics\BranchAndBound">
-      <UniqueIdentifier>{3e40c77c-2432-4db5-a3b7-88eacf706520}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GraphRepresentations">
-      <UniqueIdentifier>{994b6529-3bcf-4363-af47-c0ded4f99c6e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Heuristics">
-      <UniqueIdentifier>{65e1c9f3-3dc4-44e1-bd47-4b54d01ad251}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\GraphRepresentations\AdjacencyMatrix">
-      <UniqueIdentifier>{c5f1599a-3bbc-4b03-b5be-0cc601c23e7f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Heuristics\BranchAndBound">
-      <UniqueIdentifier>{ff97a16d-e838-4dcd-a9bc-21888d4f2276}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="dllmain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Solution.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Problem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AsymmetricAdjacencyMatrix.cpp">
-      <Filter>Source Files\GraphRepresentations</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphRepresentation.cpp">
-      <Filter>Source Files\GraphRepresentations</Filter>
-    </ClCompile>
-    <ClCompile Include="SymmetricAdjacencyMatrix.cpp">
-      <Filter>Source Files\GraphRepresentations</Filter>
-    </ClCompile>
-    <ClCompile Include="HeldKarp.cpp">
-      <Filter>Source Files\Heuristics</Filter>
-    </ClCompile>
-    <ClCompile Include="Heuristic.cpp">
-      <Filter>Source Files\Heuristics</Filter>
-    </ClCompile>
-    <ClCompile Include="BranchAndBound.cpp">
-      <Filter>Source Files\Heuristics\BranchAndBound</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphDataParser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Problem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Solution.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GraphDataParser.h">
-      <Filter>Header Files\GraphRepresentations</Filter>
+    <ClInclude Include="AsymmetricAdjacencyMatrix.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GraphRepresentation.h">
-      <Filter>Header Files\GraphRepresentations</Filter>
-    </ClInclude>
-    <ClInclude Include="Heuristic.h">
-      <Filter>Header Files\Heuristics</Filter>
+    <ClInclude Include="BB.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BranchAndBound.h">
-      <Filter>Header Files\Heuristics\BranchAndBound</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphDataParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphRepresentation.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HeldKarp.h">
-      <Filter>Header Files\Heuristics</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Heuristic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PartialSolution.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Solution.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SymmetricAdjacencyMatrix.h">
-      <Filter>Header Files\GraphRepresentations\AdjacencyMatrix</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AsymmetricAdjacencyMatrix.h">
-      <Filter>Header Files\GraphRepresentations\AdjacencyMatrix</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TSP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AsymmetricAdjacencyMatrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BranchAndBound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphRepresentation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Heuristic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PartialSolution.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Problem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Solution.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SymmetricAdjacencyMatrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

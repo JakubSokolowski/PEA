@@ -3,21 +3,26 @@
 #include "GraphRepresentation.h"
 #include "Solution.h"
 
-
-#ifdef TSP_EXPORTS
-#define TSP_API __declspec(dllexport)
-#else
-#define TSP_API __declspec(dllimport)
-#endif
-
 namespace TSP
 {
-	class TSP_API Heuristic
+	template<typename Cost>
+	class Heuristic
 	{
 	public:
 		Heuristic();
 		virtual ~Heuristic();
-		virtual Solution Solve(GraphRepresentation& representation) = 0;
+		
+		virtual Solution<Cost> Solve(GraphRepresentation<Cost>& representation) = 0;
 	};
+
+	template<typename Cost>
+	Heuristic<Cost>::Heuristic()
+	{
+	}
+
+	template<typename Cost>
+	Heuristic<Cost>::~Heuristic()
+	{
+	}
 }
 

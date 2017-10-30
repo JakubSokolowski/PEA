@@ -1,8 +1,8 @@
 ========================================================================
-    DYNAMIC LINK LIBRARY : TSP Project Overview
+    CONSOLE APPLICATION : TSP Project Overview
 ========================================================================
 
-AppWizard has created this TSP DLL for you.
+AppWizard has created this TSP application for you.
 
 This file contains a summary of what you will find in each of the files that
 make up your TSP application.
@@ -22,7 +22,7 @@ TSP.vcxproj.filters
     "Source Files" filter).
 
 TSP.cpp
-    This is the main DLL source file.
+    This is the main application source file.
 
 /////////////////////////////////////////////////////////////////////////////
 Other standard files:

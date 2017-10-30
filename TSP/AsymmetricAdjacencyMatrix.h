@@ -1,16 +1,55 @@
 #pragma once
+
+#ifndef TSP_ASYMMETRIC_ADJACENCY_MATRIX
+#define TSP_ASYMMETRIC_ADJACENCY_MATRIX
+
+
 #include "SymmetricAdjacencyMatrix.h"
 
 namespace TSP
 {
-	class TSP_API AsymmetricAdjacencyMatrix :
-		public SymmetricAdjacencyMatrix
+	template<typename Cost>
+	class AsymmetricAdjacencyMatrix :
+		public SymmetricAdjacencyMatrix<Cost>
 	{
 	public:
 		AsymmetricAdjacencyMatrix();
 		AsymmetricAdjacencyMatrix(int size);
+		AsymmetricAdjacencyMatrix(std::vector<Vertex> &coordinates);
 		virtual ~AsymmetricAdjacencyMatrix();
-		void AddEdge(int source, uint destination, uint weigh);		
+		void AddEdge(int source, uint destination, Cost weigh);		
 	};
+
+	template<typename Cost>
+	AsymmetricAdjacencyMatrix<Cost>::AsymmetricAdjacencyMatrix()
+	{
+
+	}
+	template<typename Cost>
+	TSP::AsymmetricAdjacencyMatrix<Cost>::AsymmetricAdjacencyMatrix(int size) : SymmetricAdjacencyMatrix(size)
+	{
+
+	}
+
+	template<typename Cost>
+	inline AsymmetricAdjacencyMatrix<Cost>::AsymmetricAdjacencyMatrix(std::vector<Vertex>& coordinates)	 
+		: SymmetricAdjacencyMatrix(coordinates)
+	{
+	}
+
+	template<typename Cost>
+	AsymmetricAdjacencyMatrix<Cost>::~AsymmetricAdjacencyMatrix()
+	{
+	}
+	template<typename Cost>
+	void TSP::AsymmetricAdjacencyMatrix<Cost>::AddEdge(int source, uint destination, Cost weight)
+	{
+		if (!IsConnected(source, destination))
+		{
+			adjacency_matrix_[source][destination] = weight;
+			edges_num_++;
+		}		
+	}
 }
 
+#endif // !TSP_ASYMMETRIC_ADJACENCY_MATRIX

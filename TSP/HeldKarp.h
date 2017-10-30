@@ -3,18 +3,19 @@
 
 namespace TSP
 {
-	class TSP_API HeldKarp :
-		public Heuristic
+	template <typename Cost>
+	class HeldKarp :
+		public Heuristic<Cost>
 	{
-	public:
+	public:	
 		HeldKarp();
 		virtual ~HeldKarp();
 
 		// Inherited via Heuristic
-		virtual Solution Solve(GraphRepresentation& representation) override;
+		virtual Solution<Cost> Solve(GraphRepresentation<Cost>& representation) override;
 	private:
-		std::vector<std::vector<TSP::weight>> PrepareStateMatrix(int matrix_size);
-		int SolveSubset(GraphRepresentation& representation, int position, int visited, std::vector<std::vector<TSP::weight>>& state);
+		std::vector<std::vector<Cost>> PrepareStateMatrix(int matrix_size);
+		Cost SolveSubset(GraphRepresentation<Cost>& representation, int position, int visited, std::vector<std::vector<Cost>>& state);
 	};
 
 }
