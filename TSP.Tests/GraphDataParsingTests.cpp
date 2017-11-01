@@ -12,7 +12,7 @@ using namespace TSP;
 
 namespace TSPTests
 {
-	TEST_CLASS(GraphDataParsingTests)
+	TEST_CLASS(GraphDataParserTests)
 	{
 	public:
 		TEST_METHOD(ParseFromCoordinatesFileSymmetricMatrix)

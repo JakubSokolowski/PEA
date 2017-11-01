@@ -148,6 +148,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BBMatrixTests.cpp" />
     <ClCompile Include="BranchAndBoundTests.cpp" />
     <ClCompile Include="GraphDataParsingTests.cpp" />
     <ClCompile Include="stdafx.cpp">

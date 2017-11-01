@@ -35,5 +35,8 @@
     <ClCompile Include="GraphDataParsingTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BBMatrixTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
