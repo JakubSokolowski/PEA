@@ -2,10 +2,12 @@
 //
 
 #include "stdafx.h"
+#include "AsymmetricAdjacencyMatrix.h"
+#include "SymmetricAdjacencyMatrix.h"
+#include "BB.h"
 
-
+using namespace TSP;
 int main()
 {
-    return 0;
 }
 

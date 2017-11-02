@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Graphs">
+      <UniqueIdentifier>{8b1b46ee-f51d-4a2b-b4e1-558019aa6d77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Solvers">
+      <UniqueIdentifier>{e272bd39-2b13-4943-b0fb-77c92db07231}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphs\AdjacencyMatrix">
+      <UniqueIdentifier>{1eb5300d-7248-4f11-ab83-5e846622299f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Solvers\Branch and Bound">
+      <UniqueIdentifier>{2d455d60-cb87-4d72-a06c-e222cb8c563e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -24,35 +36,38 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SymmetricAdjacencyMatrix.h">
+      <Filter>Header Files\Graphs\AdjacencyMatrix</Filter>
+    </ClInclude>
     <ClInclude Include="AsymmetricAdjacencyMatrix.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BB.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BranchAndBound.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphDataParser.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Graphs\AdjacencyMatrix</Filter>
     </ClInclude>
     <ClInclude Include="GraphRepresentation.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Graphs</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphDataParser.h">
+      <Filter>Header Files\Graphs</Filter>
     </ClInclude>
     <ClInclude Include="HeldKarp.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Solvers</Filter>
     </ClInclude>
     <ClInclude Include="Heuristic.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="BranchAndBound.h">
+      <Filter>Header Files\Solvers\Branch and Bound</Filter>
+    </ClInclude>
+    <ClInclude Include="BB.h">
+      <Filter>Header Files\Solvers\Branch and Bound</Filter>
     </ClInclude>
     <ClInclude Include="PartialSolution.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Solvers\Branch and Bound</Filter>
     </ClInclude>
     <ClInclude Include="Solution.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Solvers</Filter>
     </ClInclude>
-    <ClInclude Include="SymmetricAdjacencyMatrix.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="BBMatrix.h">
+      <Filter>Header Files\Solvers\Branch and Bound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -60,33 +75,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TSP.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AsymmetricAdjacencyMatrix.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BB.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BranchAndBound.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphRepresentation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Heuristic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PartialSolution.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Problem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Solution.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SymmetricAdjacencyMatrix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

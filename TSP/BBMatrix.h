@@ -9,7 +9,9 @@
 namespace TSP
 {
 	using std::vector;
-
+	using std::pair;
+	using Path = pair<uint, uint>;
+	using CellPosition = pair<uint, uint>;
 
 	// Wrapper Class for AdjacencyMatrix graph representation for use
 	template <typename Cost>
@@ -18,7 +20,9 @@ namespace TSP
 	public:
 		BBMatrix();
 		BBMatrix(SymmetricAdjacencyMatrix<Cost> &matrix);
+		BBMatrix(GraphRepresentation<Cost> &matrix);
 		BBMatrix(std::vector<std::vector<Cost>> &matrix);
+		BBMatrix(const BBMatrix<Cost> &other);
 		~BBMatrix();
 
 		Cost FindRowMinimum(uint row_index, int disabled_column_index = -1);
@@ -28,14 +32,28 @@ namespace TSP
 		Cost ReduceAllRows();
 		Cost ReduceAllColumns();
 		Cost ReduceMatrix();
+
+		void SetCost(uint source, uint destination, Cost cost_);
+		Cost FindHighestPenaltyEdge(Path &path, CellPosition &position);
+		void RemoveRow(uint row_index);
+		void RemoveColumn(uint column_index);
+
 		void DisableRow(uint row_index);
 		void DisableColumn(uint column_index);
 
+		uint Size();
+		Cost operator()(uint source, uint destination);
+		BBMatrix<Cost> operator = (BBMatrix<Cost> &other);
+
+		uint row_count_ = 0;
+		uint column_count_ = 0;
 		
 		vector<vector<Cost>> matrix_;
 	private:
 		
-		Cost infinity_ = std::numeric_limits<Cost>::max();		
+		const Cost infinity_ = std::numeric_limits<Cost>::max();		
+		const Cost zero_ = Cost{};
+		
 
 	};
 	template<typename Cost>
@@ -46,11 +64,30 @@ namespace TSP
 	inline BBMatrix<Cost>::BBMatrix(SymmetricAdjacencyMatrix<Cost>& matrix)
 	{
 		matrix_ = matrix.GetMatrix();
+		row_count_ = column_count_ = matrix_.size();
+	}
+	template<typename Cost>
+	inline BBMatrix<Cost>::BBMatrix(GraphRepresentation<Cost>& matrix)
+	{
+		std::vector<std::vector<Cost>> new_matrix(matrix.GetNumOfVertices(), std::vector<Cost>(matrix.GetNumOfVertices(), std::numeric_limits<Cost>::max()));
+		matrix_ = new_matrix;
+
+		for (uint i = 0; i < matrix_.size(); i++)
+			for (uint j = 0; j < matrix_.size(); j++)
+				matrix_[i][j] = matrix.GetWeight(i, j);
+		row_count_ = column_count_ = matrix_.size();
 	}
 	template<typename Cost>
 	inline BBMatrix<Cost>::BBMatrix(std::vector<std::vector<Cost>>& matrix)
 	{
 		matrix_ = matrix;
+		row_count_ = column_count_ = matrix_.size();
+	}
+	template<typename Cost>
+	inline BBMatrix<Cost>::BBMatrix(const BBMatrix<Cost>& other)
+	{
+		matrix_ = other.matrix_;
+		row_count_ = column_count_ = matrix_.size();
 	}
 	template<typename Cost>
 	inline BBMatrix<Cost>::~BBMatrix()
@@ -139,6 +176,66 @@ namespace TSP
 	{
 		return ReduceAllRows() + ReduceAllColumns();
 	}
+
+	template<typename Cost>
+	inline void BBMatrix<Cost>::SetCost(uint source, uint destination, Cost cost_)
+	{
+		matrix_[source][destination] = cost_;
+	}
+
+	// Finds the highest penalty edge, returns the penalty, cell position and path segment
+	template<typename Cost>
+	inline Cost BBMatrix<Cost>::FindHighestPenaltyEdge(Path & path, CellPosition & position)
+	{
+		// TODO : might change to it std::numeric_limits<Cost>::min() if the value not being negative 
+		// somehow breaks algorithm
+		Cost max{};
+
+		// iterations from 1 ?
+		for (int i = 0; i < matrix_.size(); i++)
+		{
+			for (int j = 0; j < matrix_.size(); j++)
+			{
+				// Find all the cells with 0 in it 
+				// (Cells when the min of row or column used to be
+				if (matrix_[i][j] == zero_)
+				{
+					// Find the min of current row with current column ignored
+					// and Find the min of current column with current row ignored
+					Cost val = FindRowMinimum(i, j) + FindColumnMinimum(i, j);
+					if (max < val)
+					{
+						max = val;
+						// Remember which row and column to disable
+						position.first = i;
+						position.first = j;
+
+						// i think the cities ids used to be stored in the 0th row and columnd, idk
+						path.first = matrix_[i][0];
+						path.second = matrix_[0][j];
+					}
+				}
+			}
+		}
+		return max;
+	}
+	template<typename Cost>
+	inline void BBMatrix<Cost>::RemoveRow(uint row_index)
+	{
+		auto it = matrix_.begin() + row_index;
+		matrix_.erase(it);
+		row_count_--;
+	}
+	template<typename Cost>
+	inline void BBMatrix<Cost>::RemoveColumn(uint column_index)
+	{
+		for (int row = 0; row < matrix_.size(); row++) 
+		{
+			auto it = matrix_[row].begin() + column_index;
+			matrix_[row].erase(it);
+		}
+		column_count_--;
+	}
 	template<typename Cost>
 	inline void BBMatrix<Cost>::DisableRow(uint row_index)
 	{
@@ -147,5 +244,24 @@ namespace TSP
 	inline void BBMatrix<Cost>::DisableColumn(uint column_index)
 	{
 	}
+	template<typename Cost>
+	inline uint BBMatrix<Cost>::Size()
+	{
+		return matrix_.size();
+	}
+	template<typename Cost>
+	inline Cost BBMatrix<Cost>::operator()(uint source, uint destination)
+	{
+		return matrix_[source][destination];
+	}
+
+	template<typename Cost>
+	inline BBMatrix<Cost> BBMatrix<Cost>::operator=(BBMatrix<Cost>& other)
+	{
+		matrix_ = other.matrix_;
+		row_count_ = column_count_ = matrix_.size();
+		return *this;
+	}
+	
 }
 #endif // !TSP_BBMATRIX

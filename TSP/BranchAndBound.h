@@ -65,12 +65,12 @@ namespace TSP
 		visited.reset();
 
 		// Compute initial bound
-		for (int i = 0; i<adj.GetNumOfVertices(); i++)
+		for (uint i = 0; i<adj.GetNumOfVertices(); i++)
 			curr_bound += (FindMinimumEdgeCost(adj, i) +
 				FindSecondMinimumEdgeCost(adj, i));
 
 		// Rounding off the lower bound to an integer
-		curr_bound = (curr_bound & 1) ? curr_bound / 2 + 1 : curr_bound / 2;
+		curr_bound = std::round(curr_bound);		
 
 		// We start at vertex 1 so the first vertex
 		// in curr_path[] is 0
@@ -175,7 +175,7 @@ namespace TSP
 	Cost TSP::BranchAndBound<Cost>::FindMinimumEdgeCost(GraphRepresentation<Cost> & representation, uint vertex)
 	{
 		Cost min = std::numeric_limits<Cost>::max();
-		for (int i = 0; i < representation.GetNumOfVertices(); i++)
+		for (uint i = 0; i < representation.GetNumOfVertices(); i++)
 			if (representation.GetWeight(vertex, i) < min && vertex != i)
 				min = representation.GetWeight(vertex, i);
 		return min;
@@ -186,7 +186,7 @@ namespace TSP
 	Cost TSP::BranchAndBound<Cost>::FindSecondMinimumEdgeCost(GraphRepresentation<Cost> & representation, uint i)
 	{
 		Cost first = std::numeric_limits<Cost>::max(), second = std::numeric_limits<Cost>::max();
-		for (int j = 0; j<representation.GetNumOfVertices(); j++)
+		for (uint j = 0; j<representation.GetNumOfVertices(); j++)
 		{
 			if (i == j)
 				continue;

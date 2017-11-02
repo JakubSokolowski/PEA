@@ -8,7 +8,6 @@
 
 #define INF INT_MAX
 
-
 namespace TSP
 {	
 
@@ -25,10 +24,9 @@ namespace TSP
 		virtual ~SymmetricAdjacencyMatrix();
 
 		
-		virtual void AddEdge(uint source, uint destination, Cost cost) override;
+		virtual void AddEdge(uint source, uint destination, Cost cost_) override;
 
-		Cost operator()(uint source, uint destination);
-		
+		Cost operator()(uint source, uint destination);		
 
 		virtual const bool IsConnected(uint source, uint destination) override;
 		virtual const Cost GetWeight(uint source, uint destination) override;
@@ -37,9 +35,11 @@ namespace TSP
 		virtual const std::string GetGraphInfo() override;
 		virtual const void Print() override;
 
-	protected:
-		std::vector<std::vector<Cost>> adjacency_matrix_;	
+		std::vector<std::vector<Cost>> GetMatrix();
 
+	protected:
+		std::vector<std::vector<Cost>> adjacency_matrix_;
+	
 	};
 
 	template<typename Cost>
@@ -50,13 +50,13 @@ namespace TSP
 	}
 
 	template<typename Cost>
-	TSP::SymmetricAdjacencyMatrix<Cost>::SymmetricAdjacencyMatrix(uint vertices)
+	SymmetricAdjacencyMatrix<Cost>::SymmetricAdjacencyMatrix(uint vertices)
 		: adjacency_matrix_(AllocateSquareMatrix(vertices))
 	{
 		edges_num_ = 0;
 	}
 	template<typename Cost>
-	TSP::SymmetricAdjacencyMatrix<Cost>::SymmetricAdjacencyMatrix(std::string filename)
+	SymmetricAdjacencyMatrix<Cost>::SymmetricAdjacencyMatrix(std::string filename)
 	{
 
 	}
@@ -79,7 +79,7 @@ namespace TSP
 	}
 	template<typename Cost>
 	void TSP::SymmetricAdjacencyMatrix<Cost>::AddEdge(uint source, uint destination, Cost weight)
-	{
+	{		
 		if (!IsConnected(source, destination))
 		{
 			adjacency_matrix_[source][destination] = weight;
@@ -132,6 +132,12 @@ namespace TSP
 			}
 			std::cout << std::endl;
 		}
+	}
+
+	template<typename Cost>
+	inline std::vector<std::vector<Cost>> SymmetricAdjacencyMatrix<Cost>::GetMatrix()
+	{
+		return adjacency_matrix_;
 	}
 
 	template<typename Cost>

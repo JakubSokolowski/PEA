@@ -34,7 +34,7 @@ namespace TSP
 		GraphRepresentation(std::vector<Vertex> &coordinates) {};		
 		virtual ~GraphRepresentation() {};
 
-	    virtual void AddEdge(uint source, uint destination, Cost cost) = 0;
+	    virtual void AddEdge(uint source, uint destination, Cost cost_) = 0;
 
 		virtual const bool IsConnected(uint source, uint destination) = 0;
 		virtual const Cost GetWeight(uint source, uint destination) = 0;
