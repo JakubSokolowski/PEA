@@ -26,7 +26,11 @@ namespace TSPTests
 				{ 9,   5,   8,   INF, 6 },
 				{ 7,   6,   9,   6,  INF }
 			};
-			
+
+			auto graph = SymmetricAdjacencyMatrix<int>(matrix);
+			auto solver = BB<int>(graph);
+			auto result = solver.Solve(graph);
+			Assert::AreEqual(34, result.distance_);
 		}
 
 	};

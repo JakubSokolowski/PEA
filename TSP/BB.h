@@ -1,7 +1,6 @@
 #pragma once
 #include "Heuristic.h"
 
-#define DEBUG
 #include <vector>
 #include <deque>
 #include <stack>
@@ -42,7 +41,6 @@ namespace TSP
 		Cost infinity_ = std::numeric_limits<Cost>::max();
 		deque<Node<Cost>> tree_;
 		vector<uint> current_tour_;
-
 		BBMatrix<Cost>  matrix_;
 
 		bool is_optimal_ = false;
@@ -79,7 +77,7 @@ namespace TSP
 		// iterate till root
 		while (index !=0 ) 
 		{
-			if (!tree_[index].included_)			
+			if (tree_[index].included_ == false)			
 				paths.push_back(tree_[index].edge_);
 			index = tree_[index].parent_;
 		}
@@ -229,7 +227,7 @@ namespace TSP
 
 			/* Until it ends up with a 2x2 matrix (3x3 du to the indexes storage)
 			* and until the current node is lower than the reference value */
-			while (m.row_count_ > 3 && tree_[id].cost_ < reference_)
+			while (m.row_count_ > 2 && tree_[id].cost_ < reference_)
 			{
 
 #ifdef DEBUG
@@ -267,7 +265,7 @@ namespace TSP
 			}
 
 			// Update of the best tour and the reference value
-			if (m.Size() == 3) 
+			if (m.Size() == 2) 
 			{
 				if (normalNode.cost_ < reference_)
 				{
