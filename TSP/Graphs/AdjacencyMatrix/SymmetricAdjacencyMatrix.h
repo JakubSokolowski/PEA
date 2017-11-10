@@ -4,8 +4,7 @@
 #ifndef TSP_SYMMETRIC_ADJACENCY_MATRIX
 #define TSP_SYMMETRIC_ADJACENCY_MATRIX
 
-
-#include "Graphs/GraphRepresentation"
+#include "Graphs/GraphRepresentation.h"
 #include <iomanip>
 #include <iostream>
 
