@@ -37,6 +37,9 @@
     <Filter Include="Benchmarks\TSPLIB Data\Asymmetric">
       <UniqueIdentifier>{6c5e144b-8b39-448f-a265-b5648c40bcbe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphs\NewFilter1">
+      <UniqueIdentifier>{71e42317-9907-4508-adbe-7ef5f7e2dd15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -84,9 +87,6 @@
     <ClInclude Include="AsymmetricAdjacencyMatrix.h">
       <Filter>Graphs\AdjacencyMatrix</Filter>
     </ClInclude>
-    <ClInclude Include="PartialSolution.h">
-      <Filter>Solvers\Branch and Bound</Filter>
-    </ClInclude>
     <ClInclude Include="BranchAndBound.h">
       <Filter>Solvers\Branch and Bound</Filter>
     </ClInclude>
@@ -95,9 +95,6 @@
     </ClInclude>
     <ClInclude Include="GraphRepresentation.h">
       <Filter>Graphs</Filter>
-    </ClInclude>
-    <ClInclude Include="HeldKarp.h">
-      <Filter>Solvers</Filter>
     </ClInclude>
     <ClInclude Include="Solution.h">
       <Filter>Solvers</Filter>
@@ -110,6 +107,12 @@
     </ClInclude>
     <ClInclude Include="PerformanceTests.h">
       <Filter>Benchmarks</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphs\AdjacencyMatrix\AsymmetricAdjacencyMatrix.h">
+      <Filter>Graphs</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphs\AdjacencyMatrix\SymmetricAdjacencyMatrix.h">
+      <Filter>Graphs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

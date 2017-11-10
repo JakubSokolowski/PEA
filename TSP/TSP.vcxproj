@@ -205,12 +205,12 @@
     <ClInclude Include="AsymmetricAdjacencyMatrix.h" />
     <ClInclude Include="GraphDataParser.h" />
     <ClInclude Include="GraphRepresentation.h" />
-    <ClInclude Include="HeldKarp.h" />
+    <ClInclude Include="Graphs\AdjacencyMatrix\AsymmetricAdjacencyMatrix.h" />
+    <ClInclude Include="Graphs\AdjacencyMatrix\SymmetricAdjacencyMatrix.h" />
     <ClInclude Include="PerformanceTests.h" />
     <ClInclude Include="Solver.h" />
     <ClInclude Include="BranchAndBound.h" />
     <ClInclude Include="LittleMatrix.h" />
-    <ClInclude Include="PartialSolution.h" />
     <ClInclude Include="Solution.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SymmetricAdjacencyMatrix.h" />
