@@ -37,9 +37,6 @@
     <Filter Include="Benchmarks\TSPLIB Data\Asymmetric">
       <UniqueIdentifier>{6c5e144b-8b39-448f-a265-b5648c40bcbe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphs\NewFilter1">
-      <UniqueIdentifier>{71e42317-9907-4508-adbe-7ef5f7e2dd15}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

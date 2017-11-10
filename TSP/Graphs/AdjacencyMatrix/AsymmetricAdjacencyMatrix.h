@@ -3,7 +3,6 @@
 #ifndef TSP_ASYMMETRIC_ADJACENCY_MATRIX
 #define TSP_ASYMMETRIC_ADJACENCY_MATRIX
 
-
 #include "SymmetricAdjacencyMatrix.h"
 
 namespace TSP

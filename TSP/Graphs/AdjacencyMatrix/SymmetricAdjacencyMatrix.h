@@ -1,10 +1,13 @@
 #pragma once
-#include "GraphRepresentation.h"
-#include <iomanip>
-#include <iostream>
+
 
 #ifndef TSP_SYMMETRIC_ADJACENCY_MATRIX
 #define TSP_SYMMETRIC_ADJACENCY_MATRIX
+
+
+#include "Graphs/GraphRepresentation"
+#include <iomanip>
+#include <iostream>
 
 #define INF INT_MAX
 
