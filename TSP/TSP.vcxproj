@@ -189,17 +189,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Text Include="AS10.txt" />
+    <Text Include="AS17.txt" />
+    <Text Include="AS29.txt" />
+    <Text Include="AS33.txt" />
+    <Text Include="AS38.txt" />
+    <Text Include="AS40.txt" />
+    <Text Include="AS44.txt" />
     <Text Include="ReadMe.txt" />
+    <Text Include="S17.txt" />
+    <Text Include="S26.txt" />
+    <Text Include="S29.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AsymmetricAdjacencyMatrix.h" />
-    <ClInclude Include="BB.h" />
-    <ClInclude Include="BBMatrix.h" />
-    <ClInclude Include="BranchAndBound.h" />
     <ClInclude Include="GraphDataParser.h" />
     <ClInclude Include="GraphRepresentation.h" />
     <ClInclude Include="HeldKarp.h" />
-    <ClInclude Include="Heuristic.h" />
+    <ClInclude Include="PerformanceTests.h" />
+    <ClInclude Include="Solver.h" />
+    <ClInclude Include="BranchAndBound.h" />
+    <ClInclude Include="LittleMatrix.h" />
     <ClInclude Include="PartialSolution.h" />
     <ClInclude Include="Solution.h" />
     <ClInclude Include="stdafx.h" />

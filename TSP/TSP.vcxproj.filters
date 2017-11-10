@@ -13,21 +13,63 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Graphs">
-      <UniqueIdentifier>{8b1b46ee-f51d-4a2b-b4e1-558019aa6d77}</UniqueIdentifier>
+    <Filter Include="Solvers">
+      <UniqueIdentifier>{3f8ec68d-5afa-40d2-aad6-96db18aa6326}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Solvers">
-      <UniqueIdentifier>{e272bd39-2b13-4943-b0fb-77c92db07231}</UniqueIdentifier>
+    <Filter Include="Solvers\Branch and Bound">
+      <UniqueIdentifier>{2d455d60-cb87-4d72-a06c-e222cb8c563e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Graphs\AdjacencyMatrix">
+    <Filter Include="Graphs">
+      <UniqueIdentifier>{2961be69-eaa6-4083-97da-7f50812cf6a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphs\AdjacencyMatrix">
       <UniqueIdentifier>{1eb5300d-7248-4f11-ab83-5e846622299f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Solvers\Branch and Bound">
-      <UniqueIdentifier>{2d455d60-cb87-4d72-a06c-e222cb8c563e}</UniqueIdentifier>
+    <Filter Include="Benchmarks">
+      <UniqueIdentifier>{2cc05a74-b33c-42e8-8ad8-346292ade968}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Benchmarks\TSPLIB Data">
+      <UniqueIdentifier>{e8c9b978-fe9c-4d85-91ae-e30b5f537b58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Benchmarks\TSPLIB Data\Symmetric">
+      <UniqueIdentifier>{1305b2dd-2f04-4f75-8683-a66bcf8143ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Benchmarks\TSPLIB Data\Asymmetric">
+      <UniqueIdentifier>{6c5e144b-8b39-448f-a265-b5648c40bcbe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+    <Text Include="S29.txt">
+      <Filter>Benchmarks\TSPLIB Data\Symmetric</Filter>
+    </Text>
+    <Text Include="S26.txt">
+      <Filter>Benchmarks\TSPLIB Data\Symmetric</Filter>
+    </Text>
+    <Text Include="S17.txt">
+      <Filter>Benchmarks\TSPLIB Data\Symmetric</Filter>
+    </Text>
+    <Text Include="AS29.txt">
+      <Filter>Benchmarks\TSPLIB Data\Asymmetric</Filter>
+    </Text>
+    <Text Include="AS33.txt">
+      <Filter>Benchmarks\TSPLIB Data\Asymmetric</Filter>
+    </Text>
+    <Text Include="AS44.txt">
+      <Filter>Benchmarks\TSPLIB Data\Asymmetric</Filter>
+    </Text>
+    <Text Include="AS38.txt">
+      <Filter>Benchmarks\TSPLIB Data\Asymmetric</Filter>
+    </Text>
+    <Text Include="AS40.txt">
+      <Filter>Benchmarks\TSPLIB Data\Asymmetric</Filter>
+    </Text>
+    <Text Include="AS17.txt">
+      <Filter>Benchmarks\TSPLIB Data\Asymmetric</Filter>
+    </Text>
+    <Text Include="AS10.txt">
+      <Filter>Benchmarks\TSPLIB Data\Asymmetric</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -37,37 +79,37 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SymmetricAdjacencyMatrix.h">
-      <Filter>Header Files\Graphs\AdjacencyMatrix</Filter>
+      <Filter>Graphs\AdjacencyMatrix</Filter>
     </ClInclude>
     <ClInclude Include="AsymmetricAdjacencyMatrix.h">
-      <Filter>Header Files\Graphs\AdjacencyMatrix</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphRepresentation.h">
-      <Filter>Header Files\Graphs</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphDataParser.h">
-      <Filter>Header Files\Graphs</Filter>
-    </ClInclude>
-    <ClInclude Include="HeldKarp.h">
-      <Filter>Header Files\Solvers</Filter>
-    </ClInclude>
-    <ClInclude Include="Heuristic.h">
-      <Filter>Header Files\Solvers</Filter>
-    </ClInclude>
-    <ClInclude Include="BranchAndBound.h">
-      <Filter>Header Files\Solvers\Branch and Bound</Filter>
-    </ClInclude>
-    <ClInclude Include="BB.h">
-      <Filter>Header Files\Solvers\Branch and Bound</Filter>
+      <Filter>Graphs\AdjacencyMatrix</Filter>
     </ClInclude>
     <ClInclude Include="PartialSolution.h">
-      <Filter>Header Files\Solvers\Branch and Bound</Filter>
+      <Filter>Solvers\Branch and Bound</Filter>
+    </ClInclude>
+    <ClInclude Include="BranchAndBound.h">
+      <Filter>Solvers\Branch and Bound</Filter>
+    </ClInclude>
+    <ClInclude Include="LittleMatrix.h">
+      <Filter>Solvers\Branch and Bound</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphRepresentation.h">
+      <Filter>Graphs</Filter>
+    </ClInclude>
+    <ClInclude Include="HeldKarp.h">
+      <Filter>Solvers</Filter>
     </ClInclude>
     <ClInclude Include="Solution.h">
-      <Filter>Header Files\Solvers</Filter>
+      <Filter>Solvers</Filter>
     </ClInclude>
-    <ClInclude Include="BBMatrix.h">
-      <Filter>Header Files\Solvers\Branch and Bound</Filter>
+    <ClInclude Include="Solver.h">
+      <Filter>Solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphDataParser.h">
+      <Filter>Graphs</Filter>
+    </ClInclude>
+    <ClInclude Include="PerformanceTests.h">
+      <Filter>Benchmarks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
