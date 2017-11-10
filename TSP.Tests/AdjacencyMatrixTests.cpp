@@ -72,6 +72,7 @@ namespace TSPTests
 			Assert::AreEqual(INT_MAX, Graph.GetWeight(3, 0));
 		}
 
+
 		
 	};
 }

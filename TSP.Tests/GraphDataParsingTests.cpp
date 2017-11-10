@@ -17,13 +17,13 @@ namespace TSPTests
 	public:
 		TEST_METHOD(ParseFromCoordinatesFileSymmetricMatrix)
 		{
-			auto Graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Symmetric Instances\\51.txt");
+			auto Graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Symmetric Instances\\51.txt");
 			Assert::AreEqual(uint(51), Graph.GetNumOfVertices());
 			Assert::AreEqual(uint(2550), Graph.GetNumOfEdges());		
 		}
 		TEST_METHOD(ParseFromCoordinatesFileAsymmetricMatrix)
 		{
-			auto Graph = ParseGraphFile<AsymmetricAdjacencyMatrix<int>>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Symmetric Instances\\51.txt");
+			auto Graph = ParseGraphFile<AsymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Symmetric Instances\\51.txt");
 			Assert::AreEqual(uint(51), Graph.GetNumOfVertices());
 			Assert::AreEqual(uint(2550), Graph.GetNumOfEdges());
 		}

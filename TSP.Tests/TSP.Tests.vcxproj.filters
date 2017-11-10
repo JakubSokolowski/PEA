@@ -29,16 +29,13 @@
     <ClCompile Include="AdjacencyMatrixTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BranchAndBoundTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GraphDataParsingTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BBMatrixTests.cpp">
+    <ClCompile Include="BranchAndBoundLittleAlgorithmTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BranchAndBoundLittleAlgorithmTests.cpp">
+    <ClCompile Include="LittleMatrixTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
