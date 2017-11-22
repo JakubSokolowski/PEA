@@ -1,10 +1,9 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include "..\TSP\SymmetricAdjacencyMatrix.h"
-#include "..\TSP\AsymmetricAdjacencyMatrix.h"
-#include "..\TSP\GraphDataParser.h"
-#include "..\TSP\HeldKarp.h"
-#include "..\TSP\BranchAndBound.h"
+#include "..\TSP\Graphs\AdjacencyMatrix\SymmetricAdjacencyMatrix.h"
+#include "..\TSP\Graphs\AdjacencyMatrix\AsymmetricAdjacencyMatrix.h"
+#include "..\TSP\Graphs\GraphDataParser.h"
+#include "..\TSP\Solvers\BranchAndBound\BranchAndBound.h"
 #include <limits>
 
 

@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include "..\TSP\SymmetricAdjacencyMatrix.h"
+#include "..\TSP\Graphs\AdjacencyMatrix\SymmetricAdjacencyMatrix.h"
 #include <limits>
-#include "..\TSP\BranchAndBound.h"
+#include "..\TSP\Solvers\BranchAndBound\BranchAndBound.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace TSP;
