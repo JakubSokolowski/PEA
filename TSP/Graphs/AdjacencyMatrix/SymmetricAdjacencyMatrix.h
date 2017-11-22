@@ -4,9 +4,9 @@
 #ifndef TSP_SYMMETRIC_ADJACENCY_MATRIX
 #define TSP_SYMMETRIC_ADJACENCY_MATRIX
 
-#include "Graphs/GraphRepresentation.h"
 #include <iomanip>
 #include <iostream>
+#include "..\GraphRepresentation.h"
 
 #define INF INT_MAX
 
@@ -57,11 +57,13 @@ namespace TSP
 	{
 		edges_num_ = 0;
 	}
+
 	template<typename Cost>
 	SymmetricAdjacencyMatrix<Cost>::SymmetricAdjacencyMatrix(std::string filename)
 	{
 
 	}
+
 	template<typename Cost>
 	TSP::SymmetricAdjacencyMatrix<Cost>::SymmetricAdjacencyMatrix(std::vector<Vertex> &coordinates)
 	{
@@ -69,6 +71,7 @@ namespace TSP
 		adjacency_matrix_ = AllocateSquareMatrix(coordinates.size());
 		ConvertCoordinatesToWeights(coordinates);
 	}
+
 	template<typename Cost>
 	TSP::SymmetricAdjacencyMatrix<Cost>::SymmetricAdjacencyMatrix(std::vector<std::vector<Cost>> matrix)
 	{
@@ -79,6 +82,7 @@ namespace TSP
 	SymmetricAdjacencyMatrix<Cost>::~SymmetricAdjacencyMatrix()
 	{
 	}
+
 	template<typename Cost>
 	void TSP::SymmetricAdjacencyMatrix<Cost>::AddEdge(uint source, uint destination, Cost weight)
 	{		

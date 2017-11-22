@@ -2,10 +2,10 @@
 
 #include <fstream>
 #include <type_traits>
-#include "GraphRepresentation.h"
 #include <iterator>
 #include <limits>
 #include <sstream>
+#include "GraphRepresentation.h"
 
 
 namespace TSP

@@ -19,56 +19,80 @@
     <Filter Include="Solvers\Branch and Bound">
       <UniqueIdentifier>{2d455d60-cb87-4d72-a06c-e222cb8c563e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphs">
-      <UniqueIdentifier>{2961be69-eaa6-4083-97da-7f50812cf6a8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphs\AdjacencyMatrix">
-      <UniqueIdentifier>{1eb5300d-7248-4f11-ab83-5e846622299f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Benchmarks">
       <UniqueIdentifier>{2cc05a74-b33c-42e8-8ad8-346292ade968}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Benchmarks\TSPLIB Data">
-      <UniqueIdentifier>{e8c9b978-fe9c-4d85-91ae-e30b5f537b58}</UniqueIdentifier>
+    <Filter Include="Benchmarks\ProblemData">
+      <UniqueIdentifier>{f4f46de4-f73c-4be5-95bc-00bf10f90bab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Benchmarks\TSPLIB Data\Symmetric">
-      <UniqueIdentifier>{1305b2dd-2f04-4f75-8683-a66bcf8143ad}</UniqueIdentifier>
+    <Filter Include="Benchmarks\ProblemData\TSPLIB">
+      <UniqueIdentifier>{5bb7d6a0-e53c-4962-a624-d3b34ff8aef6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Benchmarks\TSPLIB Data\Asymmetric">
-      <UniqueIdentifier>{6c5e144b-8b39-448f-a265-b5648c40bcbe}</UniqueIdentifier>
+    <Filter Include="Benchmarks\ProblemData\TSPLIB\Symmetric">
+      <UniqueIdentifier>{1759821e-a032-4fe6-bc71-b0b9e2772e59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Benchmarks\ProblemData\TSPLIB\Asymmetric">
+      <UniqueIdentifier>{aa67fe6b-540d-4bb9-b8d3-7586c702374f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Benchmarks\ProblemData\Random">
+      <UniqueIdentifier>{7a314389-7cce-41f0-a0ad-8db0e274253e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Benchmarks\Results">
+      <UniqueIdentifier>{4ba5c2a6-ac4e-4b67-afb0-97f63db826c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Benchmarks\Results\Symmetric">
+      <UniqueIdentifier>{812673ed-ebf5-497e-a39f-d758ca6bd623}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Benchmarks\Results\Asymmetric">
+      <UniqueIdentifier>{fe79aca9-6748-429f-9a37-3fd45f226d48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphs">
+      <UniqueIdentifier>{70b6a520-3f52-4cdc-8f9d-980181ee1644}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphs\AdjacencyMatrix">
+      <UniqueIdentifier>{cea6be61-6d27-4b4f-98cf-abdb394a85c9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
-    <Text Include="S29.txt">
-      <Filter>Benchmarks\TSPLIB Data\Symmetric</Filter>
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Symmetric\S10.txt">
+      <Filter>Benchmarks\ProblemData\TSPLIB\Symmetric</Filter>
     </Text>
-    <Text Include="S26.txt">
-      <Filter>Benchmarks\TSPLIB Data\Symmetric</Filter>
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Symmetric\S17.txt">
+      <Filter>Benchmarks\ProblemData\TSPLIB\Symmetric</Filter>
     </Text>
-    <Text Include="S17.txt">
-      <Filter>Benchmarks\TSPLIB Data\Symmetric</Filter>
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Symmetric\S26.txt">
+      <Filter>Benchmarks\ProblemData\TSPLIB\Symmetric</Filter>
     </Text>
-    <Text Include="AS29.txt">
-      <Filter>Benchmarks\TSPLIB Data\Asymmetric</Filter>
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Symmetric\S29.txt">
+      <Filter>Benchmarks\ProblemData\TSPLIB\Symmetric</Filter>
     </Text>
-    <Text Include="AS33.txt">
-      <Filter>Benchmarks\TSPLIB Data\Asymmetric</Filter>
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Asymmetric\AS10.txt">
+      <Filter>Benchmarks\ProblemData\TSPLIB\Asymmetric</Filter>
     </Text>
-    <Text Include="AS44.txt">
-      <Filter>Benchmarks\TSPLIB Data\Asymmetric</Filter>
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Asymmetric\AS17.txt">
+      <Filter>Benchmarks\ProblemData\TSPLIB\Asymmetric</Filter>
     </Text>
-    <Text Include="AS38.txt">
-      <Filter>Benchmarks\TSPLIB Data\Asymmetric</Filter>
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Asymmetric\AS29.txt">
+      <Filter>Benchmarks\ProblemData\TSPLIB\Asymmetric</Filter>
     </Text>
-    <Text Include="AS40.txt">
-      <Filter>Benchmarks\TSPLIB Data\Asymmetric</Filter>
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Asymmetric\AS33.txt">
+      <Filter>Benchmarks\ProblemData\TSPLIB\Asymmetric</Filter>
     </Text>
-    <Text Include="AS17.txt">
-      <Filter>Benchmarks\TSPLIB Data\Asymmetric</Filter>
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Asymmetric\AS38.txt">
+      <Filter>Benchmarks\ProblemData\TSPLIB\Asymmetric</Filter>
     </Text>
-    <Text Include="AS10.txt">
-      <Filter>Benchmarks\TSPLIB Data\Asymmetric</Filter>
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Asymmetric\AS40.txt">
+      <Filter>Benchmarks\ProblemData\TSPLIB\Asymmetric</Filter>
+    </Text>
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Asymmetric\AS44.txt">
+      <Filter>Benchmarks\ProblemData\TSPLIB\Asymmetric</Filter>
+    </Text>
+    <Text Include="Benchmarks\Results\Symmetric\Symmetric100.txt">
+      <Filter>Benchmarks\Results\Symmetric</Filter>
+    </Text>
+    <Text Include="Benchmarks\Results\Asymmetric\Asymmetric100.txt">
+      <Filter>Benchmarks\Results\Asymmetric</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
@@ -78,38 +102,35 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SymmetricAdjacencyMatrix.h">
-      <Filter>Graphs\AdjacencyMatrix</Filter>
-    </ClInclude>
-    <ClInclude Include="AsymmetricAdjacencyMatrix.h">
-      <Filter>Graphs\AdjacencyMatrix</Filter>
-    </ClInclude>
-    <ClInclude Include="BranchAndBound.h">
-      <Filter>Solvers\Branch and Bound</Filter>
-    </ClInclude>
-    <ClInclude Include="LittleMatrix.h">
-      <Filter>Solvers\Branch and Bound</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphRepresentation.h">
+    <ClInclude Include="Graphs\GraphDataParser.h">
       <Filter>Graphs</Filter>
     </ClInclude>
-    <ClInclude Include="Solution.h">
-      <Filter>Solvers</Filter>
-    </ClInclude>
-    <ClInclude Include="Solver.h">
-      <Filter>Solvers</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphDataParser.h">
+    <ClInclude Include="Graphs\GraphRepresentation.h">
       <Filter>Graphs</Filter>
-    </ClInclude>
-    <ClInclude Include="PerformanceTests.h">
-      <Filter>Benchmarks</Filter>
     </ClInclude>
     <ClInclude Include="Graphs\AdjacencyMatrix\AsymmetricAdjacencyMatrix.h">
-      <Filter>Graphs</Filter>
+      <Filter>Graphs\AdjacencyMatrix</Filter>
     </ClInclude>
     <ClInclude Include="Graphs\AdjacencyMatrix\SymmetricAdjacencyMatrix.h">
-      <Filter>Graphs</Filter>
+      <Filter>Graphs\AdjacencyMatrix</Filter>
+    </ClInclude>
+    <ClInclude Include="Solvers\Problem.h">
+      <Filter>Solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="Solvers\Solution.h">
+      <Filter>Solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="Solvers\Solver.h">
+      <Filter>Solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="Solvers\BranchAndBound\BranchAndBound.h">
+      <Filter>Solvers\Branch and Bound</Filter>
+    </ClInclude>
+    <ClInclude Include="Solvers\BranchAndBound\LittleMatrix.h">
+      <Filter>Solvers\Branch and Bound</Filter>
+    </ClInclude>
+    <ClInclude Include="Benchmarks\PerformanceTests.h">
+      <Filter>Benchmarks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

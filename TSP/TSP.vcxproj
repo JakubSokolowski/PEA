@@ -189,31 +189,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="AS10.txt" />
-    <Text Include="AS17.txt" />
-    <Text Include="AS29.txt" />
-    <Text Include="AS33.txt" />
-    <Text Include="AS38.txt" />
-    <Text Include="AS40.txt" />
-    <Text Include="AS44.txt" />
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Asymmetric\AS10.txt" />
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Asymmetric\AS17.txt" />
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Asymmetric\AS29.txt" />
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Asymmetric\AS33.txt" />
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Asymmetric\AS38.txt" />
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Asymmetric\AS40.txt" />
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Asymmetric\AS44.txt" />
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Symmetric\S10.txt" />
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Symmetric\S17.txt" />
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Symmetric\S26.txt" />
+    <Text Include="Benchmarks\ProblemData\TSPLIB\Symmetric\S29.txt" />
+    <Text Include="Benchmarks\Results\Asymmetric\Asymmetric100.txt" />
+    <Text Include="Benchmarks\Results\Symmetric\Symmetric100.txt" />
     <Text Include="ReadMe.txt" />
-    <Text Include="S17.txt" />
-    <Text Include="S26.txt" />
-    <Text Include="S29.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AsymmetricAdjacencyMatrix.h" />
-    <ClInclude Include="GraphDataParser.h" />
-    <ClInclude Include="GraphRepresentation.h" />
+    <ClInclude Include="Benchmarks\PerformanceTests.h" />
     <ClInclude Include="Graphs\AdjacencyMatrix\AsymmetricAdjacencyMatrix.h" />
     <ClInclude Include="Graphs\AdjacencyMatrix\SymmetricAdjacencyMatrix.h" />
-    <ClInclude Include="PerformanceTests.h" />
-    <ClInclude Include="Solver.h" />
-    <ClInclude Include="BranchAndBound.h" />
-    <ClInclude Include="LittleMatrix.h" />
-    <ClInclude Include="Solution.h" />
+    <ClInclude Include="Graphs\GraphDataParser.h" />
+    <ClInclude Include="Graphs\GraphRepresentation.h" />
+    <ClInclude Include="Solvers\BranchAndBound\BranchAndBound.h" />
+    <ClInclude Include="Solvers\BranchAndBound\LittleMatrix.h" />
+    <ClInclude Include="Solvers\Problem.h" />
+    <ClInclude Include="Solvers\Solution.h" />
+    <ClInclude Include="Solvers\Solver.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="SymmetricAdjacencyMatrix.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>

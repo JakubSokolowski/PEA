@@ -2,12 +2,13 @@
 //
 
 #include "stdafx.h"
-#include "AsymmetricAdjacencyMatrix.h"
-#include "SymmetricAdjacencyMatrix.h"
-#include "GraphDataParser.h"
-#include "LittleMatrix.h"
-#include "BranchAndBound.h"
-#include "PerformanceTests.h"
+#include "Graphs\AdjacencyMatrix\AsymmetricAdjacencyMatrix.h"
+#include "Graphs\AdjacencyMatrix\SymmetricAdjacencyMatrix.h"
+#include "Graphs\GraphDataParser.h"
+#include "Solvers\BranchAndBound\LittleMatrix.h"
+#include "Solvers\BranchAndBound\BranchAndBound.h"
+#include "Benchmarks\PerformanceTests.h"
+#include "Solvers\Solution.h"
 #include <fstream>
 #include <conio.h>
 using namespace TSP;
@@ -28,7 +29,7 @@ void StartMenu()
 		cout << "Travelling salesman problem using Branch and Bound method" << endl;
 		cout << "1. Solve symmetric instance" << endl;
 		cout << "2. Solve asymmetric instance" << endl;
-		cout << "3. Show last resul" << endl;
+		cout << "3. Show last result" << endl;
 		cout << "O. Exit" << endl;
 
 		option = _getche();
@@ -86,7 +87,7 @@ void StartMenu()
 			default:
 				break;
 		}
-	} while (option != 0);
+	} while (option != '0');
 }
 
 int main()

@@ -4,12 +4,13 @@
 #define TSP_BRANCH_AND_BOUND
 
 #include "LittleMatrix.h"
+#include "../Solver.h"
 #include <iostream>
 #include <limits>
 #include <deque>
 #include <stack>
 #include <utility>
-#include "Solver.h"
+
 
 using std::stack;
 using std::deque;

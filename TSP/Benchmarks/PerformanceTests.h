@@ -7,9 +7,9 @@
 #define NOMINMAX
 
 #include <Windows.h>
-#include "SymmetricAdjacencyMatrix.h"
-#include "GraphDataParser.h"
-#include "BranchAndBound.h"
+#include "../Graphs/AdjacencyMatrix/SymmetricAdjacencyMatrix.h"
+#include "../Graphs/GraphDataParser.h"
+#include "../Solvers/BranchAndBound/BranchAndBound.h"
 #include <vector>
 #include <string>
 #include <random>

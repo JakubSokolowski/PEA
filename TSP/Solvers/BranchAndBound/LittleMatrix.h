@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <limits>
-#include "GraphRepresentation.h"
+#include "../../Graphs/GraphRepresentation.h"
 
 namespace TSP
 {

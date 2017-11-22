@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GraphRepresentation.h"
+#include "..\Graphs\GraphRepresentation.h"
 #include "Solution.h"
 
 namespace TSP
