@@ -52,6 +52,9 @@
     <Filter Include="Graphs\AdjacencyMatrix">
       <UniqueIdentifier>{cea6be61-6d27-4b4f-98cf-abdb394a85c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Solvers\Tabu Search">
+      <UniqueIdentifier>{192c7307-2c2f-4116-b737-cfd312136a5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -131,6 +134,15 @@
     </ClInclude>
     <ClInclude Include="Benchmarks\PerformanceTests.h">
       <Filter>Benchmarks</Filter>
+    </ClInclude>
+    <ClInclude Include="Solvers\TabuSearch\TabuSearch.h">
+      <Filter>Solvers\Tabu Search</Filter>
+    </ClInclude>
+    <ClInclude Include="Solvers\TabuSearch\TabuMove.h">
+      <Filter>Solvers\Tabu Search</Filter>
+    </ClInclude>
+    <ClInclude Include="Solvers\TabuSearch\Move.h">
+      <Filter>Solvers\Tabu Search</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
