@@ -8,6 +8,7 @@
 #include <math.h>
 #include <limits>
 
+
 namespace TSP
 {
 	using uint = unsigned int;
@@ -40,6 +41,7 @@ namespace TSP
 		virtual const uint GetNumOfVertices() = 0;		
 		virtual const std::string GetGraphInfo() = 0;
 		virtual const void Print() = 0;
+		virtual const Cost GetTourCost(const std::vector<Cost> &tour);
 
 	protected:
 
@@ -75,7 +77,7 @@ namespace TSP
 		}
 	}
 
-	// Returns the euclidean distance (straight line) beetween two Vertices. The result is casted on
+	// Returns the euclidean total_cost (straight line) beetween two Vertices. The result is casted on
 	// whatever type weight is (presumably int)
 	template <typename Cost>
 	Cost GraphRepresentation<Cost>::GetEuclideanDistance(Vertex source, Vertex destination)
@@ -83,6 +85,16 @@ namespace TSP
 		int X = source.x_ - destination.x_;
 		int Y = source.y_ - destination.y_;
 		return (Cost)(sqrt(pow(X, 2) + pow(Y, 2)));
+	}
+
+	
+	template<typename Cost>
+	inline const Cost GraphRepresentation<Cost>::GetTourCost(const std::vector<Cost>& tour)
+	{
+		Cost result{};
+		for (uint i = 0; i < GetNumOfVertices(); ++i)
+			result += GetWeight(tour[i] - 1, tour[i + 1] - 1);
+		return result;
 	}
 }
 

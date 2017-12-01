@@ -36,9 +36,9 @@ namespace TSPTests
 			auto graph = SymmetricAdjacencyMatrix<int>(matrix);
 			auto solver = BranchAndBound<int>();
 			auto result = solver.Solve(graph);
-			Assert::AreEqual(34, result.distance_);
+			Assert::AreEqual(34, result.total_cost);
 			auto expected_path = std::vector<int>{ 1,3,4,2,5,1 };
-			auto actual_path = result.path_;
+			auto actual_path = result.tour;
 			for (uint i = 0; i < actual_path.size(); i++)
 				Assert::AreEqual(expected_path[i], actual_path[i]);
 		}
@@ -50,7 +50,7 @@ namespace TSPTests
 			auto Graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Symmetric Instances\\26.txt");
 			auto solver = BranchAndBound<int>();
 			auto result = solver.Solve(Graph);
-			Assert::AreEqual(937, result.distance_);
+			Assert::AreEqual(937, result.total_cost);
 		}
 */
 		TEST_METHOD(BranchAndBoundSymmetric5Int)
@@ -70,10 +70,10 @@ namespace TSPTests
 			BranchAndBound<int> solver = BranchAndBound<int>();
 			auto Graph = SymmetricAdjacencyMatrix<int>(matrix);
 			auto result = solver.Solve(Graph);
-			Assert::AreEqual(34, result.distance_);
+			Assert::AreEqual(34, result.total_cost);
 
 			auto expected_path = std::vector<int>{ 1,3,4,2,5,1 };
-			auto actual_path = result.path_;
+			auto actual_path = result.tour;
 			for (uint i = 0; i < actual_path.size(); i++)
 				Assert::AreEqual(expected_path[i], actual_path[i]);
 
@@ -89,7 +89,7 @@ namespace TSPTests
 
 			auto solver2 = BranchAndBound<int>();
 			auto result2 = solver2.Solve(Graph2);
-			Assert::AreEqual(97, result2.distance_);
+			Assert::AreEqual(97, result2.total_cost);
 		}
 		//TEST_METHOD(BranchAndBoundSymmetric5Double)
 		//{
@@ -110,7 +110,7 @@ namespace TSPTests
 		//	BranchAndBound<double> solver = BranchAndBound<double>();
 		//	auto Graph = SymmetricAdjacencyMatrix<double>(matrix);
 		//	auto result = solver.Solve(Graph);
-		//	Assert::AreEqual(34.0, result.distance_);
+		//	Assert::AreEqual(34.0, result.total_cost);
 
 		//	// 2nd instance
 
@@ -124,7 +124,7 @@ namespace TSPTests
 
 		//	auto solver2 = BranchAndBound<double>();
 		//	auto result2 = solver2.Solve(Graph2);
-		//	Assert::AreEqual(97.0, result2.distance_);
+		//	Assert::AreEqual(97.0, result2.total_cost);
 		//}
 
 		TEST_METHOD(BranchAndBoundAsymmetic3Int)
@@ -139,11 +139,11 @@ namespace TSPTests
 			BranchAndBound<int> solver = BranchAndBound<int>();
 			auto Graph = SymmetricAdjacencyMatrix<int>(matrix);
 			auto result = solver.Solve(Graph);
-			Assert::AreEqual(11, result.distance_);
+			Assert::AreEqual(11, result.total_cost);
 
 
 			auto expected_path = std::vector<int>{ 1,3,2,1 };
-			auto actual_path = result.path_;
+			auto actual_path = result.tour;
 			for (uint i = 0; i < actual_path.size(); i++)
 				Assert::AreEqual(expected_path[i], actual_path[i]);
 		}
@@ -163,25 +163,25 @@ namespace TSPTests
 			BranchAndBound<int> solver = BranchAndBound<int>();
 			auto Graph = SymmetricAdjacencyMatrix<int>(matrix);
 			auto result = solver.Solve(Graph);
-			Assert::AreEqual(62, result.distance_);			
+			Assert::AreEqual(62, result.total_cost);			
 		}
 
 
 		TEST_METHOD(BranchAndBoundAsymmetic10Int)
 		{	
-			auto Graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Asymmetric Instances\\10.txt");
+			auto Graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Asymmetric\\AS10.txt");
 			BranchAndBound<int> solver = BranchAndBound<int>();
 			auto result = solver.Solve(Graph);
-			Assert::AreEqual(10, result.distance_);		
+			Assert::AreEqual(10, result.total_cost);		
 		}
 		TEST_METHOD(BranchAndBoundAsymmetic17Int)
 		{
 			WriteAsymmetricMatrix(GenerateAsymmetricMatrix(17, 100));
 
-			auto Graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Asymmetric Instances\\17.txt");
+			auto Graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Asymmetric\\AS17.txt");
 			BranchAndBound<int> solver = BranchAndBound<int>();
 			auto result = solver.Solve(Graph);
-			Assert::AreEqual(139, result.distance_);
+			Assert::AreEqual(139, result.total_cost);
 		}
 
 

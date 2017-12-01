@@ -15,16 +15,16 @@ namespace TSP
 	{
 	public:
 		Solution();
-		Solution(Cost distance);
-		Solution(Cost distance, std::vector<int> path);
+		Solution(Cost total_cost);
+		Solution(Cost total_cost, std::vector<int> path);
 		Solution(const Solution<Cost> & other);
 
 		Solution<Cost> operator = (Solution<Cost> & other);
 		void PrintTour();
 		~Solution();
 
-		Cost distance_ = std::numeric_limits<Cost>::max();
-		std::vector<int> path_;
+		Cost total_cost = std::numeric_limits<Cost>::max();
+		std::vector<int> tour;
 	};
 
 	template<typename Cost>
@@ -35,36 +35,36 @@ namespace TSP
 	template<typename Cost>
 	TSP::Solution<Cost>::Solution(Cost distance)
 	{
-		distance_ = distance;
+		total_cost = distance;
 	}
 
 	template<typename Cost>
 	TSP::Solution<Cost>::Solution(Cost distance, std::vector<int> path)
 	{
-		distance_ = distance;
-		path_ = path;
+		total_cost = distance;
+		tour = path;
 	}
 
 	template<typename Cost>
 	inline Solution<Cost>::Solution(const Solution<Cost> & other)
 	{
-		distance_ = other.distance_;
-		path_ = other.path_;
+		total_cost = other.total_cost;
+		tour = other.tour;
 	}
 
 
 	template<typename Cost>
 	inline Solution<Cost> Solution<Cost>::operator=(Solution<Cost>& other)
 	{
-		distance_ = other.distance_;
-		path_ = other.path_;
+		total_cost = other.total_cost;
+		tour = other.tour;
 		return *this;
 	}
 
 	template<typename Cost>
 	inline void Solution<Cost>::PrintTour()
 	{
-		for (auto node : path_)
+		for (auto node : tour)
 		{
 			std::cout << node << " ";
 		}

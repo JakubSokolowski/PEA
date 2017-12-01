@@ -52,7 +52,7 @@ void StartMenu()
 					cout << "\nTime of solving: " << time << " ms. Visited " << visited_nodes << " nodes." << endl;
 					cout << "The optimal tour: " << endl;
 					result.PrintTour();
-					cout << "The total tour distance: " << result.distance_;
+					cout << "The total tour distance: " << result.total_cost;
 				}
 			}break;
 			
@@ -71,7 +71,7 @@ void StartMenu()
 					cout << "\nTime of solving: " << time << " ms. Visited " << visited_nodes << " nodes." << endl;
 					cout << "The optimal tour: " << endl;
 					result.PrintTour();
-					cout << "The total tour distance: " << result.distance_ << endl;
+					cout << "The total tour distance: " << result.total_cost << endl;
 				}
 			}break;
 			case '3':
@@ -79,7 +79,7 @@ void StartMenu()
 				cout << "\nTime of solving: " << time << " ms. Visited " << visited_nodes << " nodes." << endl;
 				cout << "The optimal tour: " << endl;
 				result.PrintTour();
-				cout << "The total tour distance: " << result.distance_ << endl;
+				cout << "The total tour distance: " << result.total_cost << endl;
 				
 			}break;
 			case '0':
