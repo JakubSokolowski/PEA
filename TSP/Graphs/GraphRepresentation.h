@@ -41,7 +41,7 @@ namespace TSP
 		virtual const uint GetNumOfVertices() = 0;		
 		virtual const std::string GetGraphInfo() = 0;
 		virtual const void Print() = 0;
-		virtual const Cost GetTourCost(const std::vector<Cost> &tour);
+		virtual Cost GetTourCost(const std::vector<Cost> &tour);
 
 	protected:
 
@@ -89,7 +89,7 @@ namespace TSP
 
 	
 	template<typename Cost>
-	inline const Cost GraphRepresentation<Cost>::GetTourCost(const std::vector<Cost>& tour)
+	inline Cost GraphRepresentation<Cost>::GetTourCost(const std::vector<Cost>& tour)
 	{
 		Cost result{};
 		for (uint i = 0; i < GetNumOfVertices(); ++i)
