@@ -209,6 +209,7 @@
     <ClCompile Include="LittleMatrixTests.cpp" />
     <ClCompile Include="BranchAndBoundLittleAlgorithmTests.cpp" />
     <ClCompile Include="GraphDataParsingTests.cpp" />
+    <ClCompile Include="MoveTests.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">Create</PrecompiledHeader>
@@ -218,6 +219,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="AdjacencyMatrixTests.cpp" />
+    <ClCompile Include="TabuListTests.cpp" />
     <ClCompile Include="TabuSearchTests.cpp" />
   </ItemGroup>
   <ItemGroup>

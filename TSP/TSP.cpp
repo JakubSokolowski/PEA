@@ -33,59 +33,59 @@ void StartMenu()
 		cout << "O. Exit" << endl;
 
 		option = _getche();
-	
+
 		string filepath;
 		switch (option)
 		{
-			case '1':
+		case '1':
+		{
+			cout << "\nEnter the relative filepath: " << endl;
+			std::getline(std::cin, filepath);
+			if (FileExists(filepath))
 			{
-				cout <<"\nEnter the relative filepath: " << endl;
-				std::getline(std::cin, filepath);
-				if (FileExists(filepath))
-				{
-					auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(filepath);
-					auto solver = BranchAndBound<int>();				
-					StartCounter();
-					result = solver.Solve(graph);
-					time = GetCounter();
-					visited_nodes = solver.VisitedNodesCount();
-					cout << "\nTime of solving: " << time << " ms. Visited " << visited_nodes << " nodes." << endl;
-					cout << "The optimal tour: " << endl;
-					result.PrintTour();
-					cout << "The total tour distance: " << result.total_cost;
-				}
-			}break;
-			
-			case '2':
+				auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(filepath);
+				auto solver = BranchAndBound<int>();
+				StartCounter();
+				result = solver.Solve(graph);
+				time = GetCounter();
+				visited_nodes = solver.VisitedNodesCount();
+				cout << "\nTime of solving: " << time << " ms. Visited " << visited_nodes << " nodes." << endl;
+				cout << "The optimal tour: " << endl;
+				result.PrintTour();
+				cout << "The total tour distance: " << result.total_cost;
+			}
+		}break;
+
+		case '2':
+		{
+			cout << "\nEnter the relative filepath: \n" << endl;
+			std::getline(std::cin, filepath);
+			if (FileExists(filepath))
 			{
-				cout << "\nEnter the relative filepath: \n" << endl;
-				std::getline(std::cin, filepath);
-				if (FileExists(filepath))
-				{
-					auto graph = ParseGraphFile<AsymmetricAdjacencyMatrix<int>, int>(filepath);
-					auto solver = BranchAndBound<int>();			
-					StartCounter();
-					result = solver.Solve(graph);
-					time = GetCounter();
-					visited_nodes = solver.VisitedNodesCount();
-					cout << "\nTime of solving: " << time << " ms. Visited " << visited_nodes << " nodes." << endl;
-					cout << "The optimal tour: " << endl;
-					result.PrintTour();
-					cout << "The total tour distance: " << result.total_cost << endl;
-				}
-			}break;
-			case '3':
-			{	
+				auto graph = ParseGraphFile<AsymmetricAdjacencyMatrix<int>, int>(filepath);
+				auto solver = BranchAndBound<int>();
+				StartCounter();
+				result = solver.Solve(graph);
+				time = GetCounter();
+				visited_nodes = solver.VisitedNodesCount();
 				cout << "\nTime of solving: " << time << " ms. Visited " << visited_nodes << " nodes." << endl;
 				cout << "The optimal tour: " << endl;
 				result.PrintTour();
 				cout << "The total tour distance: " << result.total_cost << endl;
-				
-			}break;
-			case '0':
-				break;
-			default:
-				break;
+			}
+		}break;
+		case '3':
+		{
+			cout << "\nTime of solving: " << time << " ms. Visited " << visited_nodes << " nodes." << endl;
+			cout << "The optimal tour: " << endl;
+			result.PrintTour();
+			cout << "The total tour distance: " << result.total_cost << endl;
+
+		}break;
+		case '0':
+			break;
+		default:
+			break;
 		}
 	} while (option != '0');
 }
@@ -95,5 +95,3 @@ int main()
 	StartMenu();
 	//RunTests(100);
 }
-
-

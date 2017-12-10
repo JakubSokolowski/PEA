@@ -40,7 +40,7 @@ namespace TSPTests
 			auto actual = move->EvaluateMove(solution, swap_params, graph);
 			Assert::AreEqual(expected, actual);
 		}
-		TEST_METHOD(SwapMoveTest)
+		TEST_METHOD(ExecuteSwapTest)
 		{
 			std::vector<std::vector<int>> matrix =
 			{

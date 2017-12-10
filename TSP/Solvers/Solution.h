@@ -64,10 +64,8 @@ namespace TSP
 	template<typename Cost>
 	inline void Solution<Cost>::PrintTour()
 	{
-		for (auto node : tour)
-		{
-			std::cout << node << " ";
-		}
+		for (auto node : tour)		
+			std::cout << node << " ";		
 		std::cout << std::endl;
 	}
 

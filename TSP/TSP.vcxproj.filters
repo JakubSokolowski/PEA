@@ -138,10 +138,10 @@
     <ClInclude Include="Solvers\TabuSearch\TabuSearch.h">
       <Filter>Solvers\Tabu Search</Filter>
     </ClInclude>
-    <ClInclude Include="Solvers\TabuSearch\TabuMove.h">
+    <ClInclude Include="Solvers\TabuSearch\Move.h">
       <Filter>Solvers\Tabu Search</Filter>
     </ClInclude>
-    <ClInclude Include="Solvers\TabuSearch\Move.h">
+    <ClInclude Include="Solvers\TabuSearch\TabuList.h">
       <Filter>Solvers\Tabu Search</Filter>
     </ClInclude>
   </ItemGroup>
