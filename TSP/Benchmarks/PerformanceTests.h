@@ -6,6 +6,7 @@
 
 #define NOMINMAX
 
+#include "../stdafx.h"
 #include <Windows.h>
 #include "../Graphs/AdjacencyMatrix/SymmetricAdjacencyMatrix.h"
 #include "../Graphs/GraphDataParser.h"
@@ -26,12 +27,12 @@ namespace TSP
 	using std::vector;
 	using std::string;	
 
-	double PCFreq = 0.0;
-	__int64 CounterStart = 0;
+	extern double PCFreq = 0.0;
+	extern __int64 CounterStart = 0;
 
 
-	double time_unit = 1000.0;
-	void StartCounter()
+	extern double time_unit = 1000.0;
+	inline void StartCounter()
 	{
 		LARGE_INTEGER li;
 		if (!QueryPerformanceFrequency(&li))
@@ -43,7 +44,7 @@ namespace TSP
 		CounterStart = li.QuadPart;
 	}
 
-	double GetCounter()
+	inline double GetCounter()
 	{
 		LARGE_INTEGER li;
 		QueryPerformanceCounter(&li);
@@ -53,7 +54,7 @@ namespace TSP
 
 	
 	
-	string GetTimestamp()
+	inline string GetTimestamp()
 	{
 		//time_t     now = time(0);
 		//struct tm  tstruct;
@@ -67,13 +68,13 @@ namespace TSP
 		return "D";
 	}
 
-	bool FileExists(std::string filename)
+	inline bool FileExists(std::string filename)
 	{
 		std::ifstream f(filename.c_str());
 		return f.good();
 	}
 
-	std::vector<std::vector<int>> GenerateAsymmetricMatrix(int size, int max_value)
+	inline std::vector<std::vector<int>> GenerateAsymmetricMatrix(int size, int max_value)
 	{
 		std::random_device rd; // obtain a random number from hardware
 		std::mt19937 eng(rd()); // seed the generator
@@ -90,7 +91,7 @@ namespace TSP
 
 		return matrix;
 	}
-	std::vector<std::vector<int>> GenerateSymmetricMatrix(int size, int max_value)
+	inline std::vector<std::vector<int>> GenerateSymmetricMatrix(int size, int max_value)
 	{
 		std::random_device rd; // obtain a random number from hardware
 		std::mt19937 eng(rd()); // seed the generator
@@ -109,7 +110,7 @@ namespace TSP
 
 		return matrix;
 	}
-	void WriteAsymmetricMatrix(std::vector<std::vector<int>> &vec)
+	inline void WriteAsymmetricMatrix(std::vector<std::vector<int>> &vec)
 	{
 
 		string filename = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Asymmetric Instances\\"
@@ -128,7 +129,7 @@ namespace TSP
 		file.close();
 
 	}
-	void WriteSymmetricMatrix(std::vector<std::vector<int>> &vec)
+	inline void WriteSymmetricMatrix(std::vector<std::vector<int>> &vec)
 	{
 
 		string filename = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Symmetric Instances\\"
@@ -147,7 +148,7 @@ namespace TSP
 		file.close();
 
 	}
-	void GenerateProblemData()
+	inline void GenerateProblemData()
 	{
 		auto instances = vector<int>{ 10, 29 };
 		for (auto instance : instances)
@@ -156,7 +157,7 @@ namespace TSP
 			WriteAsymmetricMatrix(GenerateAsymmetricMatrix(instance, 999));
 		}
 	}
-	void WriteTestResults(vector<double> &results, vector<std::pair<double,double>> &statistics, string filename, bool symmetric)
+	inline void WriteTestResults(vector<double> &results, vector<std::pair<double,double>> &statistics, string filename, bool symmetric)
 	{
 		string dir = symmetric ? "Symmetric" : "Asymmetric";
 		string filepath = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\" + dir + " Results\\"
@@ -181,7 +182,7 @@ namespace TSP
 	}
 
 	
-	void CalculateStdev(std::vector<double>& v, double &stdev, double &variance)
+	inline void CalculateStdev(std::vector<double>& v, double &stdev, double &variance)
 	{
 		double sum = std::accumulate(v.begin(), v.end(), 0.0);
 		double mean = sum / v.size();
@@ -194,7 +195,7 @@ namespace TSP
 	}
 	
 
-	void RunSymmetricTests(int reps)
+	inline void RunSymmetricTests(int reps)
 	{
 		cout << "Starting tests for Symmetric instances" << endl;
 
@@ -236,7 +237,7 @@ namespace TSP
 		}
 		WriteTestResults(time_results, statistics, "Symmetric" + std::to_string(reps), true);
 	}
-	void RunAsymmetricTests(int reps)
+	inline void RunAsymmetricTests(int reps)
 	{
 		cout << "Starting tests for Asymmetric instances" << endl;
 
@@ -277,10 +278,26 @@ namespace TSP
 		WriteTestResults(time_results, statistics, "Asymmetric" + std::to_string(reps), false);
 	}
 
-	void RunTests(int reps)
+	inline void RunTests(int reps)
 	{
 		RunSymmetricTests(reps);
 		RunAsymmetricTests(reps);
+	}
+
+	inline void RunTabuSymmetric(int reps)
+	{
+
+	}
+
+	inline void RunTabuAsymmetric(int reps)
+	{
+
+	}
+
+	inline void RunTabuTests(int reps)
+	{
+		RunTabuSymmetric(reps);
+		RunTabuAsymmetric(reps);
 	}
 
 }
