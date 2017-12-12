@@ -97,7 +97,25 @@ namespace TSPTests
 			Assert::AreEqual(1, actual.tour.front());
 			Assert::AreEqual(1, actual.tour.back());
 			std::wstring message = L"Optimal: 2085, actual: " +  std::to_wstring(actual.total_cost);
-			Assert::AreEqual(true, IsAccurate(2085, actual.total_cost, 0.95),message.c_str());
+			Assert::AreEqual(true, IsAccurate(2085, actual.total_cost, 0.90),message.c_str());
+		}
+
+		TEST_METHOD(TabuSearchSym195)
+		{
+			auto params = TabuParameters();
+			params.max_iterations = 5000;
+			params.tabu_list_length = 20;
+			params.tabu_tenure = 15;
+			params.max_no_improve = 500;
+			params.restart_count = 3;
+			params.max_time_s = 10 * 60;
+
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Symmetric\\rat195.txt");
+			auto solver = TabuSearch<int>(params);
+			auto move = new Swap<int>();
+			auto actual = solver.Solve(graph);
+			std::wstring message = L"Optimal: 2323, actual: " + std::to_wstring(actual.total_cost);
+			Assert::AreEqual(true, IsAccurate(2085, actual.total_cost, 0.9), message.c_str());
 		}
 
 	};
