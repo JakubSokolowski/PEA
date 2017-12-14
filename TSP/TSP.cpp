@@ -92,6 +92,9 @@ void StartMenu()
 
 int main()
 {
-	StartMenu();
+	//StartMenu();
 	//RunTests(100);
+	SymmetricTabuTenureTests(10);
+	//TabuOrientationParams();
+	std::cin.get();
 }

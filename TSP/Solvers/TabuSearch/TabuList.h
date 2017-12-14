@@ -23,7 +23,7 @@ namespace TSP
 		void DecreaseTenure();
 		void ResetList();
 		uint GetListLenght() { return tabu_list_m.size(); }
-	private:		
+	protected:		
 		int max_length_m, tabu_tenure_m;
 		// The list of all the forbidden moves. Using std::deque for O(1) front deletion
 		std::deque<TabuMove> tabu_list_m;
@@ -80,6 +80,59 @@ namespace TSP
 	inline void TabuList::ResetList()
 	{
 		tabu_list_m.clear();
+	}
+
+	class SwapTabuList
+	{
+	public:
+		SwapTabuList();
+		SwapTabuList(int tenure);
+		~SwapTabuList();
+		bool IsForbidden(MoveParameters &move);
+		void ForbidMove(MoveParameters &move);
+		void DecreaseTenure();
+		void ResetList();
+		void CreateList(int vertices_num);
+
+	private:
+		int tenure_m;
+		std::vector<std::vector<int>> tabu_list_m;
+
+	};
+
+	inline TSP::SwapTabuList::SwapTabuList()
+		: tenure_m(15)
+	{}
+	inline TSP::SwapTabuList::SwapTabuList(int tenure)
+		: tenure_m(tenure)
+	{}
+	inline SwapTabuList::~SwapTabuList()
+	{
+	}
+	inline bool SwapTabuList::IsForbidden(MoveParameters & move)
+	{
+		return tabu_list_m[move[0]][move[1]] > 0;
+	}
+	inline void SwapTabuList::ForbidMove(MoveParameters & move)
+	{
+		tabu_list_m[move[0]][move[1]] += tenure_m;
+	}
+	inline void SwapTabuList::DecreaseTenure()
+	{
+		for (auto &row : tabu_list_m)
+			for (auto &tenure : row)
+				tenure > 0 ? --tenure : tenure;
+	}
+	inline void SwapTabuList::ResetList()
+	{
+		for(auto &row : tabu_list_m)
+			for (auto &tenure : row)
+				tenure = 0;
+			
+	}
+	inline void SwapTabuList::CreateList(int vertices_num)
+	{
+		tabu_list_m = std::vector<std::vector<int>>(vertices_num, std::vector<int>(vertices_num,0));
 	}
 }
 #endif

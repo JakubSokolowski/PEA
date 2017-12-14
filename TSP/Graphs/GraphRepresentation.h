@@ -3,6 +3,8 @@
 #ifndef TSP_GRAPH_REPRESENTATION
 #define TSP_GRAPH_REPRESENTATION
 
+#define NINT(a) ((a) >= 0.0 ? (int)((a)+0.5) : (int)((a)-0.5))
+
 #include <string>
 #include <vector>
 #include <math.h>
@@ -75,6 +77,7 @@ namespace TSP
 			}
 			destination_vertex++;
 		}
+
 	}
 
 	// Returns the euclidean total_cost (straight line) beetween two Vertices. The result is casted on
@@ -84,7 +87,7 @@ namespace TSP
 	{
 		int X = source.x_ - destination.x_;
 		int Y = source.y_ - destination.y_;
-		return (Cost)(sqrt(pow(X, 2) + pow(Y, 2)));
+		return NINT(sqrt(pow(X, 2) + pow(Y, 2)));
 	}
 
 	

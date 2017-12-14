@@ -1,0 +1,8 @@
+eil51.txtCalculated: 456From Tour:  456 Time: 12286.1
+eil51.txtCalculated: 455From Tour:  455 Time: 13231.5
+eil76.txtCalculated: 580From Tour:  580 Time: 42689.1
+eil101.txtCalculated: 733From Tour:  733 Time: 108608
+rat195.txt Calculated: 2680 From Tour:  2680 Time: 942617
+berlin52.txt Calculated: 8565 From Tour:  8565 Time: 13805.4
+kroC100.txt Calculated: 24282 From Tour:  24282 Time: 109349
+kroB150.txt Calculated: 30184 From Tour:  30184 Time: 367643

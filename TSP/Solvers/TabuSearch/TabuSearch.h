@@ -12,11 +12,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <typeinfo>
+#include "../../Benchmarks/Timer.h"
 
 namespace TSP
 {
-	const uint MAX_ITERATIONS = 500;	
-	const uint MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 50;
+	
+
+
+	struct TabuParameters
+	{
+		// For how many 
+		uint tabu_tenure;
+		uint tabu_list_length;
+		// Num of different neigbourhoods that will be checked for solution
+		uint max_iterations;
+		// Max num of consecutive iterations where there is no improvement
+		// comparing to best global solution
+		uint max_no_improve;
+		// Max number of initial solutions generated
+		uint restart_count;
+		// After this time, search stops
+		double max_time_s;
+	};
 
 	template<class Cost>
 	class TabuSearch
@@ -25,17 +43,23 @@ namespace TSP
 	public:
 		TabuSearch() { move_m = new Swap<Cost>(); };
 		TabuSearch(Move<Cost> *move);
+		TabuSearch(TabuParameters params);
 		~TabuSearch() { delete move_m; };
+		bool TimeLimited = true;
 
 		Solution<Cost> Solve(GraphRepresentation<Cost> &representation);
 		Solution<Cost> GenerateInitialSolution(GraphRepresentation<Cost> &representation);	
 		Solution<Cost> FindBestNeigbourSolution(Solution<Cost> &solution, GraphRepresentation<Cost> &representation);
 	private:
-		bool AspirationCritirionReached(uint solution_cost) { return solution_cost < best_global_m.total_cost; }
+		bool AspirationCritirionReached(int solution_cost) { return solution_cost < best_global_m.total_cost; }
 		MoveParameters ConvertToGraphIndices(MoveParameters &param, Solution<Cost> &solution);
 		Solution<Cost> best_global_m;
 		Move<Cost> *move_m;
-		TabuList tabu_list_m;		
+		TabuList tabu_list_m;	
+		uint max_iterations_m = 50;
+		uint max_iterations_without_improvement_m = 50;
+		uint restart_count_m = 3;
+		double max_time_s_m = 60; //3 mins;
 	};
 
 	
@@ -46,6 +70,17 @@ namespace TSP
 		: move_m(move)
 	{
 		tabu_list_m = TabuList(50, 4);
+
+	}
+
+	template<class Cost>
+	inline TabuSearch<Cost>::TabuSearch(TabuParameters params)
+		: tabu_list_m(TabuList(params.tabu_list_length, params.tabu_tenure))
+		, max_iterations_m(params.max_iterations)
+		, max_iterations_without_improvement_m(params.max_no_improve)
+		, max_time_s_m(params.max_time_s)
+	{
+		move_m = new Swap<Cost>();
 	}
 
 	template<class Cost>
@@ -53,11 +88,17 @@ namespace TSP
 	{
 		best_global_m = GenerateInitialSolution(representation);
 		Solution<Cost> best_local, current_solution{ std::numeric_limits<Cost>::max() ,std::vector<int>{} };
-
-		int reset_count = 3;
-
-		for (int loop = 0; loop < reset_count; loop++)
+		//tabu_list_m.CreateList(representation.GetNumOfVertices() + 1);
+		Timer timer{ TimeUnit::seconds };
+		double time = 0.0;
+		timer.Start();
+		// O(restart)
+		for (uint loop = 0; loop < restart_count_m; loop++)
 		{
+			if (TimeLimited && time > max_time_s_m)
+				break;
+
+			// O(n) / O(n2)
 			tabu_list_m.ResetList();
 			if (!loop)
 				best_local = best_global_m;
@@ -65,9 +106,15 @@ namespace TSP
 				best_local = GenerateInitialSolution(representation);
 			current_solution = best_local;
 
+			
+			// O(max_iter)
 			int iterations_without_improvement = 0;
-			for (uint i = 0; i < MAX_ITERATIONS; i++)
-			{
+			for (uint i = 0; i < max_iterations_m; i++)
+			{				
+				time = timer.GetTime();
+				if (TimeLimited && time > max_time_s_m)
+					break;
+				// O(N3)
 				current_solution = FindBestNeigbourSolution(current_solution, representation);
 				if (current_solution.total_cost < best_local.total_cost)
 				{
@@ -80,7 +127,7 @@ namespace TSP
 				{
 					iterations_without_improvement++;
 					// Critical Event
-					if (iterations_without_improvement > MAX_ITERATIONS_WITHOUT_IMPROVEMENT)
+					if (iterations_without_improvement > max_iterations_without_improvement_m)
 						break;
 				}					
 			}
@@ -107,13 +154,17 @@ namespace TSP
 
 		MoveParameters tabu_params{ 0,0 };
 
+		// O(n)
 		for (int i = 1; i < tour_size - 1; i++)
 		{
+			// O(n)
 			for (int j = (i+1); j < tour_size - 1; j++)
 			{				
 				// Create new neighbour solution
 				MoveParameters params{ i, j };
+				// O(1)
 				Solution<Cost> new_solution = move_m->Execute(best_neighbour_solution, params, representation);
+				// O(tabu_tenure)
 				if (AspirationCritirionReached(new_solution.total_cost) || ((new_solution.total_cost < best_neighbour_solution.total_cost) && !tabu_list_m.IsForbidden(params)))
 				{
 					tabu_params = params;
@@ -121,6 +172,8 @@ namespace TSP
 				}
 			}
 		}
+		
+		// O(n2*tabu_len)
 		
 		tabu_list_m.DecreaseTenure();
 		tabu_list_m.ForbidMove(ConvertToGraphIndices(tabu_params, best_neighbour_solution));
@@ -132,6 +185,7 @@ namespace TSP
 	{
 		return MoveParameters{solution.tour[param[0]], solution.tour[param[1]]};
 	}
+
 }
 
 

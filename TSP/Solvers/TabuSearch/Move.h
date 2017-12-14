@@ -6,6 +6,7 @@
 #include "..\Solver.h"
 #include "..\..\Graphs\GraphRepresentation.h"
 #include "TabuList.h"
+#include <math.h>
 
 namespace TSP
 {
@@ -41,16 +42,16 @@ namespace TSP
 	template<typename Cost>
 	inline Solution<Cost> Swap<Cost>::Execute(Solution<Cost>& solution, MoveParameters & parameters, GraphRepresentation<Cost>& representation)
 	{
-		//Cost total_cost = EvaluateMove(solution, parameters, representation);
+		Cost total_cost = EvaluateMove(solution, parameters, representation);
 		auto tour = solution.tour;
 		auto temp = tour[parameters[0]];
 		tour[parameters[0]] = tour[parameters[1]];
 		tour[parameters[1]] = temp;
-		Cost total_cost = representation.GetTourCost(tour);		
+		//Cost total_cost = representation.GetTourCost(tour);		
 		return Solution<Cost>(total_cost, tour);
 	}
 
-	// Calculates total_cost of new solution in constant time
+	// Calculates total_cost of new solution after executing swap on solution
 	template<typename Cost>
 	inline Cost Swap<Cost>::EvaluateMove(Solution<Cost>& solution, MoveParameters & params, GraphRepresentation<Cost>& representation)
 	{
@@ -73,16 +74,47 @@ namespace TSP
 		right = solution.tour[params[1]] - 1;
 		right_prev = solution.tour[params[1] - 1] - 1;
 		right_next = solution.tour[params[1] + 1] - 1;
+		if (abs(params[0] - params[1]) == 1)
+		{
+			if (params[0] - params[1] == 1)
+			{
+				new_cost -= representation.GetWeight(right_prev, left_prev);
+				new_cost -= representation.GetWeight(right, left);
+				new_cost -= representation.GetWeight(left, left_next);
 
-		new_cost -= representation.GetWeight(left_prev, left);
-		new_cost -= representation.GetWeight(left, left_next);
-		new_cost -= representation.GetWeight(right_prev, right);
-		new_cost -= representation.GetWeight(right, right_next);
+				new_cost += representation.GetWeight(right_prev, left);
+				new_cost += representation.GetWeight(left, right);
+				new_cost += representation.GetWeight(right, left_next);
+			}
+			if (params[1] - params[0] == 1)
+			{
+				new_cost -= representation.GetWeight(left_prev, left);
+				new_cost -= representation.GetWeight(left, left_next);
+				new_cost -= representation.GetWeight(right, right_next);
 
-		new_cost += representation.GetWeight(left_prev, right);
-		new_cost += representation.GetWeight(right, left_next);
-		new_cost += representation.GetWeight(right_prev, left);
-		new_cost += representation.GetWeight(left, right_next);		
+				new_cost += representation.GetWeight(left_prev, right);
+				new_cost += representation.GetWeight(right, left);
+				new_cost += representation.GetWeight(left, right_next);
+			}
+		}		
+		else
+		{
+			new_cost -= representation.GetWeight(left_prev, left);
+			new_cost -= representation.GetWeight(left, left_next);
+			new_cost -= representation.GetWeight(right_prev, right);
+			new_cost -= representation.GetWeight(right, right_next);
+
+			new_cost += representation.GetWeight(left_prev, right);
+			new_cost += representation.GetWeight(right, left_next);
+			new_cost += representation.GetWeight(right_prev, left);
+			new_cost += representation.GetWeight(left, right_next);
+		}
+
+
+	
+
+		// Fix the case for swapping adjacent vertices
+	
 
 		return new_cost;
 	}

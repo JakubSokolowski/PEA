@@ -11,6 +11,7 @@
 #include "../Graphs/AdjacencyMatrix/SymmetricAdjacencyMatrix.h"
 #include "../Graphs/GraphDataParser.h"
 #include "../Solvers/BranchAndBound/BranchAndBound.h"
+#include "../Solvers/TabuSearch/TabuSearch.h"
 #include <vector>
 #include <string>
 #include <random>
@@ -26,9 +27,16 @@ namespace TSP
 {
 	using std::vector;
 	using std::string;	
+	using std::cout;
+	using std::endl;
 
 	extern double PCFreq = 0.0;
 	extern __int64 CounterStart = 0;
+
+	string symmetric_path = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Symmetric\\";
+	string asymmetric_path = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Asymmetric\\";
+
+	string tabu_result_path = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\Results\\Tabu\\";
 
 
 	extern double time_unit = 1000.0;
@@ -282,6 +290,160 @@ namespace TSP
 	{
 		RunSymmetricTests(reps);
 		RunAsymmetricTests(reps);
+	}
+
+	inline void WriteTenureResults(std::vector<int> &results, std::vector<double> times, int tenure, string filename)
+	{
+		
+	}
+
+	inline void SymmetricTabuTenureTests(int reps)
+	{
+		auto tenures = vector<int>{ 5,15,25,50 };
+		auto instances = vector<string>{ "S10.txt", "S17.txt","S29.txt","eil51.txt","eil76.txt" };
+		auto sizes = vector<int>{ 10,17,29,51,76 };
+		auto optimal_solutions = vector<int>{ 2020, 20749,2323 };
+		// 10 tests per tenure
+		TabuParameters params;
+		params.max_time_s = 5;
+		params.tabu_list_length = 50;
+		params.max_no_improve = 100;
+		params.max_iterations - 500;
+		params.restart_count = 2;
+		Timer timer{ TimeUnit::miliseconds };
+
+		for (int file_id = 0; file_id< instances.size();file_id++)
+		{ 
+
+			std::cout << "Starting tests for file " << instances[file_id] << std::endl;
+			string filepath = tabu_result_path + "Tenure" + instances[file_id];
+			string graph_path = symmetric_path + instances[file_id];
+		
+			std::ofstream file(filepath, std::ios_base::app);
+
+			auto time_results = vector<double>();
+			auto results = vector<int>();
+
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(graph_path);
+			for (int id = 0; id < tenures.size(); id++)
+			{				
+				std::cout << "\tStarting tests for tenure " << tenures[id] << std::endl;
+				for (int i = 0; i < reps; i++)
+				{
+					params.tabu_tenure = tenures[id];
+					params.max_iterations = sizes[file_id] * 4;
+					params.max_no_improve = sizes[file_id];
+					auto solver = TabuSearch<int>(params);
+					solver.TimeLimited = false;
+					timer.Start();
+					auto result = solver.Solve(graph);
+					time_results.push_back(timer.GetTime());
+					results.push_back(result.total_cost);
+				}		
+
+				double mean_time = std::accumulate(time_results.begin(), time_results.end(), 0.0) / time_results.size();
+				double mean_result = std::accumulate(results.begin(), results.end(), 0.0) / results.size();
+				file << tenures[id] << " " << mean_time << " " << mean_result << std::endl;
+			}
+			file.close();
+		}
+	}
+
+	void SymmetricTabuTenureProportionalTests(int reps)
+	{
+		auto tenures = vector<int>{ 2,4,6,8 };
+		auto instances = vector<string>{ "S10.txt", "S17.txt","S29.txt","eil51.txt","eil76.txt" };
+		auto sizes = vector<int>{ 10,17,29,51,76 };
+		// 10 tests per tenure
+		TabuParameters params;
+		params.max_time_s = 5;
+		params.tabu_list_length = 50;
+		params.max_no_improve = 100;
+		params.max_iterations - 500;
+		params.restart_count = 2;
+		Timer timer{ TimeUnit::miliseconds };
+
+		for (int file_id = 0; file_id< instances.size(); file_id++)
+		{
+
+			std::cout << "Starting tests for file " << instances[file_id] << std::endl;
+			string filepath = tabu_result_path + "Proportional_tenure_" + instances[file_id];
+			string graph_path = symmetric_path + instances[file_id];
+
+			std::ofstream file(filepath, std::ios_base::app);
+
+			auto time_results = vector<double>();
+			auto results = vector<int>();
+
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(graph_path);
+			for (int id = 0; id < tenures.size(); id++)
+			{
+				std::cout << "\tStarting tests for tenure " << tenures[id] << std::endl;
+				for (int i = 0; i < reps; i++)
+				{
+					params.tabu_tenure = (int)( graph.GetNumOfVertices() / tenures[id]);
+					params.max_iterations = sizes[file_id] * 4;
+					params.max_no_improve = sizes[file_id];
+					auto solver = TabuSearch<int>(params);
+					solver.TimeLimited = false;
+					timer.Start();
+					auto result = solver.Solve(graph);
+					time_results.push_back(timer.GetTime());
+					results.push_back(result.total_cost);
+				}
+
+				double mean_time = std::accumulate(time_results.begin(), time_results.end(), 0.0) / time_results.size();
+				double mean_result = std::accumulate(results.begin(), results.end(), 0.0) / results.size();
+				file << tenures[id] << " " << mean_time << " " << mean_result << std::endl;
+			}
+			file.close();
+		}
+	}
+
+	inline void TabuOrientationParams()
+	{
+		auto tenures = vector<int>{ 5,15,25,50 };
+		//auto instances = vector<string>{ "S29.txt","eil76.txt","pr152.txt" };
+		auto instances = vector<string>{ "berlin52.txt","kroC100.txt","kroB150.txt" };
+		auto sizes = vector<int>{ 29, 100, 195 };
+		auto optimal_solutions = vector<int>{ 2020, 20749,2323 };
+		// 10 tests per tenure
+		TabuParameters params;
+		params.max_time_s = 20 * 60;
+		params.tabu_list_length = 50;
+		params.max_no_improve = 100;
+		params.max_iterations - 500;
+		params.restart_count = 3;
+		Timer timer{ TimeUnit::miliseconds };
+
+		string filepath = tabu_result_path + "orientation_times.txt";
+		//if (FileExists(filepath))
+		//	return;
+		std::ofstream file(filepath, std::ios_base::app);
+		std::cout << "Ballpark test start!:  " << std::endl;
+		for (auto instance : instances)
+		{			
+			std::cout << "Starting for graph " + instance << std::endl;
+			string graph_path = symmetric_path + instance;	
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(graph_path);
+
+			cout << "Vertices: " << graph.GetNumOfVertices() << " Edges: " << graph.GetNumOfEdges() << endl;
+		
+
+			params.tabu_tenure = 15;
+			params.max_iterations = graph.GetNumOfVertices() * 4;
+			params.max_no_improve = graph.GetNumOfVertices();
+			auto solver = TabuSearch<int>(params);
+			solver.TimeLimited = false;
+			timer.Start();
+			auto result = solver.Solve(graph);
+			double time = timer.GetTime();
+			std::cout << "Instance " + instance + " time: " << time << " seconds" << std::endl;
+		
+			file << instance << " Calculated: " << result.total_cost <<" From Tour:  " << graph.GetTourCost(result.tour) << " Time: "<< time  << std::endl;			
+			
+		}
+		file.close();
 	}
 
 	inline void RunTabuSymmetric(int reps)
