@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include <fstream>
 #include <type_traits>
 #include <iterator>
@@ -15,10 +16,11 @@ namespace TSP
 
 	inline std::vector<Vertex> ReadCoordinates(std::fstream & stream)
 	{
-		uint id, x, y;
+		uint id;
+		double x, y;
 		auto coordinates = std::vector<Vertex>();
 		while (stream >> id >> x >> y)
-			coordinates.push_back(Vertex{ id, x, y });
+			coordinates.push_back(Vertex{(uint)x, (uint)y ,id});
 		return coordinates;
 	}
 
