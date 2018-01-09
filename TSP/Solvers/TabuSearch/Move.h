@@ -36,7 +36,7 @@ namespace TSP
 	};
 
 
-	// Swaps the vertives described by parameters.
+	// Swaps the vertices described by parameters.
 	// In this case, parameters describe the indices of vertices relative to
 	// their position in tour, and not their indices in graph
 	template<typename Cost>
