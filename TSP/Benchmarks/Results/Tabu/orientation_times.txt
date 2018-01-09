@@ -6,3 +6,8 @@ rat195.txt Calculated: 2680 From Tour:  2680 Time: 942617
 berlin52.txt Calculated: 8565 From Tour:  8565 Time: 13805.4
 kroC100.txt Calculated: 24282 From Tour:  24282 Time: 109349
 kroB150.txt Calculated: 30184 From Tour:  30184 Time: 367643
+S29.txt Calculated: 2246 From Tour:  2246 Time: 2458.88
+S29.txt Calculated: 2187 From Tour:  2187 Time: 2583.9
+eil51.txt Calculated: 474 From Tour:  474 Time: 12508.1
+eil101.txt Calculated: 702 From Tour:  702 Time: 115801
+rat195.txt Calculated: 2800 From Tour:  2800 Time: 835334

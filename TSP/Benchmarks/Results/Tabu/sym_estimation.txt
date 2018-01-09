@@ -1,0 +1,8 @@
+19-12-2017 15:25:13
+S10.txt Solution: 1503 Time: 307.962
+S17.txt Solution: 2085 Time: 800.317
+bays29.txt Solution: 2344 Time: 4310.05
+eil51.txt Solution: 526 Time: 24083.4
+eil76.txt Solution: 606 Time: 87333.6
+pr124.txt Solution: 75239 Time: 398595
+19-12-2017 15:33:59

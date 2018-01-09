@@ -1,0 +1,5 @@
+ftv33.txt Calculated: 1633 Time: 6334.36
+ftv53.txt Calculated: 9252 Time: 20714
+ftv70.txt Calculated: 2689 Time: 51330.7
+kro124.txt Calculated: 46969 Time: 146761
+ftv33.txt Calculated: 1724 Time: 57519.3

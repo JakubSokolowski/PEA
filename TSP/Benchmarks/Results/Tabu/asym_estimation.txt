@@ -1,0 +1,7 @@
+19-12-2017 15:33:59
+AS10.txt Solution: 10 Time: 228.178
+AS17.txt Solution: 260 Time: 746.295
+ftv33.txt Solution: 1569 Time: 7066.22
+ft53.txt Solution: 9179 Time: 35128.6
+ftv70.txt Solution: 2537 Time: 70212.6
+kro124.txt Solution: 43610 Time: 212211

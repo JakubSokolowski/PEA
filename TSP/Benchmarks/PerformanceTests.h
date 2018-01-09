@@ -30,17 +30,19 @@ namespace TSP
 	using std::cout;
 	using std::endl;
 
-	extern double PCFreq = 0.0;
-	extern __int64 CounterStart = 0;
+	double PCFreq = 0.0;
+	__int64 CounterStart = 0;
+
+	// PATHS
 
 	string symmetric_path = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Symmetric\\";
 	string asymmetric_path = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Asymmetric\\";
-
 	string tabu_result_path = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\Results\\Tabu\\";
 
+	// TIME MEASUREMENT
 
 	extern double time_unit = 1000.0;
-	inline void StartCounter()
+	void StartCounter()
 	{
 		LARGE_INTEGER li;
 		if (!QueryPerformanceFrequency(&li))
@@ -51,37 +53,34 @@ namespace TSP
 		QueryPerformanceCounter(&li);
 		CounterStart = li.QuadPart;
 	}
-	inline double GetCounter()
+	double GetCounter()
 	{
 		LARGE_INTEGER li;
 		QueryPerformanceCounter(&li);
 		return double(li.QuadPart - CounterStart) / PCFreq;
-	}
-	
-	inline string GetTimestamp()
+	}	
+	string GetTimestamp()
 	{
-		//time_t     now = time(0);
-		//struct tm  tstruct;
-		//char       buf[80];
-		//tstruct = *localtime(&now);
-		//// Visit http://en.cppreference.com/w/cpp/chrono/c/strftime
-		//// for more information about date/time format
-		//strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
+		auto t = std::time(nullptr);
+		auto tm = *std::localtime(&t);
 
-		//return buf;
-		return "D";
+		std::ostringstream oss;
+		oss << std::put_time(&tm, "%d-%m-%Y %H:%M:%S");
+		auto str = oss.str();
+		return str;
 	}
 
-	inline bool FileExists(std::string filename)
+	// FILE OPERATIONS INSTANCE GENERATION AND STATISTICS
+
+	bool FileExists(std::string filename)
 	{
 		std::ifstream f(filename.c_str());
 		return f.good();
 	}
-
-	inline std::vector<std::vector<int>> GenerateAsymmetricMatrix(int size, int max_value)
+	std::vector<std::vector<int>> GenerateAsymmetricMatrix(int size, int max_value)
 	{
 		std::random_device rd; // obtain a random number from hardware
-		std::mt19937 eng(rd()); // seed the generator
+		std::mt19937 eng(rd()); // seed the generator_m
 		std::uniform_int_distribution<> distr(1, max_value); // define the range
 
 		std::vector<std::vector<int>> matrix(size, std::vector<int>(size, INT_MAX));
@@ -95,10 +94,10 @@ namespace TSP
 
 		return matrix;
 	}
-	inline std::vector<std::vector<int>> GenerateSymmetricMatrix(int size, int max_value)
+	std::vector<std::vector<int>> GenerateSymmetricMatrix(int size, int max_value)
 	{
 		std::random_device rd; // obtain a random number from hardware
-		std::mt19937 eng(rd()); // seed the generator
+		std::mt19937 eng(rd()); // seed the generator_m
 		std::uniform_int_distribution<> distr(1, max_value); // define the range
 
 		std::vector<std::vector<int>> matrix(size, std::vector<int>(size, INT_MAX));
@@ -114,10 +113,29 @@ namespace TSP
 
 		return matrix;
 	}
-	inline void WriteAsymmetricMatrix(std::vector<std::vector<int>> &vec)
+	void WriteAsymmetricMatrix(std::vector<std::vector<int>> &vec)
 	{
 
-		string filename = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Asymmetric Instances\\"
+		string filename = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\"
+			+ std::to_string(vec.size()) + "as.txt";
+		if (FileExists(filename))
+			return;
+		std::ofstream file(filename);
+
+		file << "MATRIX" << "\n";
+		for (uint i = 0; i < vec.size(); i++)
+		{
+			for (uint j = 0; j < vec.size(); j++)
+				file << vec[i][j] << " ";
+			file << "\n";
+		}
+		file.close();
+
+	}
+	void WriteSymmetricMatrix(std::vector<std::vector<int>> &vec)
+	{
+
+		string filename = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\"
 			+ std::to_string(vec.size()) + ".txt";
 		if (FileExists(filename))
 			return;
@@ -133,35 +151,16 @@ namespace TSP
 		file.close();
 
 	}
-	inline void WriteSymmetricMatrix(std::vector<std::vector<int>> &vec)
+	void GenerateProblemData()
 	{
-
-		string filename = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Symmetric Instances\\"
-			+ std::to_string(vec.size()) + ".txt";
-		if (FileExists(filename))
-			return;
-		std::ofstream file(filename);
-
-		file << "MATRIX" << "\n";
-		for (uint i = 0; i < vec.size(); i++)
-		{
-			for (uint j = 0; j < vec.size(); j++)
-				file << vec[i][j] << " ";
-			file << "\n";
-		}
-		file.close();
-
-	}
-	inline void GenerateProblemData()
-	{
-		auto instances = vector<int>{ 10, 29 };
+		auto instances = vector<int>{ 10 };
 		for (auto instance : instances)
 		{
 			WriteSymmetricMatrix(GenerateSymmetricMatrix(instance, 999));
 			WriteAsymmetricMatrix(GenerateAsymmetricMatrix(instance, 999));
 		}
 	}
-	inline void WriteTestResults(vector<double> &results, vector<std::pair<double,double>> &statistics, string filename, bool symmetric)
+	void WriteTestResults(vector<double> &results, vector<std::pair<double,double>> &statistics, string filename, bool symmetric)
 	{
 		string dir = symmetric ? "Symmetric" : "Asymmetric";
 		string filepath = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\" + dir + " Results\\"
@@ -184,8 +183,6 @@ namespace TSP
 
 		file.close();
 	}
-
-	
 	inline void CalculateStdev(std::vector<double>& v, double &stdev, double &variance)
 	{
 		double sum = std::accumulate(v.begin(), v.end(), 0.0);
@@ -200,7 +197,7 @@ namespace TSP
 	
 	// BRANCH AND BOUND
 
-	inline void RunSymmetricTests(int reps)
+	void RunSymmetricTests(int reps)
 	{
 		cout << "Starting tests for Symmetric instances" << endl;
 
@@ -242,7 +239,7 @@ namespace TSP
 		}
 		WriteTestResults(time_results, statistics, "Symmetric" + std::to_string(reps), true);
 	}
-	inline void RunAsymmetricTests(int reps)
+	void RunAsymmetricTests(int reps)
 	{
 		cout << "Starting tests for Asymmetric instances" << endl;
 
@@ -282,7 +279,7 @@ namespace TSP
 		}
 		WriteTestResults(time_results, statistics, "Asymmetric" + std::to_string(reps), false);
 	}
-	inline void RunTests(int reps)
+	void RunTests(int reps)
 	{
 		RunSymmetricTests(reps);
 		RunAsymmetricTests(reps);
@@ -291,101 +288,369 @@ namespace TSP
 	
 	// TABU SEARCH
 
-	inline void TabuOrientationParams()
+	/*
+		------------INSTANCES------------
+
+		SYMMETRIC			ASYMMETRIC
+		
+		S10.txt		1140		
+		S17.txt		2085?
+		eil51.txt	426
+		eil76.txt	538
+		pr124.txt	
+	*/
+
+	vector<string> sym_instances = { "S10.txt","S17.txt","bays29.txt","eil51.txt","eil76.txt", "pr124.txt" };
+	vector<int> sym_optimal = { 1140,2085,2020,426,538,59030 };
+	vector<string> asym_instances = { "AS10.txt","AS17.txt","ftv33.txt","ft53.txt","ftv70.txt", "kro124.txt" };
+	//vector<string> asym_instances = { "AS10.txt","AS17.txt"};
+	vector<int> asym_optimal = { 10,139,1285,6905,1950,36230 };
+	Timer timer{ TimeUnit::miliseconds };
+
+	TabuParameters GetTestParams(int size)
 	{
-		auto tenures = vector<int>{ 5,15,25,50 };
-		//auto instances = vector<string>{ "S29.txt","eil76.txt","pr152.txt" };
-		auto instances = vector<string>{ "S29.txt","eil51.txt","eil101.txt","rat195.txt" };
 		TabuParameters params;
 		params.max_time_s = 15 * 60;
-		params.max_no_improve = 100;
-		params.max_iterations - 500;
+		params.max_no_improve = 3 * size;
+		params.max_iterations = 6 * size;
+		params.tabu_list_length = 3 * size;
 		params.restart_count = 2;
-		Timer timer{ TimeUnit::miliseconds };
+		return params;
+	}
 
-		string filepath = tabu_result_path + "orientation_times.txt";
-		//if (FileExists(filepath))
-		//	return;
-		std::ofstream file(filepath, std::ios_base::app);
-		std::cout << "Ballpark test start!:  " << std::endl;
-		for (auto instance : instances)
+	// TIME ESTIMATION
+
+	void AsymTimeEstimation()
+	{
+		string filepath = tabu_result_path + "asym_estimation.txt";	
+		std::ofstream file(filepath, std::ios_base::app);		
+		file << endl << GetTimestamp() << endl;
+		file << "Instance,Cost,Time" << endl;
+		std::cout << "Estimation test start!:  " << endl;
+
+		for (auto instance : asym_instances)
 		{
-			std::cout << "Starting for graph " + instance << std::endl;
+			cout << "Starting for graph " + instance << endl;
+			string graph_path = asymmetric_path + instance;
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(graph_path);
+
+			auto params = GetTestParams(graph.GetNumOfVertices());
+			auto solver = TabuSearch<int>(params);
+			solver.TimeLimited = true;
+			solver.IsSymmetric = false;		
+			timer.Start();
+			auto result = solver.Solve(graph);
+			double time = timer.GetTime();
+
+			cout << "Instance " + instance + " time: " << time << " seconds" << endl;
+			file << instance << "," << result.total_cost << "," << time << endl;
+		}
+		file << GetTimestamp() << endl;
+		file.close();
+
+		cout << "Estimation tests for asymmetric instances finished! " << endl;
+	}
+	void SymTimeEstimation()
+	{
+		string filepath = tabu_result_path + "sym_estimation.txt";
+		std::ofstream file(filepath, std::ios_base::app);
+		file << endl << GetTimestamp() << endl;
+		file << "Instance,Cost,Time" << endl;
+		cout << "Estimation test start!:  " << endl;
+
+		for (auto instance : sym_instances)
+		{
+			cout << "Starting for graph " + instance << endl;
 			string graph_path = symmetric_path + instance;
 			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(graph_path);
 
 			cout << "Vertices: " << graph.GetNumOfVertices() << " Edges: " << graph.GetNumOfEdges() << endl;
 
-			params.tabu_tenure = 15;
-			params.tabu_list_length = graph.GetNumOfVertices() * 3;
-			params.max_iterations = graph.GetNumOfVertices() * 4;
-			params.max_no_improve = graph.GetNumOfVertices();
-
+			auto params = GetTestParams(graph.GetNumOfVertices());
 			auto solver = TabuSearch<int>(params);
 			solver.TimeLimited = true;
+			solver.IsSymmetric = true;
+
 			timer.Start();
 			auto result = solver.Solve(graph);
 			double time = timer.GetTime();
-			std::cout << "Instance " + instance + " time: " << time << " seconds" << std::endl;
 
-			file << instance << " Calculated: " << result.total_cost << " From Tour:  " << graph.GetTourCost(result.tour) << " Time: " << time << std::endl;
-
+			cout << "Instance " + instance + " time: " << time << " seconds" << endl;
+			file << instance << "," << result.total_cost << "," << time << endl;
 		}
+		file << GetTimestamp() << endl;
 		file.close();
-
-		std::cout << " Orientation tests finiished! " << endl;
+		cout << "Estimation tests for symmetric instances finished! " << endl;
 	}
-	inline void SymmetricTabuTenureTests(int reps)
+	void TimeEstimation()
 	{
-		auto tenures = vector<int>{ 5,15,25,50 };
-		auto instances = vector<string>{ "S29.txt","eil51txt","eil101.txt","rat195.txt" };
-		// 10 tests per tenure
-		TabuParameters params;
-		params.max_time_s = 60 * 15;
-		params.tabu_list_length = 50;
-		params.max_no_improve = 100;
-		params.max_iterations - 500;
-		params.restart_count = 2;
-		Timer timer{ TimeUnit::miliseconds };
+		SymTimeEstimation();
+		AsymTimeEstimation();
+	}
 
-		for (int file_id = 0; file_id< instances.size();file_id++)
-		{ 
+	// STATIC TENURE TABU TESTS
 
-			std::cout << "Starting tests for file " << instances[file_id] << std::endl;
-			string filepath = tabu_result_path + "Tenure" + instances[file_id];
-			string graph_path = symmetric_path + instances[file_id];
-		
+	vector<int> static_tenures = { 5,15,25,50 };
+
+	void StaticTenureSymmetricTest(int reps)	
+	{	
+		for (auto instance : sym_instances)
+		{
+			cout << "Starting static tenure tests for symmetric graph from file " << instance << endl;
+			string filepath = tabu_result_path + "static_tenure_" + instance;
+			string graph_path = symmetric_path + instance;
+
 			std::ofstream file(filepath, std::ios_base::app);
+			file << endl << GetTimestamp() << endl;
+			file << "Tenure,Mean Time,Mean Result" << endl;
 
 			auto time_results = vector<double>();
 			auto results = vector<int>();
-
 			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(graph_path);
-			for (int id = 0; id < tenures.size(); id++)
-			{				
-				std::cout << "\tStarting tests for tenure " << tenures[id] << std::endl;
+			auto params = GetTestParams(graph.GetNumOfVertices());
+
+			for (auto tenure : static_tenures)
+			{
+				params.tabu_tenure = tenure;
+				cout << "\tStarting tests for tenure " << tenure << endl;
 				for (int i = 0; i < reps; i++)
 				{
-					params.tabu_tenure = tenures[id];
-					params.tabu_list_length = graph.GetNumOfVertices() * 3;
-					params.max_iterations = graph.GetNumOfVertices() * 4;
-					params.max_no_improve = graph.GetNumOfVertices();
 					auto solver = TabuSearch<int>(params);
 					solver.TimeLimited = true;
+					solver.IsSymmetric = true;
 					timer.Start();
 					auto result = solver.Solve(graph);
 					time_results.push_back(timer.GetTime());
 					results.push_back(result.total_cost);
-				}		
-
+				}
 				double mean_time = std::accumulate(time_results.begin(), time_results.end(), 0.0) / time_results.size();
 				double mean_result = std::accumulate(results.begin(), results.end(), 0.0) / results.size();
-				file << tenures[id] << " " << mean_time << " " << mean_result << std::endl;
+				file << tenure << "," << mean_time << "," << mean_result << endl;
 			}
+			file << GetTimestamp() << endl;
 			file.close();
 		}
-		std::cout << " Static tenure tests finished! " << endl;
+		cout << " Static tenure tests for symmetric instances finished! " << endl;
 	}
+	void StaticTenureAsymmetricTest(int reps)
+	{
+		for (auto instance : asym_instances)
+		{
+			cout << "Starting static tenure tests for asymmetric graph from file " << instance << endl;
+			string filepath = tabu_result_path + "static_tenure_" + instance;
+			string graph_path = asymmetric_path + instance;
+
+			std::ofstream file(filepath, std::ios_base::app);
+			file << endl << GetTimestamp() << endl;
+			file << "Tenure,Mean Time,Mean Result" << endl;
+
+			auto time_results = vector<double>();
+			auto results = vector<int>();
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(graph_path);
+			auto params = GetTestParams(graph.GetNumOfVertices());
+
+			for (auto tenure : static_tenures)
+			{
+				params.tabu_tenure = tenure;
+				cout << "\tStarting tests for tenure " << tenure << endl;
+				for (int i = 0; i < reps; i++)
+				{
+					auto solver = TabuSearch<int>(params);
+					solver.TimeLimited = true;
+					solver.IsSymmetric = false;
+					timer.Start();
+					auto result = solver.Solve(graph);
+					time_results.push_back(timer.GetTime());
+					results.push_back(result.total_cost);
+				}
+				double mean_time = std::accumulate(time_results.begin(), time_results.end(), 0.0) / time_results.size();
+				double mean_result = std::accumulate(results.begin(), results.end(), 0.0) / results.size();
+				file << tenure << "," << mean_time << "," << mean_result << endl;
+			}
+			file << GetTimestamp() << endl;
+			file.close();
+		}
+		cout << " Static tenure tests for asymmetric instances finished! " << endl;
+	}
+	void StaticTenureTests(int reps)
+	{
+		StaticTenureAsymmetricTest(reps);
+		StaticTenureSymmetricTest(reps);
+		
+	}
+
+	// PROPORTIONAL TENURE TABU TESTS
+
+
+	vector<int> proportional_tenures = { 8,4,6,2 };
+
+	void ProportionalTenureSymmetricTests(int reps)
+	{
+		for (auto instance : sym_instances)
+		{
+			cout << "Starting proportional tenure tests for symmetric graph from file " << instance << endl;
+			string filepath = tabu_result_path + "proportional_tenure_" + instance;
+			string graph_path = symmetric_path + instance;
+
+			std::ofstream file(filepath, std::ios_base::app);
+			file << endl << GetTimestamp() << endl;
+			file << "Tenure,Mean Time,Mean Result" <<endl;
+
+			auto time_results = vector<double>();
+			auto results = vector<int>();
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(graph_path);
+			auto params = GetTestParams(graph.GetNumOfVertices());
+
+			for (auto tenure : proportional_tenures)
+			{
+				params.tabu_tenure = (int)(graph.GetNumOfVertices() / tenure);
+				cout << "\tStarting tests for tenure equal to size/ " << tenure << endl;
+				for (int i = 0; i < reps; i++)
+				{
+					auto solver = TabuSearch<int>(params);
+					solver.TimeLimited = true;
+					solver.IsSymmetric = true;
+					timer.Start();
+					auto result = solver.Solve(graph);
+					time_results.push_back(timer.GetTime());
+					results.push_back(result.total_cost);
+				}
+				double mean_time = std::accumulate(time_results.begin(), time_results.end(), 0.0) / time_results.size();
+				double mean_result = std::accumulate(results.begin(), results.end(), 0.0) / results.size();
+				file << tenure << "," << mean_time << "," << mean_result << endl;
+			}
+			file << GetTimestamp() << endl;
+			file.close();
+		}
+		cout << " Proportional tenure tests for symmetric instances finished! " << endl;
+	}
+	void ProportionalTenureAsymmetricTests(int reps)
+	{
+		for (auto instance : asym_instances)
+		{
+			cout << "Starting proportional tenure tests for asymmetric graph from file " << instance << endl;
+			string filepath = tabu_result_path + "proportional_tenure_" + instance;
+			string graph_path = asymmetric_path + instance;
+
+			std::ofstream file(filepath, std::ios_base::app);
+			file << endl << GetTimestamp() << endl;
+			file << "Tenure,Mean Time,Mean Result" << endl;
+
+			auto time_results = vector<double>();
+			auto results = vector<int>();
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(graph_path);
+			auto params = GetTestParams(graph.GetNumOfVertices());
+
+			for (auto tenure : proportional_tenures)
+			{
+				params.tabu_tenure = (int)(graph.GetNumOfVertices() / tenure);
+				cout << "\tStarting tests for tenure equal to size/ " << tenure << endl;
+				for (int i = 0; i < reps; i++)
+				{
+					auto solver = TabuSearch<int>(params);
+					solver.TimeLimited = true;
+					solver.IsSymmetric = true;
+					timer.Start();
+					auto result = solver.Solve(graph);
+					time_results.push_back(timer.GetTime());
+					results.push_back(result.total_cost);
+				}
+				double mean_time = std::accumulate(time_results.begin(), time_results.end(), 0.0) / time_results.size();
+				double mean_result = std::accumulate(results.begin(), results.end(), 0.0) / results.size();
+				file << tenure << "," << mean_time << "," << mean_result << endl;
+			}
+			file << GetTimestamp() << endl;
+			file.close();
+		}
+		cout << " Proportional tenure tests for asymmetric instances finished! " << endl;
+	}
+	void ProportionalTenureTests(int reps)
+	{
+		ProportionalTenureAsymmetricTests(reps);
+		ProportionalTenureSymmetricTests(reps);
+	}
+
+	void FinalSymmetricTests(int reps)
+	{
+		for (auto instance : sym_instances)
+		{
+			cout << "Starting final tests for symmetric graph from file " << instance << endl;
+			string filepath = tabu_result_path + "final_" + instance;
+			string graph_path = symmetric_path + instance;
+
+			std::ofstream file(filepath, std::ios_base::app);
+			file << endl << GetTimestamp() << endl;
+			file << "Mean Time,Mean Result" << endl;
+
+			auto time_results = vector<double>();
+			auto results = vector<int>();
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(graph_path);
+			auto params = GetTestParams(graph.GetNumOfVertices());
+
+			params.tabu_tenure = 25;
+
+			for (int i = 0; i < reps; i++)
+			{
+				auto solver = TabuSearch<int>(params);
+				solver.TimeLimited = true;
+				solver.IsSymmetric = true;
+				timer.Start();
+				auto result = solver.Solve(graph);
+				time_results.push_back(timer.GetTime());
+				results.push_back(result.total_cost);
+			}
+			double mean_time = std::accumulate(time_results.begin(), time_results.end(), 0.0) / time_results.size();
+			double mean_result = std::accumulate(results.begin(), results.end(), 0.0) / results.size();
+			file << "," << mean_time << "," << mean_result << endl;
+			file << GetTimestamp() << endl;
+			file.close();
+		}
+		cout << " Final tests finished " << endl;
+	}
+	void FinalAsymmetricTests(int reps)
+	{
+		for (auto instance : asym_instances)
+		{
+			cout << "Starting final tests for asymmetric graph from file " << instance << endl;
+			string filepath = tabu_result_path + "final_" + instance;
+			string graph_path = asymmetric_path + instance;
+
+			std::ofstream file(filepath, std::ios_base::app);
+			file << endl << GetTimestamp() << endl;
+			file << "Mean Time,Mean Result" << endl;
+
+			auto time_results = vector<double>();
+			auto results = vector<int>();
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(graph_path);
+			auto params = GetTestParams(graph.GetNumOfVertices());
+
+			params.tabu_tenure = 25;
+
+			for (int i = 0; i < reps; i++)
+			{
+				auto solver = TabuSearch<int>(params);
+				solver.TimeLimited = true;
+				solver.IsSymmetric = false;
+				timer.Start();
+				auto result = solver.Solve(graph);
+				time_results.push_back(timer.GetTime());
+				results.push_back(result.total_cost);
+			}
+			double mean_time = std::accumulate(time_results.begin(), time_results.end(), 0.0) / time_results.size();
+			double mean_result = std::accumulate(results.begin(), results.end(), 0.0) / results.size();
+			file << "," << mean_time << "," << mean_result << endl;
+			file << GetTimestamp() << endl;
+			file.close();
+		}
+		cout << " Final tests finished " << endl;
+	}
+
+	void FinalTests(int reps)
+	{
+		//FinalSymmetricTests( reps);
+		FinalAsymmetricTests(reps);
+	}
+
 	void SymmetricTabuTenureProportionalTests(int reps)
 	{
 		auto tenures = vector<int>{ 2,4,6,8 };
@@ -491,17 +756,18 @@ namespace TSP
 		std::cout << " Proportional iterations tests finished! " << endl;
 	}
 
+	// PROPORTIONAL TABU TESTS
 
-	inline void RunTabuSymmetric(int reps)
+	void RunTabuSymmetric(int reps)
 	{
 
 	}
-	inline void RunTabuAsymmetric(int reps)
+	void RunTabuAsymmetric(int reps)
 	{
 
 	}
 
-	inline void RunTabuTests(int reps)
+	void RunTabuTests(int reps)
 	{
 		RunTabuSymmetric(reps);
 		RunTabuAsymmetric(reps);
