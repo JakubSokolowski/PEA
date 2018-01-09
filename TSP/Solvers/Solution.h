@@ -29,15 +29,12 @@ namespace TSP
 
 	template<typename Cost>
 	TSP::Solution<Cost>::Solution()
-	{
-	}
-
+	{}
 	template<typename Cost>
 	TSP::Solution<Cost>::Solution(Cost distance)
 	{
 		total_cost = distance;
 	}
-
 	template<typename Cost>
 	TSP::Solution<Cost>::Solution(Cost distance, std::vector<int> path)
 	{
