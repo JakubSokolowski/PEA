@@ -30,12 +30,12 @@ namespace TSP
 
 		Cost operator()(uint source, uint destination);		
 
-		virtual const bool IsConnected(uint source, uint destination) override;
-		virtual const Cost GetWeight(uint source, uint destination) override;
-		virtual const uint GetNumOfEdges() override;
-		virtual const uint GetNumOfVertices() override;
-		virtual const std::string GetGraphInfo() override;
-		virtual const void Print() override;
+		virtual bool IsConnected(uint source, uint destination) const override;
+		virtual Cost GetWeight(uint source, uint destination) const override;
+		virtual uint GetNumOfEdges() const override;
+		virtual uint GetNumOfVertices() const override;
+		virtual std::string GetGraphInfo()const override;
+		virtual void Print() const override;
 
 		std::vector<std::vector<Cost>> GetMatrix();
 
@@ -101,31 +101,31 @@ namespace TSP
 	}
 
 	template<typename Cost>
-	const Cost TSP::SymmetricAdjacencyMatrix<Cost>::GetWeight(uint source, uint destination)
+	Cost TSP::SymmetricAdjacencyMatrix<Cost>::GetWeight(uint source, uint destination) const
 	{
 		return adjacency_matrix_[source][destination];
 	}
 
 	template<typename Cost>
-	const uint TSP::SymmetricAdjacencyMatrix<Cost>::GetNumOfEdges()
+	uint TSP::SymmetricAdjacencyMatrix<Cost>::GetNumOfEdges() const
 	{
 		return edges_num_;
 	}
 
 	template<typename Cost>
-	const uint TSP::SymmetricAdjacencyMatrix<Cost>::GetNumOfVertices()
+	uint TSP::SymmetricAdjacencyMatrix<Cost>::GetNumOfVertices() const
 	{
 		return adjacency_matrix_.size();
 	}
 
 	template<typename Cost>
-	const std::string TSP::SymmetricAdjacencyMatrix<Cost>::GetGraphInfo()
+	std::string TSP::SymmetricAdjacencyMatrix<Cost>::GetGraphInfo() const
 	{
 		return std::string();
 	}
 
 	template<typename Cost>
-	const void TSP::SymmetricAdjacencyMatrix<Cost>::Print()
+	void TSP::SymmetricAdjacencyMatrix<Cost>::Print() const
 	{
 		for (auto row : adjacency_matrix_)
 		{
@@ -147,7 +147,7 @@ namespace TSP
 	}
 
 	template<typename Cost>
-	const bool TSP::SymmetricAdjacencyMatrix<Cost>::IsConnected(uint source, uint destination)
+	bool TSP::SymmetricAdjacencyMatrix<Cost>::IsConnected(uint source, uint destination) const
 	{
 		return adjacency_matrix_[source][destination] != std::numeric_limits<Cost>::max();
 	}

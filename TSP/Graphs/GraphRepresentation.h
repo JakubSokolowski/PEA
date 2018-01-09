@@ -37,13 +37,13 @@ namespace TSP
 
 	    virtual void AddEdge(uint source, uint destination, Cost cost_) = 0;
 
-		virtual const bool IsConnected(uint source, uint destination) = 0;
-		virtual const Cost GetWeight(uint source, uint destination) = 0;
-		virtual const uint GetNumOfEdges() = 0;
-		virtual const uint GetNumOfVertices() = 0;		
-		virtual const std::string GetGraphInfo() = 0;
-		virtual const void Print() = 0;
-		virtual Cost GetTourCost(const std::vector<Cost> &tour);
+		virtual bool IsConnected(uint source, uint destination) const = 0;
+		virtual Cost GetWeight(uint source, uint destination) const = 0;
+		virtual uint GetNumOfEdges() const = 0;
+		virtual uint GetNumOfVertices() const = 0;		
+		virtual std::string GetGraphInfo() const = 0;
+		virtual void Print() const = 0;
+		virtual Cost GetTourCost(const std::vector<Cost> &tour) const;
 
 	protected:
 
@@ -92,7 +92,7 @@ namespace TSP
 
 	
 	template<typename Cost>
-	inline Cost GraphRepresentation<Cost>::GetTourCost(const std::vector<Cost>& tour)
+	inline Cost GraphRepresentation<Cost>::GetTourCost(const std::vector<Cost>& tour) const
 	{
 		Cost result{};
 		for (uint i = 0; i < GetNumOfVertices(); ++i)
