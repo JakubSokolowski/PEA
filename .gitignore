@@ -260,3 +260,7 @@ paket-files/
 __pycache__/
 *.pyc
 /TSP/Asymmetric Instances
+/TSP/10.txt
+/TSP/S19.txt
+/TSP/17as.txt
+/TSP/10.txt

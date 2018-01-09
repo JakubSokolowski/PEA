@@ -55,6 +55,9 @@
     <Filter Include="Solvers\Tabu Search">
       <UniqueIdentifier>{192c7307-2c2f-4116-b737-cfd312136a5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Solvers\Genetic">
+      <UniqueIdentifier>{0d3d1198-25b2-4450-822e-72481555eee4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -117,9 +120,6 @@
     <ClInclude Include="Graphs\AdjacencyMatrix\SymmetricAdjacencyMatrix.h">
       <Filter>Graphs\AdjacencyMatrix</Filter>
     </ClInclude>
-    <ClInclude Include="Solvers\Problem.h">
-      <Filter>Solvers</Filter>
-    </ClInclude>
     <ClInclude Include="Solvers\Solution.h">
       <Filter>Solvers</Filter>
     </ClInclude>
@@ -146,6 +146,21 @@
     </ClInclude>
     <ClInclude Include="Benchmarks\Timer.h">
       <Filter>Benchmarks</Filter>
+    </ClInclude>
+    <ClInclude Include="Solvers\Genetic\GeneticAlgorithm.h">
+      <Filter>Solvers\Genetic</Filter>
+    </ClInclude>
+    <ClInclude Include="Solvers\Genetic\Population.h">
+      <Filter>Solvers\Genetic</Filter>
+    </ClInclude>
+    <ClInclude Include="Solvers\Genetic\Chromosome.h">
+      <Filter>Solvers\Genetic</Filter>
+    </ClInclude>
+    <ClInclude Include="Solvers\Genetic\RandomHelper.h">
+      <Filter>Solvers\Genetic</Filter>
+    </ClInclude>
+    <ClInclude Include="Solvers\Genetic\Mutation.h">
+      <Filter>Solvers\Genetic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

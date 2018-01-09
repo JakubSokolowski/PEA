@@ -213,7 +213,11 @@
     <ClInclude Include="Graphs\GraphRepresentation.h" />
     <ClInclude Include="Solvers\BranchAndBound\BranchAndBound.h" />
     <ClInclude Include="Solvers\BranchAndBound\LittleMatrix.h" />
-    <ClInclude Include="Solvers\Problem.h" />
+    <ClInclude Include="Solvers\Genetic\Chromosome.h" />
+    <ClInclude Include="Solvers\Genetic\GeneticAlgorithm.h" />
+    <ClInclude Include="Solvers\Genetic\Mutation.h" />
+    <ClInclude Include="Solvers\Genetic\Population.h" />
+    <ClInclude Include="Solvers\Genetic\RandomHelper.h" />
     <ClInclude Include="Solvers\Solution.h" />
     <ClInclude Include="Solvers\Solver.h" />
     <ClInclude Include="Solvers\TabuSearch\Move.h" />
