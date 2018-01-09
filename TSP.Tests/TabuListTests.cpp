@@ -24,7 +24,6 @@ namespace TSPTests
 			list.ForbidMove(MoveParameters{ 0,0 });
 			Assert::IsTrue(list.IsForbidden(MoveParameters{ 0,0 }));
 		}
-
 		TEST_METHOD(ForbidMoveTest)
 		{
 			TabuList list{ 15,15 };
@@ -34,7 +33,6 @@ namespace TSPTests
 				Assert::IsTrue( list.IsForbidden(MoveParameters{ i,i + 1 }));
 			Assert::IsFalse( list.IsForbidden(MoveParameters{ 20,20 }));
 		}
-
 		TEST_METHOD(MaxLengthConstraintTest)
 		{
 			TabuList list = TabuList(10, 15);
@@ -44,7 +42,6 @@ namespace TSPTests
 			list.ForbidMove(MoveParameters{ 10,10 });
 			Assert::IsFalse(list.IsForbidden(MoveParameters{ 0,0 }));
 		}
-		
 		TEST_METHOD(DecreaseTenureTest)
 		{
 			TabuList list = TabuList(10, 5);
@@ -58,32 +55,29 @@ namespace TSPTests
 			for (int i = 0; i < 10; i++)
 				Assert::IsFalse(list.IsForbidden(MoveParameters{ i,i }));
 		}
-
 		TEST_METHOD(SwapIsForbiddenTest)
 		{
-			SwapTabuList list{ 1 };
+			SwapTabuList list{};
 			list.CreateList(2);
-			list.ForbidMove(MoveParameters{ 0,0 });
+			list.ForbidMove(MoveParameters{ 0,0 },1);
 			Assert::IsTrue(list.IsForbidden(MoveParameters{ 0,0 }));
 		}
-
 		TEST_METHOD(SwapForbidMoveTest)
 		{
-			SwapTabuList list{ 15 };
+			SwapTabuList list{ };
 			list.CreateList(10);
 			for (int i = 0; i < 9; i++)
-				list.ForbidMove(MoveParameters{ i,i + 1 });
+				list.ForbidMove(MoveParameters{ i,i + 1 },15);
 			for (int i = 0; i < 9; i++)
 				Assert::IsTrue(list.IsForbidden(MoveParameters{ i,i + 1 }));
 			Assert::IsFalse(list.IsForbidden(MoveParameters{ 9,0 }));
 		}				
-
 		TEST_METHOD(SwapDecreaseTenureTest)
 		{
-			SwapTabuList list{ 5 };
+			SwapTabuList list{ };
 			list.CreateList(10);
 			for (int i = 0; i < 10; i++)
-				list.ForbidMove(MoveParameters{ i,i });
+				list.ForbidMove(MoveParameters{ i,i },5);
 			for (int i = 0; i < 10; i++)
 				Assert::IsTrue(list.IsForbidden(MoveParameters{ i,i }));
 			for (int i = 0; i < 5; i++)

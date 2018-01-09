@@ -85,6 +85,26 @@ namespace TSPTests
 			Assert::AreEqual(true, IsAccurate(9, actual.total_cost, 0.8), message.c_str());		
 			Assert::AreEqual(true, std::is_permutation(expected.begin(), expected.end(), actual.tour.begin()));
 		}
+		TEST_METHOD(TabuSearchFreqSym5)
+		{
+			std::vector<std::vector<int>> matrix =
+			{
+				{ 0, 1, 3, 4, 5 },
+				{ 1, 0, 1, 4, 8 },
+				{ 3, 1, 0, 5, 1 },
+				{ 4, 4, 5, 0, 2 },
+				{ 5, 8, 1, 2, 0 }
+			};
+
+			auto expected = std::vector<int>{ 1, 2, 3, 4, 5, 1 };
+			auto graph = SymmetricAdjacencyMatrix<int>(matrix);
+			auto solver = TabuSearch<int>();
+			auto move = new Swap<int>();
+			auto actual = solver.SolveFreq(graph);
+			std::wstring message = L"Optimal: 9, actual: " + std::to_wstring(actual.total_cost);
+			Assert::AreEqual(true, IsAccurate(9, actual.total_cost, 0.8), message.c_str());
+			Assert::AreEqual(true, std::is_permutation(expected.begin(), expected.end(), actual.tour.begin()));
+		}
 
 		TEST_METHOD(TabuSearchSym17)
 		{
@@ -99,26 +119,61 @@ namespace TSPTests
 			std::wstring message = L"Optimal: 2085, actual: " +  std::to_wstring(actual.total_cost);
 			Assert::AreEqual(true, IsAccurate(2085, actual.total_cost, 0.90),message.c_str());
 		}
-
-		TEST_METHOD(TabuSearchSym195)
-		{
-			auto params = TabuParameters();
-			params.max_iterations = 5000;
-			params.tabu_list_length = 20;
-			params.tabu_tenure = 15;
-			params.max_no_improve = 500;
-			params.restart_count = 3;
-			params.max_time_s = 10 * 60;
-
-			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Symmetric\\rat195.txt");
-			auto solver = TabuSearch<int>(params);
+		TEST_METHOD(TabuSearchFreqSym17)
+		{			
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Symmetric\\S17.txt");
+			auto solver = TabuSearch<int>();
 			auto move = new Swap<int>();
-			auto actual = solver.Solve(graph);
-			std::wstring message = L"Optimal: 2323, actual: " + std::to_wstring(actual.total_cost);
-			Assert::AreEqual(true, IsAccurate(2085, actual.total_cost, 0.9), message.c_str());
+			auto actual = solver.SolveFreq(graph);	
+			Assert::AreEqual(1, actual.tour.front());
+			Assert::AreEqual(1, actual.tour.back());
+			std::wstring message = L"Optimal: 2085, actual: " + std::to_wstring(actual.total_cost);
+			Assert::AreEqual(true, IsAccurate(2085, actual.total_cost, 0.90), message.c_str());
+		}
+		
+		TEST_METHOD(TabuSearchAsymmetric10)
+		{	
+			auto graph = ParseGraphFile<AsymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Asymmetric\\AS10.txt");
+			auto solver = TabuSearch<int>();
+			auto move = new Swap<int>();
+			solver.IsSymmetric = false;
+			auto actual = solver.Solve(graph);			
+			Assert::AreEqual(1, actual.tour.front());
+			Assert::AreEqual(1, actual.tour.back());
+			std::wstring message = L"Optimal: 1454, actual: " + std::to_wstring(actual.total_cost);
+			Assert::AreEqual(true, IsAccurate(1454, actual.total_cost, 0.90), message.c_str());
 		}
 
-		TEST_METHOD(TabuSearchSym280)
+		TEST_METHOD(TabuSearchAsymmetric17)
+		{
+			auto path = std::vector<int>{ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,1 };
+			auto graph = ParseGraphFile<AsymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Asymmetric\\AS17.txt");
+			auto solver = TabuSearch<int>();
+			auto move = new Swap<int>();
+			solver.IsSymmetric = false;
+			auto actual = solver.Solve(graph);
+			Assert::AreEqual(true, std::is_permutation(path.begin(), path.end(), actual.tour.begin()));
+			Assert::AreEqual(1, actual.tour.front());
+			Assert::AreEqual(1, actual.tour.back());
+			std::wstring message = L"Optimal: 1115, actual: " + std::to_wstring(actual.total_cost);
+			Assert::AreEqual(true, IsAccurate(1115, actual.total_cost, 0.7), message.c_str());
+		}
+		TEST_METHOD(TabuSearchAsymmetric33)
+		{
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Asymmetric\\AS33.txt");
+			auto solver = TabuSearch<int>();
+			auto move = new Swap<int>();
+			solver.IsSymmetric = false;
+			auto actual = solver.Solve(graph);
+			Assert::AreEqual(1, actual.tour.front());
+			Assert::AreEqual(1, actual.tour.back());
+			std::wstring message = L"Optimal: 1286, actual: " + std::to_wstring(actual.total_cost);
+			Assert::AreEqual(true, IsAccurate(1286, actual.total_cost, 0.7), message.c_str());
+		}
+		
+		
+		
+		/*TEST_METHOD(TabuSearchSym280)
 		{
 			auto params = TabuParameters();
 			params.max_iterations = 5000;
@@ -134,9 +189,9 @@ namespace TSPTests
 			auto actual = solver.Solve(graph);
 			std::wstring message = L"Optimal: 2579, actual: " + std::to_wstring(actual.total_cost);
 			Assert::AreEqual(true, IsAccurate(2579, actual.total_cost, 0.9), message.c_str());
-		}
+		}*/
 
-		TEST_METHOD(TabuSearchSym575)
+	/*	TEST_METHOD(TabuSearchSym575)
 		{
 			auto params = TabuParameters();
 			params.max_iterations = 5000;
@@ -152,7 +207,7 @@ namespace TSPTests
 			auto actual = solver.Solve(graph);
 			std::wstring message = L"Optimal: 6773, actual: " + std::to_wstring(actual.total_cost);
 			Assert::AreEqual(true, IsAccurate(6773, actual.total_cost, 0.9), message.c_str());
-		}
+		}*/
 
 	};
 }

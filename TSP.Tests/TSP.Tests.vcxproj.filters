@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Graphs">
+      <UniqueIdentifier>{529a8b33-4790-4fda-8568-bc36365e70c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BranchAndBound">
+      <UniqueIdentifier>{e07b54a5-b35d-4a8c-9dcb-b176ac65391b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TabuTests">
+      <UniqueIdentifier>{068bd92a-41d5-427d-b291-622319b4855b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GeneticTests">
+      <UniqueIdentifier>{d3a545ce-afdf-4746-afa6-eb6221980af8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -27,25 +39,40 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AdjacencyMatrixTests.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Graphs</Filter>
     </ClCompile>
     <ClCompile Include="GraphDataParsingTests.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Graphs</Filter>
     </ClCompile>
     <ClCompile Include="BranchAndBoundLittleAlgorithmTests.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\BranchAndBound</Filter>
     </ClCompile>
     <ClCompile Include="LittleMatrixTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TabuSearchTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TabuListTests.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\BranchAndBound</Filter>
     </ClCompile>
     <ClCompile Include="MoveTests.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\TabuTests</Filter>
+    </ClCompile>
+    <ClCompile Include="TabuListTests.cpp">
+      <Filter>Source Files\TabuTests</Filter>
+    </ClCompile>
+    <ClCompile Include="TabuSearchTests.cpp">
+      <Filter>Source Files\TabuTests</Filter>
+    </ClCompile>
+    <ClCompile Include="ChromosomeTests.cpp">
+      <Filter>Source Files\GeneticTests</Filter>
+    </ClCompile>
+    <ClCompile Include="PopulationTests.cpp">
+      <Filter>Source Files\GeneticTests</Filter>
+    </ClCompile>
+    <ClCompile Include="CrossoverTests.cpp">
+      <Filter>Source Files\GeneticTests</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneticAlgorithmTests.cpp">
+      <Filter>Source Files\GeneticTests</Filter>
+    </ClCompile>
+    <ClCompile Include="MutationTests.cpp">
+      <Filter>Source Files\GeneticTests</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

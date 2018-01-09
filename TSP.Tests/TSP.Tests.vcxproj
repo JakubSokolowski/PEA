@@ -206,10 +206,15 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ChromosomeTests.cpp" />
+    <ClCompile Include="CrossoverTests.cpp" />
+    <ClCompile Include="GeneticAlgorithmTests.cpp" />
     <ClCompile Include="LittleMatrixTests.cpp" />
     <ClCompile Include="BranchAndBoundLittleAlgorithmTests.cpp" />
     <ClCompile Include="GraphDataParsingTests.cpp" />
     <ClCompile Include="MoveTests.cpp" />
+    <ClCompile Include="MutationTests.cpp" />
+    <ClCompile Include="PopulationTests.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">Create</PrecompiledHeader>

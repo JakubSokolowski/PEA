@@ -172,7 +172,7 @@ namespace TSPTests
 			auto Graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Asymmetric\\AS10.txt");
 			BranchAndBound<int> solver = BranchAndBound<int>();
 			auto result = solver.Solve(Graph);
-			Assert::AreEqual(10, result.total_cost);		
+			Assert::AreEqual(1454, result.total_cost);		
 		}
 		TEST_METHOD(BranchAndBoundAsymmetic17Int)
 		{
@@ -181,7 +181,7 @@ namespace TSPTests
 			auto Graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Asymmetric\\AS17.txt");
 			BranchAndBound<int> solver = BranchAndBound<int>();
 			auto result = solver.Solve(Graph);
-			Assert::AreEqual(139, result.total_cost);
+			Assert::AreEqual(1115, result.total_cost);
 		}
 
 
