@@ -31,7 +31,7 @@
     <ProjectGuid>{DD5A1068-48AF-4689-8963-048612C3813E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>TSP</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -206,6 +206,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Benchmarks\PerformanceTests.h" />
+    <ClInclude Include="Benchmarks\TestRunner.h" />
     <ClInclude Include="Benchmarks\Timer.h" />
     <ClInclude Include="Graphs\AdjacencyMatrix\AsymmetricAdjacencyMatrix.h" />
     <ClInclude Include="Graphs\AdjacencyMatrix\SymmetricAdjacencyMatrix.h" />
@@ -213,6 +214,7 @@
     <ClInclude Include="Graphs\GraphRepresentation.h" />
     <ClInclude Include="Solvers\BranchAndBound\BranchAndBound.h" />
     <ClInclude Include="Solvers\BranchAndBound\LittleMatrix.h" />
+    <ClInclude Include="Solvers\BruteForce\BruteForce.h" />
     <ClInclude Include="Solvers\Genetic\Chromosome.h" />
     <ClInclude Include="Solvers\Genetic\GeneticAlgorithm.h" />
     <ClInclude Include="Solvers\Genetic\Mutation.h" />

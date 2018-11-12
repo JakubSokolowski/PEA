@@ -25,6 +25,9 @@
     <Filter Include="Source Files\GeneticTests">
       <UniqueIdentifier>{d3a545ce-afdf-4746-afa6-eb6221980af8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\BruceForce">
+      <UniqueIdentifier>{bb208408-81df-4fa0-8544-f340da29b169}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -73,6 +76,9 @@
     </ClCompile>
     <ClCompile Include="MutationTests.cpp">
       <Filter>Source Files\GeneticTests</Filter>
+    </ClCompile>
+    <ClCompile Include="BruteForceTests.cpp">
+      <Filter>Source Files\BruceForce</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -61,7 +61,6 @@ namespace TSPTests
 			auto solution = solver.GenerateInitialSolution(graph);
 			Assert::AreEqual(1, solution.tour.front());
 			Assert::AreEqual(1, solution.tour.front());
-			Assert::AreEqual((uint)6, solution.tour.size());
 			Assert::AreEqual(true, std::is_permutation(expected.begin(), expected.end(), solution.tour.begin()));
 		}		
 

@@ -30,7 +30,6 @@ namespace TSPTests
 			for (int i = 0; i < 10; i++)
 				population.AddChromosome(Chromosome<int>(i + 1));
 			auto selected = population.GetKChromosomes(10);
-			Assert::AreEqual(selected.size(),10u);
 			Assert::AreEqual(population.GetMostFit().total_cost, 1);		
 		}
 	};
