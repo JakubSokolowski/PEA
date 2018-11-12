@@ -115,8 +115,8 @@ namespace TSP
 	void WriteAsymmetricMatrix(std::vector<std::vector<int>> &vec)
 	{
 
-		string filename = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\"
-			+ std::to_string(vec.size()) + "as.txt";
+		string filename = random_asymmetric_path
+			+ std::to_string(vec.size()) + ".txt";
 		if (FileExists(filename))
 			return;
 		std::ofstream file(filename);
@@ -134,7 +134,7 @@ namespace TSP
 	void WriteSymmetricMatrix(std::vector<std::vector<int>> &vec)
 	{
 
-		string filename = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\"
+		string filename = random_symmetric_path
 			+ std::to_string(vec.size()) + ".txt";
 		if (FileExists(filename))
 			return;
@@ -152,17 +152,48 @@ namespace TSP
 	}
 	void GenerateProblemData()
 	{
-		auto instances = vector<int>{ 10 };
+		auto instances = vector<int>{ 5,6,7,8,9,10,11,12,13,14,15,16,17 };
 		for (auto instance : instances)
 		{
-			WriteSymmetricMatrix(GenerateSymmetricMatrix(instance, 999));
-			WriteAsymmetricMatrix(GenerateAsymmetricMatrix(instance, 999));
+			WriteSymmetricMatrix(GenerateSymmetricMatrix(instance, 350));
+			WriteAsymmetricMatrix(GenerateAsymmetricMatrix(instance, 350));
 		}
 	}
-	void WriteTestResults(vector<double> &results, vector<std::pair<double,double>> &statistics, string filename, bool symmetric)
+	void SolveProblems() {
+		auto instances = vector<int>{ 5,6,7,8,9,10,11,12,13,14,15,16,17 };
+		vector<std::pair<int, int>> sym_sol, asym_sol;
+		for (auto instance : instances) {
+			auto sym_path = random_symmetric_path + std::to_string(instance) + ".txt";
+			auto sym_graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(sym_path);
+			auto asym_graph = ParseGraphFile<AsymmetricAdjacencyMatrix<int>, int>(sym_path);
+			auto solver = BruteForce<int>();
+			auto sym_result = solver.Solve(sym_graph);
+			std::cout << "Finished symmetric" << instance << "\n";
+			auto asym_result = solver.Solve(asym_graph);
+			std::cout << "Finished asymmetric" << instance << "\n";
+			sym_sol.push_back(std::pair<int,int>(instance, sym_result.total_cost));
+			asym_sol.push_back(std::pair<int, int>(instance, asym_result.total_cost));
+		}
+
+		string filepath = random_symmetric_path + "solutions3.txt";
+		if (FileExists(filepath)) {
+			return;
+		}
+		std::ofstream file1(filepath);
+		for (auto sol : sym_sol) {
+			file1 << sol.first << " " << sol.second << "\n";
+		}
+		filepath = random_asymmetric_path + "solutions3.txt";
+		std::ofstream file2(filepath);
+		for (auto sol : asym_sol) {
+			file2 << sol.first << " " << sol.second << "\n";
+		}
+		std::cout << "Finished solving instances!\n";
+
+	}
+	void WriteTestResults(vector<double> &results, vector<std::pair<double,double>> &statistics, string filename, string algorithm, bool symmetric)
 	{
-		string dir = symmetric ? "Symmetric" : "Asymmetric";
-		string filepath = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\" + dir + " Results\\"
+		string filepath = result_path + algorithm + "\\" 
 			+ filename + ".txt";
 		if (FileExists(filepath))
 			return;
@@ -196,21 +227,21 @@ namespace TSP
 	
 	// BRANCH AND BOUND
 
-	void RunSymmetricTests(int reps)
+	void RunSymmetricBNBTests(int reps)
 	{
 		cout << "Starting tests for Symmetric instances" << endl;
 
-		auto problem_sizes = vector<int>{ 10, 17, 29 };
+		//auto problem_sizes = vector<int>{10, 17, 29 };
+		auto problem_sizes = vector<int>{ 10,17,29};
 		auto time_results = vector<double>();
 		auto all_results = vector<double>();
 		auto statistics = vector<std::pair<double, double>>();
 
-		GenerateProblemData();
 
 		for (auto instance : problem_sizes)
 		{
 			std::cout << "Starting tests for size " << instance << std::endl;
-			string filepath = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Symmetric Instances\\"
+			string filepath = tsplib_symmetric_path 
 				+ std::to_string(instance) + ".txt";
 			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(filepath);
 			auto solver = BranchAndBound<int>();
@@ -236,24 +267,23 @@ namespace TSP
 			time_results.push_back(time);
 			std::cout << "End of tests for size " << instance << std::endl;
 		}
-		WriteTestResults(time_results, statistics, "Symmetric" + std::to_string(reps), true);
+		WriteTestResults(time_results, statistics, "Symmetric" + std::to_string(reps) ,"BNB", true);
 	}
-	void RunAsymmetricTests(int reps)
+	void RunAsymmetricBNBTests(int reps)
 	{
 		cout << "Starting tests for Asymmetric instances" << endl;
 
-		auto problem_sizes = vector<int>{ 10, 17, 33};
+		auto problem_sizes = vector<int>{ 10,17,33 };
 		auto time_results = vector<double>();
 		auto all_results = vector<double>();
 		auto statistics = vector<std::pair<double, double>>();
-		GenerateProblemData();
 
 		for (auto instance : problem_sizes)
 		{
 			std::cout << "Starting tests for size " << instance << std::endl;
-			string filepath = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Asymmetric Instances\\"
+			string filepath = tsplib_asymmetric_path
 				+ std::to_string(instance) + ".txt";
-			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(filepath);
+			auto graph = ParseGraphFile<AsymmetricAdjacencyMatrix<int>, int>(filepath);
 			auto solver = BranchAndBound<int>();
 
 			double time = 0.0;
@@ -276,14 +306,108 @@ namespace TSP
 			time_results.push_back(time);
 			std::cout << "End of tests for size " << instance << std::endl;
 		}
-		WriteTestResults(time_results, statistics, "Asymmetric" + std::to_string(reps), false);
+		WriteTestResults(time_results, statistics, "Asymmetric" + std::to_string(reps),"BNB",  false);
 	}
-	void RunTests(int reps)
+	void RunBNBTests(int reps)
 	{
-		RunSymmetricTests(reps);
-		RunAsymmetricTests(reps);
+		RunSymmetricBNBTests(reps);
+		RunAsymmetricBNBTests(reps);
+		std::cout << "BNB tests finished!\n";
 	}
 	
+	// BruteForce
+
+	void RunBruteForceSymmetricTests(int reps, std::vector<int> problem_sizes) {
+		cout << "Starting tests for Symmetric instances" << endl;
+
+		auto time_results = vector<double>();
+		auto all_results = vector<double>();
+		auto statistics = vector<std::pair<double, double>>();
+
+		for (auto instance : problem_sizes)
+		{
+			std::cout << "Starting tests for size " << instance << std::endl;
+			string filepath = random_symmetric_path
+				+ std::to_string(instance) + ".txt";
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(filepath);
+			auto solver = BruteForce<int>();
+
+			double time = 0.0;
+
+			for (int i = 0; i < 3; i++)
+			{
+				solver.Solve(graph);
+			}
+
+			for (int i = 0; i < reps; i++)
+			{
+				StartCounter();
+				solver.Solve(graph);
+				auto result = GetCounter();
+				all_results.push_back(result);
+				time += result;
+			}
+
+			double stdev, var;
+			CalculateStdev(all_results, stdev, var);
+
+			statistics.push_back(std::pair<double, double>{stdev, var});
+			all_results.clear();
+
+			time = time / reps;
+			time_results.push_back(time);
+			std::cout << "End of tests for size " << instance << std::endl;
+		}
+		WriteTestResults(time_results, statistics, "Symmetric" + std::to_string(reps), "BruteForce", true);
+	}
+	void RunBruteForceAsymmetricTests(int reps, vector<int>problem_sizes) {
+		cout << "Starting tests for Asymmetric instances" << endl;
+
+		auto time_results = vector<double>();
+		auto all_results = vector<double>();
+		auto statistics = vector<std::pair<double, double>>();
+
+		for (auto instance : problem_sizes)
+		{
+			std::cout << "Starting tests for size " << instance << std::endl;
+			string filepath = random_asymmetric_path
+				+ std::to_string(instance) + ".txt";
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(filepath);
+			auto solver = BruteForce<int>();
+
+			double time = 0.0;
+
+			//warming the cache line
+			for (int i = 0; i < 3; i++)
+			{
+				solver.Solve(graph);
+			}
+
+			for (int i = 0; i < reps; i++)
+			{
+				StartCounter();
+				solver.Solve(graph);
+				auto result = GetCounter();
+				all_results.push_back(result);
+				time += result;
+			}
+
+			double stdev, var;
+			CalculateStdev(all_results, stdev, var);
+
+			statistics.push_back(std::pair<double, double>{stdev, var});
+			all_results.clear();
+			time = time / reps;
+			time_results.push_back(time);
+			std::cout << "End of tests for size " << instance << std::endl;
+		}
+		WriteTestResults(time_results, statistics, "Asymmetric" + std::to_string(reps),"BruteForce", false);
+	}
+	void RunBruteForceTests(int reps, std::vector<int> sym, std::vector<int> asym) {
+		RunBruteForceSymmetricTests(reps, sym);
+		RunBruteForceAsymmetricTests(reps, asym);
+		std::cout << "End of BruteForce tests! \n";
+	}
 	
 	// TABU SEARCH
 

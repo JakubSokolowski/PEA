@@ -55,9 +55,10 @@ void StartMenu()
 	default_params.tabu_tenure = 25;
 
 
-	Solution<int> result_bb;
+	Solution<int> result_bb, result_bf;
 	Solution<int> result_ts;
 	double time_bb = 0.0;
+	double time_bf = 0.0;
 	double time_ts;
 	uint visited_nodes = 0;
 	char option = '1';
@@ -65,8 +66,8 @@ void StartMenu()
 	{
 		cout << "\n--Menu--" << endl;
 		cout << "Solving travelling salesman problem" << endl;
-		cout << "1. BranchAndBound" << endl;
-		cout << "2. TabuSearch" << endl;
+		cout << "1. BruteForce" << endl;
+		cout << "2. BranchAndBound" << endl;
 		cout << "O. Exit" << endl;
 
 		option = _getche();
@@ -83,6 +84,72 @@ void StartMenu()
 		switch (option)
 		{
 		case '1':
+		{
+			do
+			{
+				cout << "\n--Menu--" << endl;
+				cout << "Travelling salesman problem using BruteForce method" << endl;
+				cout << "1. Symmetric" << endl;
+				cout << "2. Asymetric" << endl;
+				cout << "3. Show last result" << endl;
+				cout << "O. Exit" << endl;
+
+				option = _getche();
+
+				string filepath;
+				switch (option)
+				{
+				case '1':
+				{
+					cout << "\nEnter the relative filepath: " << endl;
+					std::getline(std::cin, filepath);
+					if (FileExists(filepath))
+					{
+						auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(filepath);
+						auto solver = BruteForce<int>();
+						StartCounter();
+						result_bf = solver.Solve(graph);
+						time_bf = GetCounter();
+						cout << "\nTime of solving: " << time_bf << endl;
+						cout << "The optimal tour: " << endl;
+						result_bf.PrintTour();
+						cout << "The total tour distance: " << result_bf.total_cost;
+					}
+				}break;
+
+				case '2':
+				{
+					cout << "\nEnter the relative filepath: \n" << endl;
+					std::getline(std::cin, filepath);
+					if (FileExists(filepath))
+					{
+						auto graph = ParseGraphFile<AsymmetricAdjacencyMatrix<int>, int>(filepath);
+						auto solver = BruteForce<int>();
+						StartCounter();
+						result_bf = solver.Solve(graph);
+						time_bf = GetCounter();
+						cout << "\nTime of solving: " << time_bf << endl;
+						cout << "The optimal tour: " << endl;
+						result_bf.PrintTour();
+						cout << "The total tour distance: " << result_bf.total_cost << endl;
+					}
+				}break;
+				case '3':
+				{
+					cout << "\nTime of solving: " << time_bf << endl;
+					cout << "The optimal tour: " << endl;
+					result_bf.PrintTour();
+					cout << "The total tour distance: " << result_bf.total_cost << endl;
+
+				}break;
+				case '0':
+					break;
+				default:
+					break;
+				}
+			} while (option != '0');
+		}break;
+		case '2':
 		{
 			do
 			{
@@ -151,7 +218,7 @@ void StartMenu()
 			} while (option != '0');
 		}break;
 
-		case '2':
+		case 'X':
 		{
 			do
 			{
@@ -247,8 +314,14 @@ void StartMenu()
 
 int main()
 {
-	StartMenu();
-	//RunTests(100);
+	//StartMenu();
+	//GenerateProblemData();
+	std::vector<int> sym{ 5,6,7,8,9,10 };
+	std::vector<int> asym{ 5,7,10 };
+	//RunBruteForceTests(100, sym, sym);
+	//SolveProblems();
+	RunBNBTests(10);
+	//RunBruteForce(100);
 	//TimeEstimation();
 	//StaticTenuresTest();
 	//SymmetricTabuTenureTests(5);
@@ -263,3 +336,4 @@ int main()
 	//std::cout << " Fin !" << std::endl;
 	std::cin.get();
 }
+
