@@ -264,3 +264,5 @@ __pycache__/
 /TSP/S19.txt
 /TSP/17as.txt
 /TSP/10.txt
+/TSP/Benchmarks/ProblemData/Random
+/TSP/Benchmarks/Results/BruteForce
