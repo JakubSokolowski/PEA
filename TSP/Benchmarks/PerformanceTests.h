@@ -12,6 +12,7 @@
 #include "../Graphs/GraphDataParser.h"
 #include "../Solvers/BranchAndBound/BranchAndBound.h"
 #include "../Solvers/TabuSearch/TabuSearch.h"
+#include "../Solvers/BruteForce/BruteForce.h"
 #include <vector>
 #include <string>
 #include <random>
@@ -35,8 +36,6 @@ namespace TSP
 
 	// PATHS
 
-	string symmetric_path = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Symmetric\\";
-	string asymmetric_path = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Asymmetric\\";
 	string tabu_result_path = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\Results\\Tabu\\";
 
 	// TIME MEASUREMENT
@@ -331,7 +330,7 @@ namespace TSP
 		for (auto instance : asym_instances)
 		{
 			cout << "Starting for graph " + instance << endl;
-			string graph_path = asymmetric_path + instance;
+			string graph_path = tsplib_asymmetric_path + instance;
 			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(graph_path);
 
 			auto params = GetTestParams(graph.GetNumOfVertices());
@@ -361,7 +360,7 @@ namespace TSP
 		for (auto instance : sym_instances)
 		{
 			cout << "Starting for graph " + instance << endl;
-			string graph_path = symmetric_path + instance;
+			string graph_path = tsplib_symmetric_path + instance;
 			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(graph_path);
 
 			cout << "Vertices: " << graph.GetNumOfVertices() << " Edges: " << graph.GetNumOfEdges() << endl;
@@ -398,7 +397,7 @@ namespace TSP
 		{
 			cout << "Starting static tenure tests for symmetric graph from file " << instance << endl;
 			string filepath = tabu_result_path + "static_tenure_" + instance;
-			string graph_path = symmetric_path + instance;
+			string graph_path = tsplib_symmetric_path + instance;
 
 			std::ofstream file(filepath, std::ios_base::app);
 			file << endl << GetTimestamp() << endl;
@@ -438,7 +437,7 @@ namespace TSP
 		{
 			cout << "Starting static tenure tests for asymmetric graph from file " << instance << endl;
 			string filepath = tabu_result_path + "static_tenure_" + instance;
-			string graph_path = asymmetric_path + instance;
+			string graph_path = tsplib_asymmetric_path + instance;
 
 			std::ofstream file(filepath, std::ios_base::app);
 			file << endl << GetTimestamp() << endl;
@@ -490,7 +489,7 @@ namespace TSP
 		{
 			cout << "Starting proportional tenure tests for symmetric graph from file " << instance << endl;
 			string filepath = tabu_result_path + "proportional_tenure_" + instance;
-			string graph_path = symmetric_path + instance;
+			string graph_path = tsplib_symmetric_path + instance;
 
 			std::ofstream file(filepath, std::ios_base::app);
 			file << endl << GetTimestamp() << endl;
@@ -530,7 +529,7 @@ namespace TSP
 		{
 			cout << "Starting proportional tenure tests for asymmetric graph from file " << instance << endl;
 			string filepath = tabu_result_path + "proportional_tenure_" + instance;
-			string graph_path = asymmetric_path + instance;
+			string graph_path = tsplib_asymmetric_path + instance;
 
 			std::ofstream file(filepath, std::ios_base::app);
 			file << endl << GetTimestamp() << endl;
@@ -576,7 +575,7 @@ namespace TSP
 		{
 			cout << "Starting final tests for symmetric graph from file " << instance << endl;
 			string filepath = tabu_result_path + "final_" + instance;
-			string graph_path = symmetric_path + instance;
+			string graph_path = tsplib_symmetric_path + instance;
 
 			std::ofstream file(filepath, std::ios_base::app);
 			file << endl << GetTimestamp() << endl;
@@ -613,7 +612,7 @@ namespace TSP
 		{
 			cout << "Starting final tests for asymmetric graph from file " << instance << endl;
 			string filepath = tabu_result_path + "final_" + instance;
-			string graph_path = asymmetric_path + instance;
+			string graph_path = tsplib_asymmetric_path + instance;
 
 			std::ofstream file(filepath, std::ios_base::app);
 			file << endl << GetTimestamp() << endl;
@@ -668,7 +667,7 @@ namespace TSP
 
 			std::cout << "Starting tests for file " << instances[file_id] << std::endl;
 			string filepath = tabu_result_path + "Proportional_tenure_" + instances[file_id];
-			string graph_path = symmetric_path + instances[file_id];
+			string graph_path = tsplib_symmetric_path + instances[file_id];
 
 			std::ofstream file(filepath, std::ios_base::app);
 
@@ -711,7 +710,7 @@ namespace TSP
 		params.max_time_s = 60 * 15;
 		params.tabu_list_length = 50;
 		params.max_no_improve = 100;
-		params.max_iterations - 500;
+		params.max_iterations = 500;
 		params.restart_count = 2;
 
 
@@ -722,7 +721,7 @@ namespace TSP
 
 			std::cout << "Starting tests for file " << instances[file_id] << std::endl;
 			string filepath = tabu_result_path + "Proportional_tenure_" + instances[file_id];
-			string graph_path = symmetric_path + instances[file_id];
+			string graph_path = tsplib_symmetric_path + instances[file_id];
 
 			std::ofstream file(filepath, std::ios_base::app);
 

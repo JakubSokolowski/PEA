@@ -7,10 +7,17 @@
 #include <limits>
 #include <sstream>
 #include "GraphRepresentation.h"
-
+#include <string>
 
 namespace TSP
 {
+
+	static std::string tsplib_symmetric_path = "C:\\Users\\Jakub\\source\\repos\\JakubSokolowski\\TSP\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Symmetric\\";
+	static std::string tsplib_asymmetric_path = "C:\\Users\\Jakub\\source\\repos\\JakubSokolowski\\TSP\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Asymmetric\\";
+	static std::string random_symmetric_path = "C:\\Users\\Jakub\\source\\repos\\JakubSokolowski\\TSP\\TSP\\Benchmarks\\ProblemData\\Random\\Symmetric\\";
+	static std::string random_asymmetric_path = "C:\\Users\\Jakub\\source\\repos\\JakubSokolowski\\TSP\\TSP\\Benchmarks\\ProblemData\\Random\\Asymmetric\\";
+
+
 	template<typename Graph, typename Cost>
 	Graph ParseGraphFile(std::string filepath);	
 

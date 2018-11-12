@@ -2,9 +2,10 @@
 
 #ifndef TSP_TIMER
 #define TSP_TIMER
-
 #define NOMINMAX
 #include <Windows.h>
+#include <time.h>
+#include <iomanip>
 
 namespace TSP
 {	
@@ -24,6 +25,7 @@ namespace TSP
 		~Timer();
 		void Start();
 		double GetTime();
+		std::string GetTimestamp();
 
 	private:
 
@@ -35,20 +37,18 @@ namespace TSP
 	};
 
 
-	inline TSP::Timer::Timer()
+	inline Timer::Timer()
 	{
 	}
 
-	inline TSP::Timer::Timer(TimeUnit unit)
+	inline Timer::Timer(TimeUnit unit)
 		: time_unit_m(AssignUnit(unit))
-	{
-	}
+	{}
 
-	inline TSP::Timer::~Timer()
-	{
-	}
+	inline Timer::~Timer()
+	{}
 
-	inline void TSP::Timer::Start()
+	inline void Timer::Start()
 	{
 		LARGE_INTEGER li;
 		if (!QueryPerformanceFrequency(&li))
@@ -60,14 +60,23 @@ namespace TSP
 		counter_start_m = li.QuadPart;
 	}
 
-	inline double TSP::Timer::GetTime()
+
+	inline double Timer::GetTime()
 	{
 		LARGE_INTEGER li;
 		QueryPerformanceCounter(&li);
 		return double(li.QuadPart - counter_start_m) / pc_freq_m;
 	}
 
-	inline double TSP::Timer::AssignUnit(TimeUnit unit)
+	inline std::string Timer::GetTimestamp() {
+		auto t = std::time(nullptr);
+		auto tm = *localtime(&t);
+		std::ostringstream oss;
+		oss << std::put_time(&tm, "%d-%m-%Y %H-%M-%S");
+		return oss.str();
+	}
+
+	inline double Timer::AssignUnit(TimeUnit unit)
 	{
 		double time_unit = 0.0;
 		switch (unit)

@@ -68,7 +68,7 @@ namespace TSP
 	TSP::SymmetricAdjacencyMatrix<Cost>::SymmetricAdjacencyMatrix(std::vector<Vertex> &coordinates)
 	{
 		coordinates_ = coordinates;
-		adjacency_matrix_ = AllocateSquareMatrix(coordinates.size());
+		adjacency_matrix_ = AllocateSquareMatrix((uint)coordinates.size());
 		ConvertCoordinatesToWeights(coordinates);
 	}
 
@@ -115,7 +115,7 @@ namespace TSP
 	template<typename Cost>
 	uint TSP::SymmetricAdjacencyMatrix<Cost>::GetNumOfVertices() const
 	{
-		return adjacency_matrix_.size();
+		return (uint)adjacency_matrix_.size();
 	}
 
 	template<typename Cost>
