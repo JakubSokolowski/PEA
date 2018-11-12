@@ -23,7 +23,7 @@ namespace TSP
 		void ForbidMove(MoveParameters &move);
 		void DecreaseTenure();
 		void ResetList();
-		uint GetListLenght() { return tabu_list_m.size(); }
+		uint GetListLenght() { return (uint)tabu_list_m.size(); }
 	protected:		
 		int max_length_m, tabu_tenure_m;
 		// The list of all the forbidden moves. Using std::deque for O(1) front deletion

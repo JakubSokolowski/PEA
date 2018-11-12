@@ -47,7 +47,7 @@ namespace TSP
 		Cost ReduceMatrix(LittleMatrix<Cost> &m);
 		Cost FindBranchingPositionAndRegret(LittleMatrix<Cost> &m, Edge &path, Position &pos);
 		void RemoveSubtour(LittleMatrix<Cost> &m, int index, Edge &path);
-		uint VisitedNodesCount() { return tree_m.size(); }
+		uint VisitedNodesCount() { return (uint)tree_m.size(); }
 
 		void AddIndices(LittleMatrix<Cost> &m);
 		vector<int> RetriveNewTourFromTree(int index, int begin);
@@ -289,7 +289,7 @@ template<class Cost> vector<int> BranchAndBound<Cost>::RetriveNewTourFromTree(in
 	}
 
 	// Search for the edge that contains beginning
-	int path_size = path.size();
+	uint path_size = (uint)path.size();
 	for (uint i = 0; i < path.size(); i++) 
 	{
 		if (path[i].first == beginning) 
@@ -361,7 +361,7 @@ inline void TSP::BranchAndBound<Cost>::FindTour()
 			// Branching to the left
 			if (left_node.lower_bound < current_smallest_cost_m)
 			{
-				matrix.first = tree_m.size() - 1;
+				matrix.first = (int)tree_m.size() - 1;
 				matrix.second = m;
 				matrix.second.SetCost(pos.first, pos.second, infinity);
 				matrices.push(matrix);
@@ -372,14 +372,14 @@ inline void TSP::BranchAndBound<Cost>::FindTour()
 			// Remove rows, columns, and subtours
 			m.RemoveRow(pos.first);
 			m.RemoveColumn(pos.second);
-			RemoveSubtour(m, tree_m.size() - 1, right_node.path);
+			RemoveSubtour(m, (int)tree_m.size() - 1, right_node.path);
 
 			// Calculate new lower bound - parent lower bound + sum of reduction
 			right_node.lower_bound = tree_m[id].lower_bound + ReduceMatrix(m);
 			right_node.parent_key = id;
 			tree_m.push_back(right_node);
 
-			id = tree_m.size() - 1;
+			id = (int)tree_m.size() - 1;
 		}
 
 		// Update the best tour and the current_smallest_cost_m value
@@ -389,7 +389,7 @@ inline void TSP::BranchAndBound<Cost>::FindTour()
 			{
 				UpdateCurrentBestSolution(m);
 				current_smallest_cost_m = right_node.lower_bound;
-				current_best_tour_m = RetriveNewTourFromTree(tree_m.size() - 1, 1);
+				current_best_tour_m = RetriveNewTourFromTree((int)tree_m.size() - 1, 1);
 			}
 		}
 	}
@@ -420,7 +420,7 @@ template<class Cost> void BranchAndBound<Cost>::UpdateCurrentBestSolution(Little
 				node.path.first = m.GetCost(i, 0);
 				node.path.second = m.GetCost(0, j);
 				node.lower_bound = tree_m.back().lower_bound;
-				node.parent_key = tree_m.size() - 1;
+				node.parent_key = (long)tree_m.size() - 1;
 				tree_m.push_back(node);
 			}
 		}

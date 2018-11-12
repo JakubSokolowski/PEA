@@ -117,7 +117,7 @@ namespace TSP
 
 			
 			// O(max_iter)
-			int iterations_without_improvement = 0;
+			uint iterations_without_improvement = 0;
 			for (uint i = 0; i < max_iterations_m; i++)
 			{				
 				time = timer.GetTime();
@@ -199,7 +199,7 @@ namespace TSP
 	template<class Cost>
 	inline Solution<Cost> TabuSearch<Cost>::GenerateInitialSolution(GraphRepresentation<Cost>& representation)
 	{
-		srand(time(NULL));
+		srand(time((uint)NULL));
 		std::vector<Cost> tour(representation.GetNumOfVertices() + 1);
 		std::iota(tour.begin(), tour.end(), 1);
 		tour.back() = 1;
