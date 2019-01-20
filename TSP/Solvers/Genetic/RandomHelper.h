@@ -4,7 +4,7 @@
 #define TSP_RANDOM_HELPER
 
 #include <random>
-#include <iterator>
+#include <time.h>
 #include <vector>
 
 namespace TSP
@@ -14,6 +14,7 @@ namespace TSP
 	{
 	public:
 		static int GetRandomInRange(int from, int to);
+		static double GetRandomInRange(double from, double to);
 		static bool EventOccured(double probability);
 		static std::vector<int> GetRandomPair(int from, int to);
 		
@@ -28,7 +29,7 @@ namespace TSP
 		static void ShuffleFragment(std::vector<I> &vec, int from, int to);
 	private:
 		static std::mt19937& Generator() { static std::mt19937 gen; return gen; }
-		RandomHelper() {}
+		RandomHelper() { Generator().seed(time(0)); }
 	};
 
 	template<typename I>
@@ -58,6 +59,11 @@ namespace TSP
 	inline int RandomHelper::GetRandomInRange(int from, int to)
 	{
 		std::uniform_int_distribution<int> distr(from, to);
+		return distr(Generator());
+	}
+
+	inline double RandomHelper::GetRandomInRange(double from, double to) {
+		std::uniform_real_distribution<> distr(from, to);
 		return distr(Generator());
 	}
 	inline bool RandomHelper::EventOccured(double probability)
