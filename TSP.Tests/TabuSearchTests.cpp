@@ -108,45 +108,45 @@ namespace TSPTests
 		TEST_METHOD(TabuSearchSym17)
 		{
 			auto path = std::vector<int>{ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,1 };
-			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Symmetric\\S17.txt");
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(tsplib_symmetric_path + "17.txt");
 			auto solver = TabuSearch<int>();
 			auto move = new Swap<int>();
 			auto actual = solver.Solve(graph);
 			Assert::AreEqual(true, std::is_permutation(path.begin(), path.end(), actual.tour.begin()));
 			Assert::AreEqual(1, actual.tour.front());
 			Assert::AreEqual(1, actual.tour.back());
-			std::wstring message = L"Optimal: 2085, actual: " +  std::to_wstring(actual.total_cost);
-			Assert::AreEqual(true, IsAccurate(2085, actual.total_cost, 0.90),message.c_str());
+			std::wstring message = L"Optimal: 2300, actual: " +  std::to_wstring(actual.total_cost);
+			Assert::AreEqual(true, IsAccurate(2300, actual.total_cost, 0.90),message.c_str());
 		}
 		TEST_METHOD(TabuSearchFreqSym17)
 		{			
-			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Symmetric\\S17.txt");
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(tsplib_symmetric_path + "17.txt");
 			auto solver = TabuSearch<int>();
 			auto move = new Swap<int>();
 			auto actual = solver.SolveFreq(graph);	
 			Assert::AreEqual(1, actual.tour.front());
 			Assert::AreEqual(1, actual.tour.back());
-			std::wstring message = L"Optimal: 2085, actual: " + std::to_wstring(actual.total_cost);
-			Assert::AreEqual(true, IsAccurate(2085, actual.total_cost, 0.90), message.c_str());
+			std::wstring message = L"Optimal: 2300, actual: " + std::to_wstring(actual.total_cost);
+			Assert::AreEqual(true, IsAccurate(2300, actual.total_cost, 0.90), message.c_str());
 		}
 		
 		TEST_METHOD(TabuSearchAsymmetric10)
 		{	
-			auto graph = ParseGraphFile<AsymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Asymmetric\\AS10.txt");
+			auto graph = ParseGraphFile<AsymmetricAdjacencyMatrix<int>, int>(tsplib_asymmetric_path + "10.txt");
 			auto solver = TabuSearch<int>();
 			auto move = new Swap<int>();
 			solver.IsSymmetric = false;
 			auto actual = solver.Solve(graph);			
 			Assert::AreEqual(1, actual.tour.front());
 			Assert::AreEqual(1, actual.tour.back());
-			std::wstring message = L"Optimal: 1454, actual: " + std::to_wstring(actual.total_cost);
-			Assert::AreEqual(true, IsAccurate(1454, actual.total_cost, 0.90), message.c_str());
+			std::wstring message = L"Optimal: 2856, actual: " + std::to_wstring(actual.total_cost);
+			Assert::AreEqual(true, IsAccurate(2856, actual.total_cost, 0.90), message.c_str());
 		}
 
 		TEST_METHOD(TabuSearchAsymmetric17)
 		{
 			auto path = std::vector<int>{ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,1 };
-			auto graph = ParseGraphFile<AsymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Asymmetric\\AS17.txt");
+			auto graph = ParseGraphFile<AsymmetricAdjacencyMatrix<int>, int>(tsplib_asymmetric_path + "17.txt");
 			auto solver = TabuSearch<int>();
 			auto move = new Swap<int>();
 			solver.IsSymmetric = false;
@@ -154,12 +154,12 @@ namespace TSPTests
 			Assert::AreEqual(true, std::is_permutation(path.begin(), path.end(), actual.tour.begin()));
 			Assert::AreEqual(1, actual.tour.front());
 			Assert::AreEqual(1, actual.tour.back());
-			std::wstring message = L"Optimal: 1115, actual: " + std::to_wstring(actual.total_cost);
-			Assert::AreEqual(true, IsAccurate(1115, actual.total_cost, 0.7), message.c_str());
+			std::wstring message = L"Optimal: 2300, actual: " + std::to_wstring(actual.total_cost);
+			Assert::AreEqual(true, IsAccurate(2300, actual.total_cost, 0.7), message.c_str());
 		}
 		TEST_METHOD(TabuSearchAsymmetric33)
 		{
-			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Asymmetric\\AS33.txt");
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(tsplib_asymmetric_path + "33.txt");
 			auto solver = TabuSearch<int>();
 			auto move = new Swap<int>();
 			solver.IsSymmetric = false;

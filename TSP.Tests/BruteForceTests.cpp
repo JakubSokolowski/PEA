@@ -33,7 +33,7 @@ namespace TSPTests {
 		}
 
 		TEST_METHOD(BruteForceAsymmetic10Int) {
-			auto Graph = ParseGraphFile<AsymmetricAdjacencyMatrix<int>, int>(tsplib_asymmetric_path + "AS10.txt");
+			auto Graph = ParseGraphFile<AsymmetricAdjacencyMatrix<int>, int>(tsplib_asymmetric_path + "10.txt");
 			BruteForce<int> solver = BruteForce<int>();
 			auto result = solver.Solve(Graph);
 			Assert::AreEqual(1454, result.total_cost);

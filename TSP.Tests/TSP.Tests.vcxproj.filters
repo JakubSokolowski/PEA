@@ -80,5 +80,8 @@
     <ClCompile Include="BruteForceTests.cpp">
       <Filter>Source Files\BruceForce</Filter>
     </ClCompile>
+    <ClCompile Include="RandomHelperTests.cpp">
+      <Filter>Source Files\GeneticTests</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

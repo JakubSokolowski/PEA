@@ -17,7 +17,7 @@ namespace TSPTests
 	{
 		TEST_METHOD(InsertionMutation)
 		{
-			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Symmetric\\S17.txt");
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>( tsplib_symmetric_path + "17.txt");
 			auto population = Population<int>(1, graph);
 			auto chromosome = population.GetMostFit();
 			auto mutated = chromosome;
@@ -27,7 +27,7 @@ namespace TSPTests
 		}
 		TEST_METHOD(SwapMutation)
 		{
-			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Symmetric\\S17.txt");
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(tsplib_symmetric_path + "17.txt");
 			auto population = Population<int>(1, graph);
 			auto chromosome = population.GetMostFit();
 			auto mutated = chromosome;

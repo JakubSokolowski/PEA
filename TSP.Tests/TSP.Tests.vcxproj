@@ -216,6 +216,7 @@
     <ClCompile Include="MoveTests.cpp" />
     <ClCompile Include="MutationTests.cpp" />
     <ClCompile Include="PopulationTests.cpp" />
+    <ClCompile Include="RandomHelperTests.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">Create</PrecompiledHeader>

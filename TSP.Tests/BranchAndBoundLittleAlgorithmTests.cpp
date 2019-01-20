@@ -91,41 +91,6 @@ namespace TSPTests
 			auto result2 = solver2.Solve(Graph2);
 			Assert::AreEqual(97, result2.total_cost);
 		}
-		//TEST_METHOD(BranchAndBoundSymmetric5Double)
-		//{
-
-		//	// 1st instance
-		//	auto res = std::numeric_limits<double>::max();
-		//	double D_INF = std::numeric_limits<double>::max();
-
-		//	std::vector<std::vector<double>> matrix =
-		//	{
-		//		{ D_INF, 10,  8,   9,   7 },
-		//		{ 10,  D_INF, 10,  5,   6 },
-		//		{ 8,   10,  D_INF, 8,   9 },
-		//		{ 9,   5,   8,   D_INF, 6 },
-		//		{ 7,   6,   9,   6,  D_INF }
-		//	};
-
-		//	BranchAndBound<double> solver = BranchAndBound<double>();
-		//	auto Graph = SymmetricAdjacencyMatrix<double>(matrix);
-		//	auto result = solver.Solve(Graph);
-		//	Assert::AreEqual(34.0, result.total_cost);
-
-		//	// 2nd instance
-
-		//	auto Graph2 = SymmetricAdjacencyMatrix<double>(4);
-		//	Graph2.AddEdge(0, 1, 20);
-		//	Graph2.AddEdge(0, 2, 42);
-		//	Graph2.AddEdge(0, 3, 35);
-		//	Graph2.AddEdge(3, 2, 12);
-		//	Graph2.AddEdge(1, 3, 34);
-		//	Graph2.AddEdge(1, 2, 30);
-
-		//	auto solver2 = BranchAndBound<double>();
-		//	auto result2 = solver2.Solve(Graph2);
-		//	Assert::AreEqual(97.0, result2.total_cost);
-		//}
 
 		TEST_METHOD(BranchAndBoundAsymmetic3Int)
 		{
@@ -169,7 +134,7 @@ namespace TSPTests
 
 		TEST_METHOD(BranchAndBoundAsymmetic10Int)
 		{	
-			auto Graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Asymmetric\\AS10.txt");
+			auto Graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(tsplib_asymmetric_path + "10.txt");
 			BranchAndBound<int> solver = BranchAndBound<int>();
 			auto result = solver.Solve(Graph);
 			Assert::AreEqual(1454, result.total_cost);		
@@ -178,7 +143,7 @@ namespace TSPTests
 		{
 			WriteAsymmetricMatrix(GenerateAsymmetricMatrix(17, 100));
 
-			auto Graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Asymmetric\\AS17.txt");
+			auto Graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(tsplib_asymmetric_path + "17.txt");
 			BranchAndBound<int> solver = BranchAndBound<int>();
 			auto result = solver.Solve(Graph);
 			Assert::AreEqual(1115, result.total_cost);

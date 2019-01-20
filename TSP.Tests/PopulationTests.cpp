@@ -17,7 +17,7 @@ namespace TSPTests
 		TEST_METHOD(RandomGeneration)
 		{
 			auto path = std::vector<int>{ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,1 };
-			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>("C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\ProblemData\\TSPLIB\\Symmetric\\S17.txt");
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(tsplib_symmetric_path + "17.txt");
 			auto population = Population<int>(10, graph);
 			Assert::AreEqual(population.GetSize(), 10);
 			Assert::AreEqual(population.GetMaxSize(), 10);
