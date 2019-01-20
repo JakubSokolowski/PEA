@@ -7,7 +7,8 @@
 #include "Graphs\GraphDataParser.h"
 #include "Solvers\BranchAndBound\LittleMatrix.h"
 #include "Solvers\BranchAndBound\BranchAndBound.h"
-#include "Benchmarks\PerformanceTests.h"
+#include "Solvers\BruteForce\BruteForce.h"
+#include "Solvers\TabuSearch\TabuSearch.h"
 #include "Solvers\Solution.h"
 #include <fstream>
 #include <sstream>
@@ -18,7 +19,47 @@ using std::cout;
 using std::endl;
 using std::string;
 
+double PCFreq = 0.0;
+__int64 CounterStart = 0;
 
+// PATHS
+
+string tabu_result_path = "C:\\Users\\jakub\\Documents\\Visual Studio 2017\\Projects\\PEA\\TSP\\Benchmarks\\Results\\Tabu\\";
+
+// TIME MEASUREMENT
+
+extern double time_unit = 1000.0;
+void StartCounter() {
+	LARGE_INTEGER li;
+	if (!QueryPerformanceFrequency(&li))
+		std::cout << "QueryPerformanceFrequency failed!\n";
+
+	PCFreq = double(li.QuadPart) / time_unit;
+
+	QueryPerformanceCounter(&li);
+	CounterStart = li.QuadPart;
+}
+double GetCounter() {
+	LARGE_INTEGER li;
+	QueryPerformanceCounter(&li);
+	return double(li.QuadPart - CounterStart) / PCFreq;
+}
+string GetTimestamp() {
+	auto t = std::time(nullptr);
+	auto tm = *std::localtime(&t);
+
+	std::ostringstream oss;
+	oss << std::put_time(&tm, "%d-%m-%Y %H:%M:%S");
+	auto str = oss.str();
+	return str;
+}
+
+// FILE OPERATIONS INSTANCE GENERATION AND STATISTICS
+
+bool FileExists(std::string filename) {
+	std::ifstream f(filename.c_str());
+	return f.good();
+}
 
 
 void PrintParameters(TabuParameters p)
@@ -59,18 +100,21 @@ void StartMenu()
 	Solution<int> result_ts;
 	double time_bb = 0.0;
 	double time_bf = 0.0;
-	double time_ts;
+	double time_ts = 0.0;
 	uint visited_nodes = 0;
 	char option = '1';
+	char option2 = '1';
 	do
 	{
 		cout << "\n--Menu--" << endl;
 		cout << "Solving travelling salesman problem" << endl;
 		cout << "1. BruteForce" << endl;
 		cout << "2. BranchAndBound" << endl;
+		cout << "3. TabuSearch" << endl;
 		cout << "O. Exit" << endl;
 
-		option = _getche();
+		option = getchar();
+
 
 		TabuParameters params;
 		params.max_time_s = 5 * 60;
@@ -83,6 +127,7 @@ void StartMenu()
 		string filepath;
 		switch (option)
 		{
+			
 		case '1':
 		{
 			do
@@ -93,16 +138,19 @@ void StartMenu()
 				cout << "2. Asymetric" << endl;
 				cout << "3. Show last result" << endl;
 				cout << "O. Exit" << endl;
-
-				option = _getche();
+				
+				option2 = getchar();
+				option2 = getchar();
 
 				string filepath;
-				switch (option)
+				switch (option2)
 				{
 				case '1':
 				{
-					cout << "\nEnter the relative filepath: " << endl;
+					cout << "\nEnter the relative filepath: " << endl;					
 					std::getline(std::cin, filepath);
+					if (filepath == "")
+						std::getline(std::cin, filepath);
 					if (FileExists(filepath))
 					{
 						auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(filepath);
@@ -121,6 +169,8 @@ void StartMenu()
 				{
 					cout << "\nEnter the relative filepath: \n" << endl;
 					std::getline(std::cin, filepath);
+					if (filepath == "")
+						std::getline(std::cin, filepath);
 					if (FileExists(filepath))
 					{
 						auto graph = ParseGraphFile<AsymmetricAdjacencyMatrix<int>, int>(filepath);
@@ -147,7 +197,7 @@ void StartMenu()
 				default:
 					break;
 				}
-			} while (option != '0');
+			} while (option2 != '0');
 		}break;
 		case '2':
 		{
@@ -160,15 +210,19 @@ void StartMenu()
 				cout << "3. Show last result" << endl;
 				cout << "O. Exit" << endl;
 
-				option = _getche();
+				option2 = getchar();
+				if(option2 == '\n')
+					option2 = getchar();
 
 				string filepath;
-				switch (option)
+				switch (option2)
 				{
 				case '1':
 				{
 					cout << "\nEnter the relative filepath: " << endl;
 					std::getline(std::cin, filepath);
+					if(filepath =="")
+						std::getline(std::cin, filepath);
 					if (FileExists(filepath))
 					{
 						auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(filepath);
@@ -188,6 +242,8 @@ void StartMenu()
 				{
 					cout << "\nEnter the relative filepath: \n" << endl;
 					std::getline(std::cin, filepath);
+					if (filepath == "")
+						std::getline(std::cin, filepath);
 					if (FileExists(filepath))
 					{
 						auto graph = ParseGraphFile<AsymmetricAdjacencyMatrix<int>, int>(filepath);
@@ -215,10 +271,10 @@ void StartMenu()
 				default:
 					break;
 				}
-			} while (option != '0');
+			} while (option2 != '0');
 		}break;
 
-		case 'X':
+		case '3':
 		{
 			do
 			{
@@ -231,15 +287,19 @@ void StartMenu()
 				cout << "5. Show parameters" << endl;
 				cout << "O. Exit" << endl;
 
-				option = _getche();
+				option2 = getchar();
+				if(option2 == '\n')
+					option2 = getchar();
 
 				string filepath;
-				switch (option)
+				switch (option2)
 				{
 				case '1':
 				{
 					cout << "\nEnter the relative filepath: " << endl;
 					std::getline(std::cin, filepath);
+					if(filepath == "")
+						std::getline(std::cin, filepath);
 					if (FileExists(filepath))
 					{
 						auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(filepath);
@@ -261,6 +321,8 @@ void StartMenu()
 				{
 					cout << "\nEnter the relative filepath: \n" << endl;
 					std::getline(std::cin, filepath);
+					if (filepath == "")
+						std::getline(std::cin, filepath);
 					if (FileExists(filepath))
 					{
 						auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(filepath);
@@ -284,6 +346,8 @@ void StartMenu()
 						<< "max non improving iterations, max time [s], number of restarts" << endl;
 					string str;
 					std::getline(std::cin, str);
+					if(str=="")
+						std::getline(std::cin, str);
 					std::istringstream is(str);
 					is >> params.tabu_tenure >> params.tabu_list_length >> params.max_iterations >> params.max_no_improve >> params.max_time_s >> params.restart_count;
 
@@ -303,7 +367,7 @@ void StartMenu()
 				default:
 					break;
 				}
-			} while (option != '0');
+			} while (option2 != '0');
 		}
 		break;
 		default:
@@ -314,13 +378,13 @@ void StartMenu()
 
 int main()
 {
-	//StartMenu();
+	StartMenu();
 	//GenerateProblemData();
-	std::vector<int> sym{ 5,6,7,8,9,10 };
-	std::vector<int> asym{ 5,7,10 };
+	//std::vector<int> sym{ 5,6,7,8,9,10 };
+	//std::vector<int> asym{ 5,7,10 };
 	//RunBruteForceTests(100, sym, sym);
 	//SolveProblems();
-	RunBNBTests(10);
+	//RunBNBTests(10);
 	//RunBruteForce(100);
 	//TimeEstimation();
 	//StaticTenuresTest();
@@ -329,7 +393,6 @@ int main()
 	//SymmetricTabuTenureProportionalTests(5);
 	//ProportionalTenureTests(5);
 	//GenerateProblemData();
-	//(1);
 	//ProportionalTenureAsymmetricTests(5);
 	//StaticTenureAsymmetricTest(5);
 	//FinalTests(5);
