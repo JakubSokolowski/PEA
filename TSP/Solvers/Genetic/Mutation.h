@@ -32,7 +32,6 @@ namespace TSP
 		chromosome.tour.erase(chromosome.tour.begin() + rnd_source);
 		// To take into account ereased ciry, if the destination index is bigger than source, insert before the destination, otherwise after
 		chromosome.tour.insert(chromosome.tour.begin() + rnd_destination + ((rnd_source < rnd_destination) ? 1 : -1), city);
-		// Calculate new tour cost
 		chromosome.total_cost = representation.GetTourCost(chromosome.tour);
 	}
 	template<typename Cost>
@@ -47,8 +46,9 @@ namespace TSP
 	}
 	template<typename Cost>
 	inline void Mutation<Cost>::Scramble(Chromosome<Cost>& chromosome, const GraphRepresentation<Cost>& representation)
-	{
-	
+	{	
+		RandomHelper::ShuffleFragment(chromosome.tour);
+		chromosome.total_cost = representation.GetTourCost(chromosome.tour);
 	}
 
 }
