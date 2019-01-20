@@ -27,10 +27,59 @@ namespace TSPTests
 		{
 			int population_size = 10;
 			auto population = Population<int>(population_size);		
+			for (int i = 0; i < 3; i++)
+				population.AddChromosome(Chromosome<int>(i + 1));
+			auto selected = population.GetKChromosomes(3);
+			Assert::AreEqual(population.GetMostFit().total_cost, 1);		
+		}
+		TEST_METHOD(GetMostFitPercentage) {
+			int population_size = 10;
+			auto population = Population<int>(population_size);
 			for (int i = 0; i < 10; i++)
 				population.AddChromosome(Chromosome<int>(i + 1));
-			auto selected = population.GetKChromosomes(10);
-			Assert::AreEqual(population.GetMostFit().total_cost, 1);		
+			auto selected = population.GetMostFitPercentage(0.3);
+			Assert::AreEqual(1, selected[0].total_cost);
+			Assert::AreEqual(2, selected[1].total_cost);
+			Assert::AreEqual(3, selected[2].total_cost);
+		}
+		TEST_METHOD(ElitePercentageConstructor) {
+			int population_size = 10;
+			auto population = Population<int>(population_size);
+			for (int i = 0; i < 10; i++)
+				population.AddChromosome(Chromosome<int>(i + 1));
+			auto new_population = Population<int>(population, 0.3);
+			Assert::AreEqual(new_population.GetSize(), 3);
+			Assert::AreEqual(new_population.GetMaxSize(), 10);
+		}
+		TEST_METHOD(RouletteSelection) {
+			srand(time(0));
+			int population_size = 10;
+			auto population = Population<int>(population_size);
+			for (int i = 0; i < 10; i++)
+				population.AddChromosome(Chromosome<int>(i + 1));
+			auto selected = std::vector < Chromosome<int>>();
+			auto average_cost = 0;
+			for (int i = 0; i < 10; i++) {
+				selected.push_back(population.RouletteSelection());
+				average_cost += selected.back().total_cost;
+			}
+			average_cost /= 10;
+			Assert::IsTrue(average_cost < 4.0);	
+		}
+		TEST_METHOD(TournamentSelection) {
+			srand(time(0));
+			int population_size = 10;
+			auto population = Population<int>(population_size);
+			for (int i = 0; i < 10; i++)
+				population.AddChromosome(Chromosome<int>(i + 1));
+			auto selected = std::vector < Chromosome<int>>();
+			auto average_cost = 0;
+			for (int i = 0; i < 10; i++) {
+				selected.push_back(population.TournamentSelection(10));
+				average_cost += selected.back().total_cost;
+			}
+			average_cost /= 10;
+			Assert::IsTrue(average_cost < 4.0);
 		}
 	};
 }
