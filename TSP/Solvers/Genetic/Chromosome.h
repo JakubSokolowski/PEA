@@ -17,10 +17,12 @@ namespace TSP
 		Chromosome(const Solution<Cost>& solution);
 		Chromosome(const Chromosome<Cost> &other);
 		Chromosome<Cost> operator = (const Chromosome<Cost> &other);
+		bool operator == (const Chromosome<Cost> &other);
 		~Chromosome();
 	
 		double GetFitness() const;
 		Solution<Cost> GetSolution() const;
+		void UpdateCost(GraphRepresentation<Cost> &rep);
 
 		Cost total_cost = std::numeric_limits<Cost>::max();
 		std::vector<int> tour;		
@@ -63,7 +65,12 @@ namespace TSP
 		total_cost = other.total_cost;
 		tour = other.tour;
 		return *this;
-	}	
+	}
+	template<typename Cost>
+	inline bool Chromosome<Cost>::operator==(const Chromosome<Cost>& other) {
+		return total_cost == other.total_cost && tour == other.tour;
+	}
+
 	template<typename Cost>
 	inline Chromosome<Cost>::~Chromosome()
 	{}
@@ -77,6 +84,11 @@ namespace TSP
 	inline Solution<Cost> Chromosome<Cost>::GetSolution() const
 	{
 		return Solution<Cost>(total_cost, tour);
+	}
+
+	template<typename Cost>
+	inline void Chromosome<Cost>::UpdateCost(GraphRepresentation<Cost>& rep) {
+		total_cost = rep.GetTourCost(tour):
 	}
 
 }
