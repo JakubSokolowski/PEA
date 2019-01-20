@@ -16,8 +16,11 @@ namespace TSP
 		Chromosome(Cost tour_cost, std::vector<int> path);
 		Chromosome(const Solution<Cost>& solution);
 		Chromosome(const Chromosome<Cost> &other);
+		Chromosome(const Chromosome<Cost> &&other);
 		Chromosome<Cost> operator = (const Chromosome<Cost> &other);
 		bool operator == (const Chromosome<Cost> &other);
+		bool operator < (const Chromosome<Cost> &other) const;
+		bool operator > (const Chromosome<Cost> &other) const;
 		~Chromosome();
 	
 		double GetFitness() const;
@@ -60,6 +63,11 @@ namespace TSP
 		, tour(other.tour)
 	{}
 	template<typename Cost>
+	inline Chromosome<Cost>::Chromosome(const Chromosome<Cost>&& other) {
+		total_cost = other.total_cost;
+		tour = std::move(other.tour);
+	}
+	template<typename Cost>
 	inline Chromosome<Cost> Chromosome<Cost>::operator=(const Chromosome<Cost>& other)
 	{
 		total_cost = other.total_cost;
@@ -70,6 +78,16 @@ namespace TSP
 	inline bool Chromosome<Cost>::operator==(const Chromosome<Cost>& other) {
 		return total_cost == other.total_cost && tour == other.tour;
 	}
+
+	template<typename Cost>
+	inline bool Chromosome<Cost>::operator<(const Chromosome<Cost>& other) const {
+		return GetFitness() < other.GetFitness();
+	}
+	template<typename Cost>
+	inline bool Chromosome<Cost>::operator>(const Chromosome<Cost>& other) const {
+		return GetFitness() > other.GetFitness();
+	}
+
 
 	template<typename Cost>
 	inline Chromosome<Cost>::~Chromosome()
