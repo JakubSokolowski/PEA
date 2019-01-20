@@ -9,6 +9,7 @@
 #include "../stdafx.h"
 #include <Windows.h>
 #include "../Graphs/AdjacencyMatrix/SymmetricAdjacencyMatrix.h"
+#include "../Graphs/AdjacencyMatrix/AsymmetricAdjacencyMatrix.h"
 #include "../Graphs/GraphDataParser.h"
 #include "../Solvers/BranchAndBound/BranchAndBound.h"
 #include "../Solvers/TabuSearch/TabuSearch.h"

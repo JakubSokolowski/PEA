@@ -61,6 +61,9 @@
     <Filter Include="Solvers\BruteForce">
       <UniqueIdentifier>{d6665551-618c-4cbb-9e56-4b8039f562c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Solvers\Genetic\Crossover">
+      <UniqueIdentifier>{98d40001-f9ad-48bd-9c48-5cc2e00dc92c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -170,6 +173,18 @@
     </ClInclude>
     <ClInclude Include="Solvers\BruteForce\BruteForce.h">
       <Filter>Solvers\BruteForce</Filter>
+    </ClInclude>
+    <ClInclude Include="Solvers\Genetic\Crossover\Crossover.h">
+      <Filter>Solvers\Genetic\Crossover</Filter>
+    </ClInclude>
+    <ClInclude Include="Solvers\Genetic\Crossover\OX.h">
+      <Filter>Solvers\Genetic\Crossover</Filter>
+    </ClInclude>
+    <ClInclude Include="Solvers\Genetic\Crossover\PMX.h">
+      <Filter>Solvers\Genetic\Crossover</Filter>
+    </ClInclude>
+    <ClInclude Include="Solvers\Genetic\Crossover\CX.h">
+      <Filter>Solvers\Genetic\Crossover</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

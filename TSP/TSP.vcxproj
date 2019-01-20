@@ -216,6 +216,10 @@
     <ClInclude Include="Solvers\BranchAndBound\LittleMatrix.h" />
     <ClInclude Include="Solvers\BruteForce\BruteForce.h" />
     <ClInclude Include="Solvers\Genetic\Chromosome.h" />
+    <ClInclude Include="Solvers\Genetic\Crossover\Crossover.h" />
+    <ClInclude Include="Solvers\Genetic\Crossover\CX.h" />
+    <ClInclude Include="Solvers\Genetic\Crossover\OX.h" />
+    <ClInclude Include="Solvers\Genetic\Crossover\PMX.h" />
     <ClInclude Include="Solvers\Genetic\GeneticAlgorithm.h" />
     <ClInclude Include="Solvers\Genetic\Mutation.h" />
     <ClInclude Include="Solvers\Genetic\Population.h" />

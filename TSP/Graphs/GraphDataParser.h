@@ -80,6 +80,13 @@ namespace TSP
 		return rep;
 	}
 
+	template<typename Graph, typename Cost>
+	inline Graph ParseInstance(std::string name) {
+		auto path = ""
+		return ParseGraphFile()
+	}
+
+
 	template<typename Cost>
 	inline std::vector<std::vector<Cost>> ReadMatrix(std::fstream & stream)
 	{

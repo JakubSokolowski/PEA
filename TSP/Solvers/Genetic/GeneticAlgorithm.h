@@ -30,6 +30,7 @@ namespace TSP
 	{
 	public:
 
+		Solution<Cost> Solve(GraphRepresentation<Cost>& representation);
 
 	private:
 
@@ -41,6 +42,11 @@ namespace TSP
 
 
 	};
+
+	template<class Cost>
+	inline Solution<Cost> GeneticAlgorithm<Cost>::Solve(GraphRepresentation<Cost>& representation) {
+		return Solution<Cost>();
+	}
 
 }
 #endif // !TSP_GENETIC_ALGORITHM
