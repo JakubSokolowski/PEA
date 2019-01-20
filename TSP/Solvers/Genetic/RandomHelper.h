@@ -5,6 +5,7 @@
 
 #include <random>
 #include <iterator>
+#include <vector>
 
 namespace TSP
 {	
@@ -14,14 +15,19 @@ namespace TSP
 	public:
 		static int GetRandomInRange(int from, int to);
 		static bool EventOccured(double probability);
+		static std::vector<int> GetRandomPair(int from, int to);
 		
 
 		template <typename I>
 		static I RandomElement(I begin, I end);
+
+		template <typename I>
+		static void ShuffleRandomFragment(std::vector<I> &vec);
+
+		template <typename I>
+		static void ShuffleFragment(std::vector<I> &vec, int from, int to);
 	private:
 		static std::mt19937& Generator() { static std::mt19937 gen; return gen; }
-		static std::random_device rnd_m;
-		static std::mt19937 generator_m;
 		RandomHelper() {}
 	};
 
@@ -33,6 +39,22 @@ namespace TSP
 		return begin;
 	}
 
+	template<typename I>
+	inline void RandomHelper::ShuffleRandomFragment(std::vector<I>& vec) {
+		auto len = vec.size();
+		if (len > 1) {
+			auto from = GetRandomInRange(1, len - 2);
+			auto to = GetRandomInRange(1, len - 2);
+			ShuffleFragment(vec, std::min(from, to), std::max(from, to));
+		}		
+	}
+
+	template<typename I>
+	inline void RandomHelper::ShuffleFragment(std::vector<I>& vec, int from, int to) {
+		std::random_shuffle(vec.begin() + from, vec.begin() + to);
+	}
+
+
 	inline int RandomHelper::GetRandomInRange(int from, int to)
 	{
 		std::uniform_int_distribution<int> distr(from, to);
@@ -42,6 +64,13 @@ namespace TSP
 	{		
 		std::bernoulli_distribution distr(probability);
 		return distr(Generator());		
+	}
+	inline std::vector<int> RandomHelper::GetRandomPair(int from, int to) {
+		int first = GetRandomInRange(from, to);
+		int second = GetRandomInRange(from, to);
+		while (first == second)
+			second = GetRandomInRange(from, to);
+		return std::vector<int>{std::min(first, second), std::max(first, second)};
 	}
 }
 
