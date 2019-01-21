@@ -15,25 +15,81 @@ namespace TSPTests
 {
 	TEST_CLASS(MutationTests)
 	{
-		TEST_METHOD(InsertionMutation)
+		TEST_METHOD(InsertAtIndexFromGreaterThanTo)
 		{
-			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>( tsplib_symmetric_path + "17.txt");
-			auto population = Population<int>(1, graph);
-			auto chromosome = population.GetMostFit();
-			auto mutated = chromosome;
-			Mutation<int>::Insertion(mutated, graph);
-			Assert::IsTrue(std::is_permutation(chromosome.tour.begin(), chromosome.tour.end(), mutated.tour.begin()));
-			Assert::AreNotEqual(chromosome.total_cost, mutated.total_cost);
+			auto chromosome = Chromosome<int>(0, { 1,2,3,4,5,1 });
+			Mutation<int>::InsertAtIndex(chromosome,4,1);
+			auto expected = std::vector<int>{ 1,5,2,3,4,1 };
+			auto actual = chromosome.tour;
+			Assert::AreEqual(RandomHelper::ToString(expected).c_str(), RandomHelper::ToString(actual).c_str());
+		}		
+
+		TEST_METHOD(InsertAtIndexToGreaterThanFrom) {
+			auto chromosome = Chromosome<int>(0, { 1,2,3,4,5,1 });
+			Mutation<int>::InsertAtIndex(chromosome, 1, 4);
+			auto expected = std::vector<int>{ 1,3,4,5,2,1 };
+			auto actual = chromosome.tour;
+			Assert::AreEqual(RandomHelper::ToString(expected).c_str(), RandomHelper::ToString(actual).c_str());
 		}
-		TEST_METHOD(SwapMutation)
-		{
-			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(tsplib_symmetric_path + "17.txt");
-			auto population = Population<int>(1, graph);
-			auto chromosome = population.GetMostFit();
-			auto mutated = chromosome;
-			Mutation<int>::Swap(mutated, graph);
-			Assert::IsTrue(std::is_permutation(chromosome.tour.begin(), chromosome.tour.end(), mutated.tour.begin()));
-			Assert::AreNotEqual(chromosome.total_cost, mutated.total_cost);
+
+		TEST_METHOD(InsertionMutationMultipleRandom) {
+			auto chromosome = Chromosome<int>(0, { 1,2,3,4,5,1 });
+			auto original = chromosome;
+			for (int i = 0; i < 10 ; i++) {
+				Mutation<int>::Insertion(chromosome);
+				Assert::AreEqual(1, chromosome.tour.front());
+				Assert::AreEqual(1, chromosome.tour.back());
+				Assert::AreNotEqual(RandomHelper::ToString(original.tour).c_str(), 
+					RandomHelper::ToString(chromosome.tour).c_str());
+			}
 		}
+
+		TEST_METHOD(SwapAtIndicesFromGreaterThanTo) {
+			auto chromosome = Chromosome<int>(0, { 1,2,3,4,5,1 });
+			Mutation<int>::SwapAtIndices(chromosome, 4, 1);
+			auto expected = std::vector<int>{ 1,5,3,4,2,1 };
+			auto actual = chromosome.tour;
+			Assert::AreEqual(RandomHelper::ToString(expected).c_str(), RandomHelper::ToString(actual).c_str());
+		}
+
+		TEST_METHOD(SwapAtIndicesToGreaterThanFrom) {
+			auto chromosome = Chromosome<int>(0, { 1,2,3,4,5,1 });
+			Mutation<int>::SwapAtIndices(chromosome, 1, 4);
+			auto expected = std::vector<int>{ 1,5,3,4,2,1 };
+			auto actual = chromosome.tour;
+			Assert::AreEqual(RandomHelper::ToString(expected).c_str(), RandomHelper::ToString(actual).c_str());
+		}
+
+		TEST_METHOD(SwapMutationMultipleRandom) {
+			auto chromosome = Chromosome<int>(0, { 1,2,3,4,5,1 });
+			auto original = chromosome;
+			for (int i = 0; i < 10; i++) {
+				Mutation<int>::Swap(chromosome);
+				Assert::AreEqual(1, chromosome.tour.front());
+				Assert::AreEqual(1, chromosome.tour.back());
+				Assert::AreNotEqual(RandomHelper::ToString(original.tour).c_str(),
+					RandomHelper::ToString(chromosome.tour).c_str());
+			}
+		}
+
+		TEST_METHOD(ScrambleMutationMutipleRandom) {
+			srand(time(NULL));
+			auto base = Chromosome<int>(0, { 1,2,3,4,5,1 });
+			int same_counter = 0, different_counter = 0;
+			for (int i = 0; i < 50; i++) {
+				auto chromosome = base;
+				Mutation<int>::ScrambleBetweenIndices(chromosome,1,4);
+				Assert::AreEqual(1, chromosome.tour.front());
+				Assert::AreEqual(1, chromosome.tour.back());
+				if (base.tour == chromosome.tour)
+					same_counter++;
+				else
+					different_counter++;
+			}
+			Logger::WriteMessage(std::to_string(different_counter).c_str());
+			Assert::IsTrue(different_counter > same_counter);
+		}
+
+		
 	};
 }

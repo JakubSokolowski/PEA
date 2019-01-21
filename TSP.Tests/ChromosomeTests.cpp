@@ -2,7 +2,10 @@
 #include "CppUnitTest.h"
 #include <limits>
 #include "..\TSP\Graphs\AdjacencyMatrix\SymmetricAdjacencyMatrix.h"
+#include "..\TSP\Graphs\GraphDataParser.h"
 #include "..\TSP\Solvers\Genetic\Chromosome.h"
+#include "..\TSP\Solvers\Genetic\Population.h"
+#include "..\TSP\Solvers\Genetic\Mutation.h";
 #include <set>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -33,6 +36,16 @@ namespace TSPTests
 				mset.insert(Chromosome<int>(i));
 			}
 			Assert::IsTrue(mset.end() != mset.find(Chromosome<int>(1)));
+		}
+
+		TEST_METHOD(UpdateFitness) {
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(tsplib_asymmetric_path + "17.txt");
+			auto pop = Population<int>(1, graph);
+			auto chromosome = pop.GetMostFit();
+			auto prev_fitness = chromosome.GetFitness();
+			Mutation<int>::Swap(chromosome);
+			chromosome.UpdateFitness(graph);
+			Assert::AreNotEqual(prev_fitness, chromosome.GetFitness());
 		}
 	};
 }

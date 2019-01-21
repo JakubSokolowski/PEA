@@ -5,6 +5,7 @@
 #include "..\TSP\Graphs\GraphDataParser.h"
 #include "..\TSP\Solvers\Genetic\Chromosome.h"
 #include "..\TSP\Solvers\Genetic\Population.h"
+#include "..\TSP\Solvers\Genetic\Mutation.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace TSP;
@@ -64,6 +65,7 @@ namespace TSPTests
 				average_cost += selected.back().total_cost;
 			}
 			average_cost /= 10;
+			Logger::WriteMessage(std::to_string(average_cost).c_str());
 			Assert::IsTrue(average_cost < 4.0);	
 		}
 		TEST_METHOD(TournamentSelection) {
@@ -81,5 +83,21 @@ namespace TSPTests
 			average_cost /= 10;
 			Assert::IsTrue(average_cost < 4.0);
 		}
+
+		TEST_METHOD(GetParents) {
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(tsplib_symmetric_path + "17.txt");
+			auto population = Population<int>(10, graph);
+			auto parents = population.GetParents(ROULETTE);
+			Assert::IsFalse(parents.first == parents.second);
+		}
+		TEST_METHOD(MutateAndUpdate) {
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(tsplib_symmetric_path + "17.txt");
+			auto population = Population<int>(10, graph);
+			for (auto &ch : population.population_m) {
+				Mutation<int>::Scramble(ch);
+			}
+			population.UpdateFitness(graph);
+		}
+
 	};
 }
