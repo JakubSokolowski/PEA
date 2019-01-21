@@ -17,6 +17,7 @@ namespace TSP
 		static double GetRandomInRange(double from, double to);
 		static bool EventOccured(double probability);
 		static std::vector<int> GetRandomPair(int from, int to);
+		static std::string ToString(const std::vector<int>&vec);
 		
 
 		template <typename I>
@@ -77,6 +78,14 @@ namespace TSP
 		while (first == second)
 			second = GetRandomInRange(from, to);
 		return std::vector<int>{std::min(first, second), std::max(first, second)};
+	}
+	inline std::string RandomHelper::ToString(const std::vector<int>& vec) {
+		std::string result = "{";
+		for (auto it : vec) {
+			result += std::to_string(it) + ",";
+		}
+		result[result.size() - 1] = '}';
+		return result;
 	}
 }
 
