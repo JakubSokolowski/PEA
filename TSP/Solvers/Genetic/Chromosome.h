@@ -25,7 +25,7 @@ namespace TSP
 	
 		double GetFitness() const;
 		Solution<Cost> GetSolution() const;
-		void UpdateCost(GraphRepresentation<Cost> &rep);
+		void UpdateFitness(GraphRepresentation<Cost> &rep);
 
 		Cost total_cost = std::numeric_limits<Cost>::max();
 		std::vector<int> tour;		
@@ -105,8 +105,8 @@ namespace TSP
 	}
 
 	template<typename Cost>
-	inline void Chromosome<Cost>::UpdateCost(GraphRepresentation<Cost>& rep) {
-		total_cost = rep.GetTourCost(tour):
+	inline void Chromosome<Cost>::UpdateFitness(GraphRepresentation<Cost>& rep) {
+		total_cost = rep.GetTourCost(tour);
 	}
 
 }
