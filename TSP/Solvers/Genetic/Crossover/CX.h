@@ -36,7 +36,7 @@ namespace TSP
 
 	template<typename Cost>
 	inline void CX<Cost>::FillMaps(Chromosome<Cost>& c1, Chromosome<Cost>& c2) {
-		for (uint i = 0; i < c1.tour.size(); i++) {
+		for (uint i = 1; i < c1.tour.size()-1; i++) {
 			c1_index[c1.tour[i]] = i;
 			c2_index[c2.tour[i]] = i;
 			cycles[i] = false;
@@ -70,7 +70,7 @@ namespace TSP
 	template<typename Cost>
 	inline std::vector<Cycle> CX<Cost>::FindAllCycles(Chromosome<Cost>& c1, Chromosome<Cost>& c2) {
 		std::vector<Cycle> cycles;
-		for (uint i = 0; i < c1.tour.size(); i++) {
+		for (uint i = 1; i < c1.tour.size() -1; i++) {
 			if (!IsPartOfCycle(c1.tour[i])) {
 				cycles.push_back(FindCycle(i, c1, c2));
 			}
@@ -96,10 +96,11 @@ namespace TSP
 	template<typename Cost>
 	inline std::vector<int> CX<Cost>::CreateChildTour(Chromosome<Cost>& c1, Chromosome<Cost>& c2) {
 		std::vector<int> result;
+		result.push_back(c1.tour[0]);
 		bool first_parent_is_source = true;
-		int index = 0;
+		int index = 1;
 		while (true) {
-			if (index == c1.tour.size())
+			if (index == c1.tour.size() - 1)
 				break;
 			std::vector<int> chunk;
 			if (first_parent_is_source)
@@ -110,6 +111,7 @@ namespace TSP
 			index += chunk.size();
 			result.insert(result.end(), chunk.begin(), chunk.end());
 		}
+		result.push_back(c1.tour[0]);
 		return result;
 	}
 
@@ -118,7 +120,7 @@ namespace TSP
 		std::vector<int> result;
 		auto cycle_id = c1_cycle[c1.tour[index]];
 		while (true) {
-			if ( index == c1.tour.size() || c1_cycle[c1.tour[index]] != cycle_id)
+			if ( index == c1.tour.size() - 1 || c1_cycle[c1.tour[index]] != cycle_id)
 				break;
 			result.push_back(c1.tour[index]);
 			index++;
@@ -131,7 +133,7 @@ namespace TSP
 		std::vector<int> result;
 		auto cycle_id = c2_cycle[c2.tour[index]];
 		while (true) {
-			if (index == c2.tour.size() || c2_cycle[c2.tour[index]] != cycle_id)
+			if (index == c2.tour.size() -1|| c2_cycle[c2.tour[index]] != cycle_id)
 				break;
 			result.push_back(c2.tour[index]);
 			index++;
