@@ -43,7 +43,9 @@ namespace TSP
 		void AddChromosome(Chromosome<Cost> &chromosome);
 
 	
-		Cost GetAvergeTourCost() const { return  Cost(std::accumulate(population_m.) / population_m.size()) }
+		Cost GetAvergeTourCost() const {
+			return  Cost(std::accumulate(population_m) / population_m.size());
+		}
 		Chromosome<Cost> GetMostFit() const;
 		std::vector<Chromosome<Cost>> GetMostFitPercentage(double percentage) const;	
 		Chromosome<Cost> GetBestChromosomeWithProbability(double probability, std::vector<Chromosome<Cost>> &chromosomes);
@@ -53,6 +55,12 @@ namespace TSP
 		std::pair<Chromosome<Cost>, Chromosome<Cost>> GetParents(Selection sel);
 		std::vector<Chromosome<Cost>> population_m;
 		void UpdateFitness(GraphRepresentation<Cost> &rep);
+		void GenerateRoulette();
+
+		bool roulette_generated = false;
+		std::vector<double> sorted_weights;
+		std::vector<Chromosome<Cost>> sorted_pop;
+		double weight_sum = 0.0;
 
 	private:
 
@@ -82,6 +90,9 @@ namespace TSP
 	{
 		population_m = other.population_m;
 		max_pop_size_m = other.max_pop_size_m;
+		roulette_generated = other.roulette_generated;
+		sorted_pop = other.sorted_pop;
+		weight_sum = other.weight_sum;
 	}
 	template<typename Cost>
 	inline Population<Cost>::Population(const std::vector<Chromosome<Cost>>& chromosomes)
@@ -93,6 +104,9 @@ namespace TSP
 	{
 		population_m = other.population_m;
 		max_pop_size_m = other.max_pop_size_m;
+		roulette_generated = other.roulette_generated;
+		sorted_pop = other.sorted_pop;
+		weight_sum = other.weight_sum;
 		return *this;
 	}
 	template<typename Cost>
@@ -172,23 +186,14 @@ namespace TSP
 	}
 	template<typename Cost>
 	inline Chromosome<Cost> Population<Cost>::RouletteSelection() {
-		auto pop = population_m;
-		std::sort(pop.rbegin(), pop.rend(), ChromosomeCompare<Cost>());
-		// calculate the total weight
-		double weight_sum = 0;
-		for (auto ch : pop) {
-			weight_sum += ch.GetFitness();
+		if (!roulette_generated) {
+			GenerateRoulette();
+			roulette_generated = true;
 		}
-		// get a random value
 		double value = RandomHelper::GetRandomInRange(0.0, 1.0) * weight_sum;
-		// locate the random value based on the weights
-		for (auto ch : pop) {
-			value -= ch.GetFitness();
-			if (value < 0)
-				return ch;
-		}
-		// when rounding errors occur, we return the last item's index 
-		return pop.front();
+		auto it = std::lower_bound(sorted_weights.begin(), sorted_weights.end(), value);
+		int index = it - sorted_weights.begin();
+		return sorted_pop[index];
 	}
 	template<typename Cost>
 	inline std::pair<Chromosome<Cost>, Chromosome<Cost>>  Population<Cost>::GetParents(Selection sel) {
@@ -197,8 +202,6 @@ namespace TSP
 			case TSP::ROULETTE: {
 				auto first_parent = RouletteSelection();
 				auto second_parent = RouletteSelection();
-				while (first_parent == second_parent)
-					second_parent = RouletteSelection();
 				return std::make_pair(first_parent, second_parent);
 			}
 			
@@ -215,6 +218,19 @@ namespace TSP
 	inline void Population<Cost>::UpdateFitness(GraphRepresentation<Cost>& rep) {
 		for (auto &it : population_m) {
 			it.UpdateFitness(rep);
+		}
+		GenerateRoulette();
+	}
+	template<typename Cost>
+	inline void Population<Cost>::GenerateRoulette() {
+		sorted_pop = population_m;
+		sorted_weights.clear();
+		std::sort(sorted_pop.begin(), sorted_pop.end(), ChromosomeCompare<Cost>());
+		// calculate the total weight
+		weight_sum = 0.0;
+		for (auto ch : sorted_pop) {
+			weight_sum += ch.GetFitness();
+			sorted_weights.push_back(weight_sum);
 		}
 	}
 }
