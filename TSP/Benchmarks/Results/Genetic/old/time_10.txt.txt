@@ -1,0 +1,22 @@
+GENETIC PARAMETERS:
+Population Size: 	10
+Max Generations: 	10
+Crossover Type : 	OX
+Crossover Rate : 	0.8
+Mutation Type  : 	Swap
+Mutation Rate  : 	0.1
+Elitism Rate   : 	0.1
+Selection Type : 	Roulette2570Generation num: Best Tour Cost: 
+0 2814
+1 2638
+2 2545
+3 2474
+4 2424
+5 2284
+6 2281
+7 2168
+8 2107
+9 2049
+
+Total Time:	Avg gen time: 
+0.180877 0.0180877
