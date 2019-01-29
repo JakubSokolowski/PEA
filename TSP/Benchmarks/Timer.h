@@ -26,6 +26,7 @@ namespace TSP
 		void Start();
 		double GetTime();
 		std::string GetTimestamp();
+		std::string GetShortTimestamp();
 
 	private:
 
@@ -72,7 +73,14 @@ namespace TSP
 		auto t = std::time(nullptr);
 		auto tm = *localtime(&t);
 		std::ostringstream oss;
-		oss << std::put_time(&tm, "%d-%m-%Y %H-%M-%S");
+		oss << std::put_time(&tm, "%H:%M:%S_%d-%m-%Y");
+		return oss.str();
+	}
+	inline std::string Timer::GetShortTimestamp() {
+		auto t = std::time(nullptr);
+		auto tm = *localtime(&t);
+		std::ostringstream oss;
+		oss << std::put_time(&tm, "%H_%M_%S");
 		return oss.str();
 	}
 
