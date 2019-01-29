@@ -202,21 +202,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BestTours.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BestTours.cpp" />
     <ClCompile Include="BruteForceTests.cpp" />
     <ClCompile Include="ChromosomeTests.cpp" />
+    <ClCompile Include="CrossoverBenchmarks.cpp" />
+    <ClCompile Include="CrossoverRateBenchmark.cpp" />
     <ClCompile Include="CrossoverTests.cpp" />
+    <ClCompile Include="ElitismBenchmarks.cpp" />
+    <ClCompile Include="GenerationsNumBenchmark.cpp" />
     <ClCompile Include="GeneticAlgorithmTests.cpp" />
     <ClCompile Include="LittleMatrixTests.cpp" />
     <ClCompile Include="BranchAndBoundLittleAlgorithmTests.cpp" />
     <ClCompile Include="GraphDataParsingTests.cpp" />
     <ClCompile Include="MoveTests.cpp" />
+    <ClCompile Include="MutationBenchmarks.cpp" />
+    <ClCompile Include="MutationRateBenchmark.cpp" />
     <ClCompile Include="MutationTests.cpp" />
+    <ClCompile Include="PopulationSizeBenchmark.cpp" />
     <ClCompile Include="PopulationTests.cpp" />
     <ClCompile Include="RandomHelperTests.cpp" />
+    <ClCompile Include="RouletteBenchmarks.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">Create</PrecompiledHeader>
@@ -228,6 +238,7 @@
     <ClCompile Include="AdjacencyMatrixTests.cpp" />
     <ClCompile Include="TabuListTests.cpp" />
     <ClCompile Include="TabuSearchTests.cpp" />
+    <ClCompile Include="TimeBenchmark.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TSP\TSP.vcxproj">

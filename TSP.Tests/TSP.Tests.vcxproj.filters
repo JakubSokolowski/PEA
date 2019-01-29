@@ -28,12 +28,18 @@
     <Filter Include="Source Files\BruceForce">
       <UniqueIdentifier>{bb208408-81df-4fa0-8544-f340da29b169}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GeneticTests\Benchmarks">
+      <UniqueIdentifier>{a154d980-2df6-4aa1-a67a-a3d706b85cdd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BestTours.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -82,6 +88,36 @@
     </ClCompile>
     <ClCompile Include="RandomHelperTests.cpp">
       <Filter>Source Files\GeneticTests</Filter>
+    </ClCompile>
+    <ClCompile Include="RouletteBenchmarks.cpp">
+      <Filter>Source Files\GeneticTests\Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="ElitismBenchmarks.cpp">
+      <Filter>Source Files\GeneticTests\Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="CrossoverBenchmarks.cpp">
+      <Filter>Source Files\GeneticTests\Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="MutationBenchmarks.cpp">
+      <Filter>Source Files\GeneticTests\Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="BestTours.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GenerationsNumBenchmark.cpp">
+      <Filter>Source Files\GeneticTests\Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="PopulationSizeBenchmark.cpp">
+      <Filter>Source Files\GeneticTests\Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="CrossoverRateBenchmark.cpp">
+      <Filter>Source Files\GeneticTests\Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="MutationRateBenchmark.cpp">
+      <Filter>Source Files\GeneticTests\Benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeBenchmark.cpp">
+      <Filter>Source Files\GeneticTests\Benchmarks</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

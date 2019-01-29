@@ -12,11 +12,10 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace TSP;
 
 
-namespace TSPTests
+namespace Benchmarks
 {
-	TEST_CLASS(GeneticAlgorithmTests)
-	{
-		const int max_reps = 5;
+	TEST_CLASS(CrossoverBenchmarks) {
+		const int max_reps = 10;
 		Timer timer = Timer(TimeUnit::miliseconds);
 		Benchmark RepeatBenchmark(GeneticAlgorithm<int> &sol, GraphRepresentation<int> &rep, int reps) {
 			auto benchmarks = std::vector<Benchmark>();
@@ -28,7 +27,7 @@ namespace TSPTests
 		}
 		void RunConfig(GeneticAlgorithm<int> &sol, GraphRepresentation<int> &rep, int reps, std::string filename) {
 			auto avg = RepeatBenchmark(sol, rep, reps);
-			avg.WriteToFile(filename + "_" + timer.GetTimestamp());
+			avg.WriteToFile(filename);
 		}
 
 		void RunSymmetricComparision(GeneticAlgorithm<int> &sol, std::string name, vector<string> instances, int reps) {
@@ -42,63 +41,67 @@ namespace TSPTests
 			file.close();
 		}
 
-	
-	
 
-		std::vector<std::string> sym_instances = { "10","S17","bays29", "eil51", "eil76","pr124","rat195" };
-		std::vector<std::string> asym_instances = { "10", "17","ftv33" "ftv50", "ftv70", "kro124" };
-		
-		TEST_METHOD(BenchMarkSymmetircAll) {
-			for (auto instance : sym_instances) {
-				auto path = tsplib_symmetric_path + instance + ".txt";
-				std::ofstream file(path);
-				if (file.good())
-					continue;
-				auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(path);
-				auto params = GeneticParameters(
-					100,							// Population size
-					50,								// Max Generations
-					10,								// Tournament size
-					0.1,							// Mutation Rate
-					0.8,							// Crossover Rate
-					0.1,							// Elitism %
-					CrossoverType::ORDER_ONE,
-					MutationType::SWAP,
-					Selection::ROULETTE);
-				auto solver = GeneticAlgorithm<int>(params);
-				RunConfig(solver, graph, 1, "time_" + instance);
-			}
-		}
-		TEST_METHOD(BenchMarkSymmetric10) {		
-			auto path = tsplib_symmetric_path + "S10.txt";
-			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(path);
+		TEST_METHOD(BenchMarkPMXMedium) {
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(tsplib_symmetric_path + "eil51.txt");
 			auto params = GeneticParameters(
-				10,							// Population size
-				10,								// Max Generations
+				25,								// Population size
+				50,								// Max Generations
 				10,								// Tournament size
 				0.1,							// Mutation Rate
-				0.8,							// Crossover Rate
+				0.9,							// Crossover Rate
+				0.1,							// Elitism %
+				CrossoverType::PARTIALLY_MAPPED,
+				MutationType::SWAP,
+				Selection::ROULETTE);
+			auto solver = GeneticAlgorithm<int>(params);
+			RunConfig(solver, graph, max_reps, "crossover\\PMX_medium");
+		}
+		TEST_METHOD(BenchMarkOXMedium) {
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(tsplib_symmetric_path + "eil51.txt");
+			auto params = GeneticParameters(
+				25,								// Population size
+				50,								// Max Generations
+				10,								// Tournament size
+				0.1,							// Mutation Rate
+				0.9,							// Crossover Rate
 				0.1,							// Elitism %
 				CrossoverType::ORDER_ONE,
 				MutationType::SWAP,
 				Selection::ROULETTE);
 			auto solver = GeneticAlgorithm<int>(params);
-			RunConfig(solver, graph, 1, "time_10.txt");
+			RunConfig(solver, graph, max_reps, "crossover\\OX_medium");
 		}
-		TEST_METHOD(BenchmarkSymmetric) {
-			auto instances = vector<string>{ "S10","S17","bays29" };
+
+		TEST_METHOD(BenchMarkPMXBig) {
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(tsplib_symmetric_path + "rat195.txt");
 			auto params = GeneticParameters(
-				10,							    // Population size
-				10,								// Max Generations
+				25,								// Population size
+				50,								// Max Generations
 				10,								// Tournament size
 				0.1,							// Mutation Rate
-				0.8,							// Crossover Rate
+				0.9,							// Crossover Rate
+				0.1,							// Elitism %
+				CrossoverType::PARTIALLY_MAPPED,
+				MutationType::SWAP,
+				Selection::ROULETTE);
+			auto solver = GeneticAlgorithm<int>(params);
+			RunConfig(solver, graph, max_reps, "crossover\\PMX_big");
+		}
+		TEST_METHOD(BenchMarkOXBig) {
+			auto graph = ParseGraphFile<SymmetricAdjacencyMatrix<int>, int>(tsplib_symmetric_path + "rat195.txt");
+			auto params = GeneticParameters(
+				25,								// Population size
+				50,								// Max Generations
+				10,								// Tournament size
+				0.1,							// Mutation Rate
+				0.9,							// Crossover Rate
 				0.1,							// Elitism %
 				CrossoverType::ORDER_ONE,
 				MutationType::SWAP,
 				Selection::ROULETTE);
 			auto solver = GeneticAlgorithm<int>(params);
-			RunSymmetricComparision(solver, "symmetric_comparision", instances, 2);
+			RunConfig(solver, graph, max_reps, "crossover\\OX_big");		
 		}
 
 	};

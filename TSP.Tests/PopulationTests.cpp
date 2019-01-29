@@ -53,20 +53,26 @@ namespace TSPTests
 			Assert::AreEqual(new_population.GetMaxSize(), 10);
 		}
 		TEST_METHOD(RouletteSelection) {
-			srand(time(0));
+			srand(10);
 			int population_size = 10;
 			auto population = Population<int>(population_size);
-			for (int i = 0; i < 10; i++)
-				population.AddChromosome(Chromosome<int>(i + 1));
+			auto population_average = 0.0;
+			for (int i = 0; i < 10; i++) {
+				auto ch = Chromosome<int>(i + 1);
+				population.AddChromosome(ch);
+				population_average += ch.total_cost;
+			}
+			population_average /= 10;
 			auto selected = std::vector < Chromosome<int>>();
-			auto average_cost = 0;
+			auto average_cost = 0.0;
 			for (int i = 0; i < 10; i++) {
 				selected.push_back(population.RouletteSelection());
 				average_cost += selected.back().total_cost;
 			}
 			average_cost /= 10;
 			Logger::WriteMessage(std::to_string(average_cost).c_str());
-			Assert::IsTrue(average_cost < 4.0);	
+			Logger::WriteMessage(std::to_string(population_average).c_str());
+			Assert::IsTrue(population_average > average_cost);	
 		}
 		TEST_METHOD(TournamentSelection) {
 			srand(time(0));
@@ -77,7 +83,7 @@ namespace TSPTests
 			auto selected = std::vector < Chromosome<int>>();
 			auto average_cost = 0;
 			for (int i = 0; i < 10; i++) {
-				selected.push_back(population.TournamentSelection(10));
+				selected.push_back(population.TournamentSelection(2));
 				average_cost += selected.back().total_cost;
 			}
 			average_cost /= 10;
