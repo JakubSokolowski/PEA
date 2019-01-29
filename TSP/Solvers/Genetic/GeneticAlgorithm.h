@@ -10,15 +10,21 @@
 #include "Crossover\PMX.h"
 #include "Crossover\CX.h"
 #include "Mutation.h"
-#include "CppUnitTest.h"
+#include "Windows.h"
+#include "../../Benchmarks/Timer.h"
 
 namespace TSP
 {
+	using std::vector;
+	using std::pair;
+	using std::string;
+
 	enum CrossoverType {
 		ORDER_ONE,
 		PARTIALLY_MAPPED,
 		CYCLE
 	};
+	
 	struct GeneticParameters
 	{
 		int population_size;
@@ -44,6 +50,133 @@ namespace TSP
 			, mut(m)
 			, sel(s)
 		{}
+		void WriteToStream(std::ofstream &stream) {
+			stream << "GENETIC PARAMETERS:\n";
+			stream << "Population Size: \t" << population_size << '\n';
+			stream << "Max Generations: \t" << max_generations << '\n';
+			stream << "Crossover Type : \t" << ToString(cros) << '\n';
+			stream << "Crossover Rate : \t" << crossover_rate << '\n';
+			stream << "Mutation Type  : \t" << ToString(mut) << '\n';
+			stream << "Mutation Rate  : \t" << mutation_rate << '\n';
+			stream << "Elitism Rate   : \t" << elitism_rate << '\n';
+			stream << "Selection Type : \t" << ToString(sel, tournament_size) << '\n';
+		}
+		static string ToString(CrossoverType type) {
+			switch (type)
+			{
+			case TSP::ORDER_ONE:
+				return "OX";
+			case TSP::PARTIALLY_MAPPED:
+				return "PMX";
+			case TSP::CYCLE:
+				return "CX";
+			default:
+				break;
+			}
+		}
+		static string ToString(MutationType type) {
+			switch (type)
+			{
+			case TSP::INSERTION:
+				return "Insertion";
+			case TSP::SWAP:
+				return "Swap";
+			case TSP::SCRAMBLE:
+				return "Scramble";
+			default:
+				break;
+			}
+		}
+		static string ToString(Selection type, int size) {
+			switch (type)
+			{
+			case TSP::ROULETTE:
+				return "Roulette";
+			case TSP::TOURNAMENT:
+				return "Tournament, " + std::to_string(size);
+			default:
+				break;
+			}
+		}
+	};
+	
+	struct Benchmark {
+		vector<int> most_fit_tours = vector<int>();
+		double total_execution_time = 0.0;
+		int instance_size = 0;
+		int best_cost = 0;
+		GeneticParameters params;
+
+		Benchmark() {}
+
+		void WriteToStream(std::ofstream &stream, bool head = false, bool time = false) {
+			if(head)
+				params.WriteToStream(stream);
+			if (time) {
+				stream << "Total Time:\tAvg gen time: \n";
+				stream << total_execution_time << "\t" << total_execution_time / most_fit_tours.size() << "\n";
+			}
+		
+			stream << "gen\tcost\n";
+			for (int i = 0; i < most_fit_tours.size(); i++) {
+				stream << i + 1 << "\t" << most_fit_tours[i] << "\n";
+			}
+			stream << std::endl;
+		
+		}
+	
+		void WriteToFile(string filename, bool head = false, bool time = false) {
+			string filepath = "C:\\Users\\Jakub\\source\\repos\\JakubSokolowski\\TSP\\TSP\\Benchmarks\\Results\\Genetic\\" + filename + ".txt";
+			std::ofstream file(filepath);
+			WriteToStream(file, head, time);
+			file.close();
+		}
+		void WriteSummaryToStream(std::ofstream &stream) {
+			stream << total_execution_time << " " << best_cost << "\n";
+		}
+		void WriteSummaryToFile(string filename) {
+			string filepath = "C:\\Users\\Jakub\\source\\repos\\JakubSokolowski\\TSP\\TSP\\Benchmarks\\Results\\Genetic\\" + filename + ".txt";
+			std::ofstream file(filepath);
+			if (file.good()) {
+				file.close();
+				file.open(filepath, std::ios_base::app);
+			}
+			WriteSummaryToStream(file);
+			file.close();
+		}
+		static Benchmark Average(vector<Benchmark> &vec) {
+			Benchmark result;
+			double total_time = 0.0;
+			double total_cost = 0.0;
+			
+			int generation_num = vec[0].params.max_generations;
+			auto tours_num = vec[0].most_fit_tours.size();
+			vector<int> tour_average(tours_num);
+			int counter = 0;
+			for (auto &summary : vec) {
+				total_time += summary.total_execution_time;
+				total_cost += summary.best_cost;
+				int gen_counter = 0;
+				for (auto &cost : summary.most_fit_tours) {
+					tour_average[gen_counter] += cost;
+					++gen_counter;
+				}
+				++counter;
+			}
+			for (auto &cost : tour_average) {
+				cost /= vec.size();
+			}
+
+			auto avg_time = total_time / vec.size();
+			auto avg_cost = total_cost / vec.size();
+
+			result.most_fit_tours = tour_average;
+			result.params = vec[0].params;
+			result.total_execution_time = avg_time;
+			result.best_cost = avg_cost;
+
+			return result;
+		}
 	};
 
 	template<class Cost>
@@ -52,31 +185,34 @@ namespace TSP
 	{
 	public:
 		GeneticAlgorithm(GeneticParameters params);
+
 		Solution<Cost> Solve(GraphRepresentation<Cost>& representation);
 		void Evolve(Population<Cost> &pop, GraphRepresentation<Cost> &rep);
-		void Mutate(Population<Cost>& pop, GraphRepresentation<Cost>& rep, MutationType type);
 		Chromosome<Cost> Crossover(Chromosome<Cost> &c1, Chromosome<Cost> &c2);
-
-	private:
+		void Mutate(Population<Cost>& pop, GraphRepresentation<Cost>& rep, MutationType type);
+		void WriteSummaryToFile(string filename);
+		Benchmark GetSummary() {
+			return summary_m;
+		}
 		GeneticParameters params_m;
-		int max_pop_size_m;
-		int max_generations_m;
-		double mutation_rate_m;
-		double crossover_rate_m;
-		double elite_percentage_m;
-		int tournament_size_m;
-		Selection sel_m = Selection::ROULETTE;
-		CrossoverType cros_m = CrossoverType::PARTIALLY_MAPPED;
-		MutationType mut_m = MutationType::SWAP;
+	private:
+		Timer timer = Timer(TimeUnit::seconds);
+		Benchmark summary_m;
+	
 	};
 
 	template<class Cost>
 	inline GeneticAlgorithm<Cost>::GeneticAlgorithm(GeneticParameters params) {
 		params_m = params;
+		summary_m.params = params;
 	}
 
 	template<class Cost>
 	inline Solution<Cost> GeneticAlgorithm<Cost>::Solve(GraphRepresentation<Cost>& representation) {
+		timer.Start();
+		summary_m = Benchmark();
+		summary_m.instance_size = representation.GetNumOfVertices();
+		summary_m.params = params_m;
 		auto current_generation = Population<Cost>(params_m.population_size, representation);
 		auto next_generation = Population<Cost>();
 		for (int i = 0; i < params_m.max_generations; i++) {
@@ -89,9 +225,10 @@ namespace TSP
 			Mutate(current_generation, representation, params_m.mut);
 			next_generation.UpdateFitness(representation);
 			current_generation = next_generation;			
-			Logger::WriteMessage(std::to_string(current_generation.GetMostFit().total_cost).c_str());
-			Logger::WriteMessage("\n");
+			summary_m.most_fit_tours.push_back(current_generation.GetMostFit().total_cost);
 		}
+		summary_m.total_execution_time = timer.GetTime();
+		summary_m.best_cost = current_generation.GetMostFit().total_cost;
 		return current_generation.GetMostFit().GetSolution();
 	}
 
@@ -126,6 +263,13 @@ namespace TSP
 				return cros.Execute(c1, c2);
 			}
 		}
+	}
+	template<class Cost>
+	inline void GeneticAlgorithm<Cost>::WriteSummaryToFile(string filename) {
+		string filepath = genetic_result_path + filename + ".txt";
+		std::ofstream file(filepath);
+		summary_m.WriteToStream(file);
+		file.close();
 	}
 }
 #endif // !TSP_GENETIC_ALGORITHM
