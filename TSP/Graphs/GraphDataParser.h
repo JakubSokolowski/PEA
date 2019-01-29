@@ -17,7 +17,7 @@ namespace TSP
 	static std::string random_symmetric_path = "C:\\Users\\Jakub\\source\\repos\\JakubSokolowski\\TSP\\TSP\\Benchmarks\\ProblemData\\Random\\Symmetric\\";
 	static std::string random_asymmetric_path = "C:\\Users\\Jakub\\source\\repos\\JakubSokolowski\\TSP\\TSP\\Benchmarks\\ProblemData\\Random\\Asymmetric\\";
 	static std::string result_path = "C:\\Users\\Jakub\\source\\repos\\JakubSokolowski\\TSP\\TSP\\Benchmarks\\Results\\";
-
+	static std::string genetic_result_path = "C:\\Users\\Jakub\\source\\repos\\JakubSokolowski\\TSP\\TSP\\Benchmarks\\Results\\Genetic\\";
 
 	template<typename Graph, typename Cost>
 	Graph ParseGraphFile(std::string filepath);	
